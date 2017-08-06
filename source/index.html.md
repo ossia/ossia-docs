@@ -3,15 +3,15 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - c: C
-  - cpp: C++
+  - cpp--98: C++98
+  - cpp--14: C++14
   - python: Python
   - qml: QML
-  - java: Java
-  - cpp: ofx
-  - text: Unity
-  - text: Pd
-  - text: Max
-  - text: SuperCollider
+  - cpp--ofx: OFX
+  - csharp: Unity3D
+  - plaintext--pd: Pd
+  - plaintext--max: Max
+  - smalltalk: SuperCollider
 
 toc_footers:
   - <a href='https://github.com/OSSIA/libossia'>Get libossia on Github</a>
@@ -23,51 +23,62 @@ search: true
 
 # Introduction
 
-Libossia is a modern C++, cross-environment distributed object model for creative coding and interaction scoring. It allows to expose the parameters of your creative coding application over the network, and score them in time.
+**libossia** is a modern C++, cross-environment distributed object model for creative coding and interaction scoring. 
+It allows to expose the parameters of your creative coding application over the network, and score them in time.
 
-Libossia handles various protocoles such as OSC, Midi, Minuit and OSCQuery (in progres) and offers bindings for many environments (ie PureData, Max, Python, Unity3D, QML, Faust, SC).
+It handles various protocols such as OSC, MIDI, Minuit and OSCQuery.
+It offers bindings for many environments (PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider).
 
 
 # Architecture
 
 ## Local device
+
 ```c
-whatever{
-	sdlkgjfh
-}
+#include <ossia-c/ossia-c.h>
+...
+ossia_device_t dev = ossia_device_create(proto, "supersoftware");
 ```
 
-```cpp
+```cpp--98
+#include <ossia-cpp/ossia-cpp98.hpp>
+...
+opp::oscquery_server dev("supersoftware");
+```
+
+```cpp--14
+#include <ossia/ossia.hpp>
+...
+ossia::net::generic_device dev{
+    std::make_unique<ossia::oscquery::multiplex_protocol>(),
+    "supersoftware"};
 ```
 
 ```python
 ```
 
 ```qml
+import Ossia 1.0 as Ossia
+...
+Ossia.OSCQueryServer {
+    name: "supersoftware"
+}
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/ossia.device.png" /></pre>
+
+
+```smalltalk
 ```
-
-```Max
-> ![ossia.device object](/images/ossia.device.png)
-
-```
-
-```sc
-```
-
-
-
 
 Ability to create a local device for the application
 
@@ -75,7 +86,10 @@ Ability to create a local device for the application
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -84,22 +98,19 @@ Ability to create a local device for the application
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -109,7 +120,10 @@ Ability to connect to an existing device and exchange messages with it
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -118,22 +132,19 @@ Ability to connect to an existing device and exchange messages with it
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -143,7 +154,10 @@ Being able to get & set various properties on addresses : domain, accesss mode, 
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -152,22 +166,19 @@ Being able to get & set various properties on addresses : domain, accesss mode, 
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -177,7 +188,10 @@ Being able to get & set less common properties: critical, hidden, etc
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -186,22 +200,19 @@ Being able to get & set less common properties: critical, hidden, etc
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -211,7 +222,10 @@ Being able to do something in reaction to a value being received through the net
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -220,22 +234,19 @@ Being able to do something in reaction to a value being received through the net
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -245,7 +256,10 @@ Being able to do something in reaction to a node being created, removed, etc
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -254,22 +268,19 @@ Being able to do something in reaction to a node being created, removed, etc
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -279,7 +290,10 @@ Being able to use the libossia logging facilities
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -288,22 +302,19 @@ Being able to use the libossia logging facilities
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -313,7 +324,10 @@ Being able to load & save preset files
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -322,22 +336,19 @@ Being able to load & save preset files
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -348,7 +359,10 @@ Being able to create new objects in reaction to the loading of a preset
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -357,22 +371,19 @@ Being able to create new objects in reaction to the loading of a preset
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -382,7 +393,10 @@ Being able to create the relevant protocol
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -391,22 +405,19 @@ Being able to create the relevant protocol
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -416,7 +427,10 @@ Being able to create and remove objects in reaction to OSCQuery messages
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -425,22 +439,19 @@ Being able to create and remove objects in reaction to OSCQuery messages
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
@@ -450,7 +461,10 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```c
 ```
 
-```cpp
+```cpp--98
+```
+
+```cpp--14
 ```
 
 ```python
@@ -459,22 +473,19 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```qml
 ```
 
-```java
+```cpp--ofx
 ```
 
-```ofx
+```csharp
 ```
 
-```Unity
+```plaintext--pd
 ```
 
-```Pd
+```plaintext--max
 ```
 
-```max
-```
-
-```sc
+```smalltalk
 ```
 
 
