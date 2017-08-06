@@ -32,6 +32,9 @@ Libossia handles various protocoles such as OSC, Midi, Minuit and OSCQuery (in p
 
 ## Local device
 ```c
+whatever{
+	sdlkgjfh
+}
 ```
 
 ```cpp
@@ -55,7 +58,9 @@ Libossia handles various protocoles such as OSC, Midi, Minuit and OSCQuery (in p
 ```Pd
 ```
 
-```max
+```Max
+> ![ossia.device object](/images/ossia.device.png)
+
 ```
 
 ```sc
