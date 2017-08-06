@@ -2,16 +2,16 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - c
-  - cpp
-  - python
-  - qml
-  - java
-  - ofx
-  - Unity
-  - Pd
-  - max
-  - sc
+  - c: C
+  - cpp: C++
+  - python: Python
+  - qml: QML
+  - java: Java
+  - cpp: ofx
+  - text: Unity
+  - text: Pd
+  - text: Max
+  - text: SuperCollider
 
 toc_footers:
   - <a href='https://github.com/OSSIA/libossia'>Get libossia on Github</a>
