@@ -616,8 +616,6 @@ Being able to create new objects in reaction to the loading of a preset
 
 ## Access mode
 
-An indicative value that says is a particular address should be considered
-as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write.
 
 ```c
 ```
@@ -626,6 +624,8 @@ as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```
 
 ```python
@@ -649,6 +649,49 @@ as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write
 ```smalltalk
 ```
 
+An indicative value that says is a particular address should be considered
+as :
+* **GET** : read-only (e.g. a VU-meter)
+* **SET** : write-only (e.g. a "Play" button)
+* **BI** : read-write
+
+The default is "BI".
+
+
+## Domain (min/max)
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+auto dom = ossia::net::make_domain(-5., 5.);
+ossia::net::set_domain(node, dom);
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
 
 ## Clip mode
 
@@ -659,6 +702,8 @@ as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_bounding_mode(node, ossia::bounding_mode::CLIP);
 ```
 
 ```python
@@ -682,39 +727,16 @@ as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write
 ```smalltalk
 ```
 
+The clip mode tells what happens when a value is outside of the min / max:
 
-## Range (min/max)
+* **FREE** : no clipping; domain is only indicative.
+* **CLIP** : clipped to the closest value in the range.
+* **LOW** : only clips values lower than the min.
+* **HIGH** : only clips values higher than the max.
+* **WRAP** : ...
+* **FOLD** : ...
 
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
+The default is **FREE**.
 ## Repetition filter
 
 ```c
@@ -747,8 +769,118 @@ as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write
 ```smalltalk
 ```
 
+When the repetition filter is enabled, if the same value is sent twice,
+the second time will be filtered.
 
 ## Units
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+### List of units
+
+Taken from Jamoma
+#### Position
+
+* cart2D
+* cart3D
+* spherical
+* polar
+* opengl
+* cylindrical
+
+#### Orientation
+
+* quaternion:
+* euler:
+* axis:
+
+#### Color
+
+* argb: all between 0 - 1
+* rgba:
+* rgb:
+* bgr:
+* argb8: all between 0 - 255
+* hsv:
+* cmy8:
+* todo: css? (rgb in 0, 1 and alpha in 0, 255)
+
+#### Angle
+
+* degree
+* radian
+
+#### Distance
+
+* meter
+* kilometer
+* decimeter
+* centimeter
+* millimeter
+* micrometer
+* nanometer
+* picometer
+* inch
+* foot
+* mile
+
+#### Time
+
+* second
+* bark
+* bpm
+* cent
+* frequency
+* mel
+* midi_pitch
+* millisecond
+* playback_speed
+
+#### Gain
+
+* linear
+* midigain
+* decibel
+* decibel_raw
+
+#### Speed
+
+* meter_per_second
+* miles_per_hour
+* kilometer_per_hour
+* knot
+* foot_per_second
+* foot_per_hour
+
+## Extended type
 
 ```c
 ```
