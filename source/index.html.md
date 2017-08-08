@@ -152,6 +152,9 @@ qmlscene Device.qml
 ...
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
 ossia_device_t dev = ossia_device_create(proto, "supersoftware");
+...
+ossia_device_free(dev);
+ossia_protocol_free(proto);
 ```
 
 ```cpp--98
@@ -211,42 +214,74 @@ For the sake of simplicity, some bindings tie together device and protocol
 implementation.
 
 We use OSCQuery as an example of protocol here.
-Once a device has been created
+Once a device has been created, it is possible to check what's in it by going
+to [https://localhost:5678](https://localhost:5678).
 
-## Remote OSCQuery Device
+For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
+
+
+## Creating nodes and adresses
+
 ```c
 #include <ossia-c/ossia-c.h>
 ...
-ossia_protocol_oscquery_mirror_create("ws://localhost:5678");
+ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
+ossia_device_t dev = ossia_device_create(proto, "supersoftware");
+ossia_node_t root = ossia_device_get_root_node(dev);
+ossia_node_t a_node = ossia_node_create(dev, "/foo/blu");
+
+ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
+ossia_address_push_f(an_address, 345.);
 ```
 
 ```cpp--98
 #include <ossia-cpp/ossia-cpp98.hpp>
 ...
-opp::oscquery_mirror mirror{"my_mirror", "ws://localhost:5678"};
-mirror.refresh();
+opp::oscquery_server dev("supersoftware");
+dev.get_root_node()
+   .create_node("/foo/blu")
+   .create_float()
+   .set_value(2.34);
 ```
 
 ```cpp--14
 #include <ossia/ossia.hpp>
-#include <ossia/network/oscquery/oscquery_mirror.hpp>
 ...
-auto proto = new ossia::oscquery::oscquery_mirror_protocol{"ws://localhost:5678"};
 ossia::net::generic_device dev{
-    std::unique_ptr<ossia::oscquery::oscquery_mirror_protocol>(proto),
-    "my_mirror"};
-proto->update(dev);
+    std::make_unique<ossia::oscquery::oscquery_server_protocol>(1234, 5678),
+    "supersoftware"};
+auto& n1 = ossia::net::create_node(dev, "/foo/bar");
+n1.create_address(val_type::FLOAT);
+n1.push_value(3.56);
 ```
 
 ```python
 ```
 
 ```qml
+import QtQuick 2.7
+import QtQuick.Controls 2.0
 import Ossia 1.0 as Ossia
 ...
-Ossia.OSCQueryMirror {
-    name: "my_mirror"
-    host: "ws://localhost:5678"
+ApplicationWindow {
+    visible: true
+    id: root
+    Ossia.OSCQueryServer {
+        id: device
+        name: "supersoftware"
+    }
+
+    // There is no explicit address to add in QML.
+    // Either you create a Node without addresss
+    Ossia.Node { node: "/foo/bar" }
+
+    // Or you create a parameter which is node + address.
+    Ossia.Parameter {
+        node: "/tata"
+        valueType: Ossia.Type.Float
+    }
+
+    Component.onCompleted: device.recreate(root)
 }
 ```
 
@@ -266,41 +301,53 @@ Ossia.OSCQueryMirror {
 ```
 
 
-Ability to connect to an existing device and exchange messages with it
+The nodes in the device are simply called "nodes" in the API.
+Nodes are identified with the OSC address syntax: `/foo/bar`.
 
-## Address properties
-```c
-```
+**Nodes** per se don't carry any value; they have to be extended with **adresses**
+to be able to send and receive messages.
 
-```cpp--98
-```
+Each node can only have a single address.
+Addresses can have the following types:
 
-```cpp--14
-```
+* Integer: 32-bit int.
+* Floating-point: 32-bit float.
+* Boolean: true/false.
+* Impulse: no value; just a message.
+* ASCII Character: 'a', '0', '$'...
+* String
+* Tuple: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
 
-```python
-```
+As an optimisation, specific types for 2, 3, and 4 floats are provided;
+they are referred to as Vec2f, Vec3f, Vec4f through the code.
+
+Values can be written to an address, and fetched from it.
+
+This example shows how to create a node, an address, and send a value to
+the address.
+
+
+
+## Property binding
 
 ```qml
+    Rectangle {
+        // Creates /rect
+        Ossia.Node
+        { node: "rect" }
+
+        // Creates /rect/width of type float
+        Ossia.Property on width
+        { }
+
+        // Creates /some/node of type float
+        Ossia.Property on height
+        { node: "/some/node" }
+    }
 ```
 
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
-
-Being able to get & set various properties on addresses : domain, accesss mode, description, etc
+This show how, for environments that support it, ossia objects can integrate
+with existing property environments.
 
 ## Extended properties
 ```c
@@ -404,6 +451,65 @@ Being able to do something in reaction to a value being received through the net
 
 Being able to do something in reaction to a node being created, removed, etc
 
+## Remote OSCQuery Device
+```c
+#include <ossia-c/ossia-c.h>
+...
+ossia_protocol_t proto = ossia_protocol_oscquery_mirror_create("ws://localhost:5678");
+ossia_device_t dev = ossia_device_create(proto, "my_mirror");
+ossia_device_update_namespace(dev);
+...
+ossia_device_free(dev);
+ossia_protocol_free(proto);
+```
+
+```cpp--98
+#include <ossia-cpp/ossia-cpp98.hpp>
+...
+opp::oscquery_mirror mirror{"my_mirror", "ws://localhost:5678"};
+mirror.refresh();
+```
+
+```cpp--14
+#include <ossia/ossia.hpp>
+#include <ossia/network/oscquery/oscquery_mirror.hpp>
+...
+ossia::net::generic_device dev{
+    std::make_unique<ossia::oscquery::oscquery_mirror_protocol>("ws://localhost:5678"),
+    "my_mirror"};
+dev.get_protocol()->update(dev);
+```
+
+```python
+```
+
+```qml
+import Ossia 1.0 as Ossia
+...
+Ossia.OSCQueryMirror {
+    name: "my_mirror"
+    host: "ws://localhost:5678"
+}
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+This shows how to connect to an existing OSCquery device, and refresh the image that
+we have of it.
+
 ## Logging
 ```c
 ```
@@ -505,6 +611,558 @@ Being able to load & save preset files
 
 
 Being able to create new objects in reaction to the loading of a preset
+
+# Node attributes
+
+## Access mode
+
+An indicative value that says is a particular address should be considered
+as read-only (e.g. a VU-meter), write-only (e.g. a "Play" button), or read-write.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+
+## Clip mode
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+
+## Range (min/max)
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Repetition filter
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+
+## Units
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Instance bounds
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Description
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Tags
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Priority
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Refresh rate
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Step size
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Default value
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Zombie
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Critical
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Disabled
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Hidden
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Muted
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
 
 # Communication
 ## Midi, OSC, OSCQuery
