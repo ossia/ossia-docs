@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;c&quot;,&quot;cpp&quot;,&quot;python&quot;,&quot;qml&quot;,&quot;java&quot;,&quot;cpp&quot;,&quot;text&quot;,&quot;text&quot;,&quot;text&quot;,&quot;text&quot;]">
+  <body class="index" data-languages="[&quot;c&quot;,&quot;cpp--98&quot;,&quot;cpp--14&quot;,&quot;python&quot;,&quot;qml&quot;,&quot;cpp--ofx&quot;,&quot;csharp&quot;,&quot;plaintext--pd&quot;,&quot;plaintext--max&quot;,&quot;smalltalk&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,15 +212,15 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="c">C</a>
-              <a href="#" data-language-name="cpp">C++</a>
+              <a href="#" data-language-name="cpp--98">Safe C++</a>
+              <a href="#" data-language-name="cpp--14">Fast C++</a>
               <a href="#" data-language-name="python">Python</a>
               <a href="#" data-language-name="qml">QML</a>
-              <a href="#" data-language-name="java">Java</a>
-              <a href="#" data-language-name="cpp">ofx</a>
-              <a href="#" data-language-name="text">Unity</a>
-              <a href="#" data-language-name="text">Pd</a>
-              <a href="#" data-language-name="text">Max</a>
-              <a href="#" data-language-name="text">SuperCollider</a>
+              <a href="#" data-language-name="cpp--ofx">OFX</a>
+              <a href="#" data-language-name="csharp">Unity3D</a>
+              <a href="#" data-language-name="plaintext--pd">Pd</a>
+              <a href="#" data-language-name="plaintext--max">Max</a>
+              <a href="#" data-language-name="smalltalk">SuperCollider</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -231,16 +231,24 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
+            <a href="#setup" class="toc-h1 toc-link" data-title="Setup">Setup</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#compilation" class="toc-h2 toc-link" data-title="Setup">Compilation</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#architecture" class="toc-h1 toc-link" data-title="Architecture">Architecture</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#local-device" class="toc-h2 toc-link" data-title="Architecture">Local device</a>
+                    <a href="#local-oscquery-device" class="toc-h2 toc-link" data-title="Architecture">Local OSCQuery device</a>
                   </li>
                   <li>
-                    <a href="#remote-device" class="toc-h2 toc-link" data-title="Architecture">Remote Device</a>
+                    <a href="#creating-nodes-and-adresses" class="toc-h2 toc-link" data-title="Architecture">Creating nodes and adresses</a>
                   </li>
                   <li>
-                    <a href="#address-properties" class="toc-h2 toc-link" data-title="Architecture">Address properties</a>
+                    <a href="#property-binding" class="toc-h2 toc-link" data-title="Architecture">Property binding</a>
                   </li>
                   <li>
                     <a href="#extended-properties" class="toc-h2 toc-link" data-title="Architecture">Extended properties</a>
@@ -252,6 +260,9 @@
                     <a href="#device-callbacks" class="toc-h2 toc-link" data-title="Architecture">Device callbacks</a>
                   </li>
                   <li>
+                    <a href="#remote-oscquery-device" class="toc-h2 toc-link" data-title="Architecture">Remote OSCQuery Device</a>
+                  </li>
+                  <li>
                     <a href="#logging" class="toc-h2 toc-link" data-title="Architecture">Logging</a>
                   </li>
                   <li>
@@ -259,6 +270,65 @@
                   </li>
                   <li>
                     <a href="#preset-instances" class="toc-h2 toc-link" data-title="Architecture">Preset instances</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#node-attributes" class="toc-h1 toc-link" data-title="Node attributes">Node attributes</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#access-mode" class="toc-h2 toc-link" data-title="Node attributes">Access mode</a>
+                  </li>
+                  <li>
+                    <a href="#domain-min-max" class="toc-h2 toc-link" data-title="Node attributes">Domain (min/max)</a>
+                  </li>
+                  <li>
+                    <a href="#clip-mode" class="toc-h2 toc-link" data-title="Node attributes">Clip mode</a>
+                  </li>
+                  <li>
+                    <a href="#repetition-filter" class="toc-h2 toc-link" data-title="Node attributes">Repetition filter</a>
+                  </li>
+                  <li>
+                    <a href="#units" class="toc-h2 toc-link" data-title="Node attributes">Units</a>
+                  </li>
+                  <li>
+                    <a href="#extended-type" class="toc-h2 toc-link" data-title="Node attributes">Extended type</a>
+                  </li>
+                  <li>
+                    <a href="#instance-bounds" class="toc-h2 toc-link" data-title="Node attributes">Instance bounds</a>
+                  </li>
+                  <li>
+                    <a href="#description" class="toc-h2 toc-link" data-title="Node attributes">Description</a>
+                  </li>
+                  <li>
+                    <a href="#tags" class="toc-h2 toc-link" data-title="Node attributes">Tags</a>
+                  </li>
+                  <li>
+                    <a href="#priority" class="toc-h2 toc-link" data-title="Node attributes">Priority</a>
+                  </li>
+                  <li>
+                    <a href="#refresh-rate" class="toc-h2 toc-link" data-title="Node attributes">Refresh rate</a>
+                  </li>
+                  <li>
+                    <a href="#step-size" class="toc-h2 toc-link" data-title="Node attributes">Step size</a>
+                  </li>
+                  <li>
+                    <a href="#default-value" class="toc-h2 toc-link" data-title="Node attributes">Default value</a>
+                  </li>
+                  <li>
+                    <a href="#zombie" class="toc-h2 toc-link" data-title="Node attributes">Zombie</a>
+                  </li>
+                  <li>
+                    <a href="#critical" class="toc-h2 toc-link" data-title="Node attributes">Critical</a>
+                  </li>
+                  <li>
+                    <a href="#disabled" class="toc-h2 toc-link" data-title="Node attributes">Disabled</a>
+                  </li>
+                  <li>
+                    <a href="#hidden" class="toc-h2 toc-link" data-title="Node attributes">Hidden</a>
+                  </li>
+                  <li>
+                    <a href="#muted" class="toc-h2 toc-link" data-title="Node attributes">Muted</a>
                   </li>
               </ul>
           </li>
@@ -289,54 +359,393 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Libossia is a modern C++, cross-environment distributed object model for creative coding and interaction scoring. It allows to expose the parameters of your creative coding application over the network, and score them in time.</p>
+<p><strong>libossia</strong> is a modern C++, cross-environment distributed object model for creative coding and interaction scoring.
+It allows to expose the parameters of your creative coding application over the network, and score them in time.</p>
 
-<p>Libossia handles various protocoles such as OSC, Midi, Minuit and OSCQuery (in progres) and offers bindings for many environments (ie PureData, Max, Python, Unity3D, QML, Faust, SC).</p>
-<h1 id='architecture'>Architecture</h1><h2 id='local-device'>Local device</h2><pre class="highlight c tab-c"><code><span class="n">whatever</span><span class="p">{</span>
-    <span class="n">sdlkgjfh</span>
+<p>It handles various protocols such as OSC, MIDI, Minuit and OSCQuery.
+It offers bindings for many environments (PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider).</p>
+
+<p>Here&#39;s a quick explanation of the bindings:</p>
+
+<ul>
+<li><strong>C</strong> : a C89 binding that should work everywhere and has a stable and strong API &amp; ABI guarantee.</li>
+<li><strong>Safe C++</strong>: a simplified C++ binding, kept compatible with C++98, which makes it hard to have problems at the cost of performance.</li>
+<li><strong>Fast C++</strong>: the native libossia API, written in modern C++14. Subject to frequent updates and changes; use to get maximal performance.</li>
+<li><strong>Python</strong>: Python 2 / 3 bindings made with <a href="https://github.com/pybind/pybind11">pybind11</a>.</li>
+<li><strong>QML</strong>: Bindings for the Qt declarative UI language, <a href="http://doc.qt.io/qt-5/qmlapplications.html">QML</a>. Very nice for user interfaces.</li>
+<li><strong>OFX</strong>: OpenFrameworks bindings. Requires the <a href="https://github.com/OSSIA/ofxOSSIA">ofxOssia</a> addon.</li>
+<li><strong>Unity3D</strong>: Bindings for the Unity3D game engine. Required C# files are <a href="https://github.com/jcelerier/ossia-unity3d/tree/master/ossia">here</a>.</li>
+<li><strong>Pd</strong>: PureData bindings. Requires at least Pd vanilla 0.48/</li>
+<li><strong>Max</strong>: Max/MSP bindings. Requires at least Max 7.</li>
+<li><strong>SuperCollider</strong>: Requires a custom build of SuperCollider.</li>
+<li><strong>Faust</strong>: A Faust architecture file is provided. It should be modified however to tailor your own system.</li>
+</ul>
+<h1 id='setup'>Setup</h1><h2 id='compilation'>Compilation</h2><pre class="highlight c tab-c"><code><span class="c1">// device.c:
+</span><span class="cp">#include &lt;ossia-c/ossia-c.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="c1">// Assuming the release package is extracted here:
+</span>
+<span class="c1">// Linux:
+</span><span class="n">gcc</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c89</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Mac:
+</span><span class="n">clang</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c89</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Windows with MSVC: run in a Visual Studio shell:
+</span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c89</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="c1">// device.cpp:
+</span><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="c1">// Assuming the release package is extracted here:
+</span>
+<span class="c1">// Linux:
+</span><span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">98</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Mac:
+</span><span class="n">clang</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">98</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Windows with MSVC: run in a Visual Studio shell:
+</span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// device.cpp:
+</span><span class="cp">#include &lt;ossia/ossia.hpp&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="c1">// Assuming the release package is extracted here:
+</span>
+<span class="c1">// Linux:
+</span><span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">1</span><span class="n">z</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Mac:
+</span><span class="n">clang</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">1</span><span class="n">z</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
+
+<span class="c1">// Windows with MSVC: run in a Visual Studio shell:
+</span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="o">//</span> <span class="n">device</span><span class="o">.</span><span class="n">py</span><span class="p">:</span>
+<span class="kn">import</span> <span class="nn">ossia_python</span> <span class="k">as</span> <span class="n">ossia</span>
+
+<span class="o">//</span> <span class="n">Run</span> <span class="k">with</span> <span class="n">ossia_python</span><span class="o">.</span><span class="p">{</span><span class="n">so</span><span class="p">,</span><span class="n">dll</span><span class="p">,</span><span class="n">dylib</span><span class="p">}</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">current</span> <span class="n">folder</span>
+<span class="n">python</span> <span class="n">device</span><span class="o">.</span><span class="n">py</span>
+</code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// Device.qml</span>
+<span class="kr">import</span> <span class="nx">Ossia</span> <span class="mf">1.0</span> <span class="nx">as</span> <span class="nx">Ossia</span>
+
+<span class="kt">Item</span> <span class="p">{}</span>
+
+<span class="c1">// Extract the Ossia folder in the Qt/qml folder, e.g.</span>
+<span class="c1">// /home/myself/Qt/5.9.1/gcc_64/qml</span>
+<span class="c1">// /Users/myself/Qt/5.9.1/clang_64/qml</span>
+<span class="c1">// c:\Qt\5.9.1\msvc2017_64\qml</span>
+<span class="c1">// etc...</span>
+<span class="c1">// and run :</span>
+<span class="nx">qmlscene</span> <span class="nx">Device</span><span class="p">.</span><span class="nx">qml</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code><span class="c1">// Like every other ofx addon
+</span></code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// Create a new empty GameObject and add the script OssiaDevice.cs to it.</span>
+</code></pre><pre class="highlight plaintext tab-plaintext--pd"><code>// Install with Deken
+</code></pre><pre class="highlight plaintext tab-plaintext--max"><code>// Extract the ossia package to Documents/Max 7/Packages.
+</code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h1 id='architecture'>Architecture</h1><h2 id='local-oscquery-device'>Local OSCQuery device</h2><pre class="highlight c tab-c"><code><span class="cp">#include &lt;ossia-c/ossia-c.h&gt;
+</span><span class="p">...</span>
+<span class="n">ossia_protocol_t</span> <span class="n">proto</span> <span class="o">=</span> <span class="n">ossia_protocol_oscquery_server_create</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
+<span class="n">ossia_device_t</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">ossia_device_create</span><span class="p">(</span><span class="n">proto</span><span class="p">,</span> <span class="s">"supersoftware"</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">ossia_device_free</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+<span class="n">ossia_protocol_free</span><span class="p">(</span><span class="n">proto</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="cp">#include &lt;ossia/ossia.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ossia</span><span class="o">::</span><span class="n">oscquery</span><span class="o">::</span><span class="n">oscquery_server_protocol</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">),</span>
+    <span class="s">"supersoftware"</span><span class="p">};</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">ossia_python</span> <span class="k">as</span> <span class="n">ossia</span>
+<span class="n">local_device</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">LocalDevice</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">)</span>
+</code></pre><pre class="highlight qml tab-qml"><code><span class="kr">import</span> <span class="nx">Ossia</span> <span class="mf">1.0</span> <span class="nx">as</span> <span class="nx">Ossia</span>
+<span class="p">...</span>
+<span class="kt">Ossia.OSCQueryServer</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span> <span class="s2">"supersoftware"</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code>&gt; ![ossia.device object](images/ossia.device.png)
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="images/ossia.device.png" /></pre>
+<pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>A device represents a tree of parameters.</p>
 
-</code></pre><pre class="highlight plaintext"><code></code></pre>
-<p>Ability to create a local device for the application</p>
-<h2 id='remote-device'>Remote Device</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
-<p>Ability to connect to an existing device and exchange messages with it</p>
-<h2 id='address-properties'>Address properties</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
-<p>Being able to get &amp; set various properties on addresses : domain, accesss mode, description, etc</p>
-<h2 id='extended-properties'>Extended properties</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<p>Local devices map to real parameters on the executable libossia is used with.
+For instance the frequency of a filter, etc.</p>
+
+<p>Remote devices are <strong>mirror images</strong> of local devices on other applications:
+remote controls, mobile apps, etc.
+Every parameter in a local device will be synchronized with the remote
+devices that connected to it.</p>
+
+<p>Devices can be mapped to different protocols: <strong>Minuit</strong>, <strong>OSCQuery</strong>, etc.
+For the sake of simplicity, some bindings tie together device and protocol
+implementation.</p>
+
+<p>We use OSCQuery as an example of protocol here.
+Once a device has been created, it is possible to check what&#39;s in it by going
+to <a href="https://localhost:5678">https://localhost:5678</a>.</p>
+
+<p>For more information on the OSCQuery protocol, please refer to <a href="https://github.com/mrRay/OSCQueryProposal">the proposal</a>.</p>
+<h2 id='creating-nodes-and-adresses'>Creating nodes and adresses</h2><pre class="highlight c tab-c"><code><span class="cp">#include &lt;ossia-c/ossia-c.h&gt;
+</span><span class="p">...</span>
+<span class="n">ossia_protocol_t</span> <span class="n">proto</span> <span class="o">=</span> <span class="n">ossia_protocol_oscquery_server_create</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
+<span class="n">ossia_device_t</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">ossia_device_create</span><span class="p">(</span><span class="n">proto</span><span class="p">,</span> <span class="s">"supersoftware"</span><span class="p">);</span>
+<span class="n">ossia_node_t</span> <span class="n">root</span> <span class="o">=</span> <span class="n">ossia_device_get_root_node</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+<span class="n">ossia_node_t</span> <span class="n">a_node</span> <span class="o">=</span> <span class="n">ossia_node_create</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">"/foo/blu"</span><span class="p">);</span>
+
+<span class="n">ossia_address_t</span> <span class="n">an_address</span> <span class="o">=</span> <span class="n">ossia_node_create_address</span><span class="p">(</span><span class="n">a_node</span><span class="p">,</span> <span class="n">FLOAT_T</span><span class="p">);</span>
+<span class="n">ossia_address_push_f</span><span class="p">(</span><span class="n">an_address</span><span class="p">,</span> <span class="mi">345</span><span class="p">.);</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
+<span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">()</span>
+   <span class="p">.</span><span class="n">create_node</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">)</span>
+   <span class="p">.</span><span class="n">create_float</span><span class="p">()</span>
+   <span class="p">.</span><span class="n">set_value</span><span class="p">(</span><span class="mf">2.34</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="cp">#include &lt;ossia/ossia.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ossia</span><span class="o">::</span><span class="n">oscquery</span><span class="o">::</span><span class="n">oscquery_server_protocol</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">),</span>
+    <span class="s">"supersoftware"</span><span class="p">};</span>
+<span class="k">auto</span><span class="o">&amp;</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">create_node</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">"/foo/bar"</span><span class="p">);</span>
+<span class="n">n1</span><span class="p">.</span><span class="n">create_address</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
+<span class="n">n1</span><span class="p">.</span><span class="n">push_value</span><span class="p">(</span><span class="mf">3.56</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kr">import</span> <span class="nx">QtQuick</span> <span class="mf">2.7</span>
+<span class="kr">import</span> <span class="nx">QtQuick</span><span class="p">.</span><span class="nx">Controls</span> <span class="mf">2.0</span>
+<span class="kr">import</span> <span class="nx">Ossia</span> <span class="mf">1.0</span> <span class="nx">as</span> <span class="nx">Ossia</span>
+<span class="p">...</span>
+<span class="kt">ApplicationWindow</span> <span class="p">{</span>
+    <span class="nl">visible</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="nl">id</span><span class="p">:</span> <span class="nx">root</span>
+    <span class="kt">Ossia.OSCQueryServer</span> <span class="p">{</span>
+        <span class="nl">id</span><span class="p">:</span> <span class="nx">device</span>
+        <span class="nl">name</span><span class="p">:</span> <span class="s2">"supersoftware"</span>
+    <span class="p">}</span>
+
+    <span class="c1">// There is no explicit address to add in QML.</span>
+    <span class="c1">// Either you create a Node without addresss</span>
+    <span class="kt">Ossia.Node</span> <span class="p">{</span> <span class="nl">node</span><span class="p">:</span> <span class="s2">"/foo/bar"</span> <span class="p">}</span>
+
+    <span class="c1">// Or you create a parameter which is node + address.</span>
+    <span class="kt">Ossia.Parameter</span> <span class="p">{</span>
+        <span class="nl">node</span><span class="p">:</span> <span class="s2">"/tata"</span>
+        <span class="nl">valueType</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Type</span><span class="p">.</span><span class="nx">Float</span>
+    <span class="p">}</span>
+
+    <span class="nl">Component.onCompleted</span><span class="p">:</span> <span class="nx">device</span><span class="p">.</span><span class="nx">recreate</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>The nodes in the device are simply called &quot;nodes&quot; in the API.
+Nodes are identified with the OSC address syntax: <code>/foo/bar</code>.</p>
+
+<p><strong>Nodes</strong> per se don&#39;t carry any value; they have to be extended with <strong>adresses</strong>
+to be able to send and receive messages.</p>
+
+<p>Each node can only have a single address.
+Addresses can have the following types:</p>
+
+<ul>
+<li>Integer: 32-bit int.</li>
+<li>Floating-point: 32-bit float.</li>
+<li>Boolean: true/false.</li>
+<li>Impulse: no value; just a message.</li>
+<li>ASCII Character: &#39;a&#39;, &#39;0&#39;, &#39;$&#39;...</li>
+<li>String</li>
+<li>Tuple: a generic list of values: <code>[3, &#39;a&#39;, 2.68, [&quot;foo&quot;, &quot;bar&quot;]]</code></li>
+</ul>
+
+<p>As an optimisation, specific types for 2, 3, and 4 floats are provided;
+they are referred to as Vec2f, Vec3f, Vec4f through the code.</p>
+
+<p>Values can be written to an address, and fetched from it.</p>
+
+<p>This example shows how to create a node, an address, and send a value to
+the address.</p>
+<h2 id='property-binding'>Property binding</h2><pre class="highlight qml tab-qml"><code>    <span class="kt">Rectangle</span> <span class="p">{</span>
+        <span class="c1">// Creates /rect</span>
+        <span class="kt">Ossia.Node</span>
+        <span class="p">{</span> <span class="nl">node</span><span class="p">:</span> <span class="s2">"rect"</span> <span class="p">}</span>
+
+        <span class="c1">// Creates /rect/width of type float</span>
+        <span class="kt">Ossia.Property</span> <span class="k">on</span> <span class="nl">width</span>
+        <span class="p">{</span> <span class="p">}</span>
+
+        <span class="c1">// Creates /some/node of type float</span>
+        <span class="kt">Ossia.Property</span> <span class="k">on</span> <span class="nl">height</span>
+        <span class="p">{</span> <span class="nl">node</span><span class="p">:</span> <span class="s2">"/some/node"</span> <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre>
+<p>This show how, for environments that support it, ossia objects can integrate
+with existing property environments.</p>
+<h2 id='extended-properties'>Extended properties</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to get &amp; set less common properties: critical, hidden, etc</p>
-<h2 id='address-callbacks'>Address callbacks</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='address-callbacks'>Address callbacks</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to do something in reaction to a value being received through the network</p>
-<h2 id='device-callbacks'>Device callbacks</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='device-callbacks'>Device callbacks</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to do something in reaction to a node being created, removed, etc</p>
-<h2 id='logging'>Logging</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='remote-oscquery-device'>Remote OSCQuery Device</h2><pre class="highlight c tab-c"><code><span class="cp">#include &lt;ossia-c/ossia-c.h&gt;
+</span><span class="p">...</span>
+<span class="n">ossia_protocol_t</span> <span class="n">proto</span> <span class="o">=</span> <span class="n">ossia_protocol_oscquery_mirror_create</span><span class="p">(</span><span class="s">"ws://localhost:5678"</span><span class="p">);</span>
+<span class="n">ossia_device_t</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">ossia_device_create</span><span class="p">(</span><span class="n">proto</span><span class="p">,</span> <span class="s">"my_mirror"</span><span class="p">);</span>
+<span class="n">ossia_device_update_namespace</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">ossia_device_free</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+<span class="n">ossia_protocol_free</span><span class="p">(</span><span class="n">proto</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">opp</span><span class="o">::</span><span class="n">oscquery_mirror</span> <span class="n">mirror</span><span class="p">{</span><span class="s">"my_mirror"</span><span class="p">,</span> <span class="s">"ws://localhost:5678"</span><span class="p">};</span>
+<span class="n">mirror</span><span class="p">.</span><span class="n">refresh</span><span class="p">();</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="cp">#include &lt;ossia/ossia.hpp&gt;
+#include &lt;ossia/network/oscquery/oscquery_mirror.hpp&gt;
+</span><span class="p">...</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ossia</span><span class="o">::</span><span class="n">oscquery</span><span class="o">::</span><span class="n">oscquery_mirror_protocol</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ws://localhost:5678"</span><span class="p">),</span>
+    <span class="s">"my_mirror"</span><span class="p">};</span>
+<span class="n">dev</span><span class="p">.</span><span class="n">get_protocol</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kr">import</span> <span class="nx">Ossia</span> <span class="mf">1.0</span> <span class="nx">as</span> <span class="nx">Ossia</span>
+<span class="p">...</span>
+<span class="kt">Ossia.OSCQueryMirror</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span> <span class="s2">"my_mirror"</span>
+    <span class="nl">host</span><span class="p">:</span> <span class="s2">"ws://localhost:5678"</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>This shows how to connect to an existing OSCquery device, and refresh the image that
+we have of it.</p>
+<h2 id='logging'>Logging</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to use the libossia logging facilities</p>
-<h2 id='preset'>Preset</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='preset'>Preset</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to load &amp; save preset files</p>
-<h2 id='preset-instances'>Preset instances</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='preset-instances'>Preset instances</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to create new objects in reaction to the loading of a preset</p>
-<h1 id='communication'>Communication</h1><h2 id='midi-osc-oscquery'>Midi, OSC, OSCQuery</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h1 id='node-attributes'>Node attributes</h1><h2 id='access-mode'>Access mode</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_access_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">access_mode</span><span class="o">::</span><span class="n">BI</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>An indicative value that says is a particular address should be considered
+as :
+* <strong>GET</strong> : read-only (e.g. a VU-meter)
+* <strong>SET</strong> : write-only (e.g. a &quot;Play&quot; button)
+* <strong>BI</strong> : read-write</p>
+
+<p>The default is &quot;BI&quot;.</p>
+<h2 id='domain-min-max'>Domain (min/max)</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="k">auto</span> <span class="n">dom</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">make_domain</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">);</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_domain</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">dom</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='clip-mode'>Clip mode</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_bounding_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">bounding_mode</span><span class="o">::</span><span class="n">CLIP</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>The clip mode tells what happens when a value is outside of the min / max:</p>
+
+<ul>
+<li><strong>FREE</strong> : no clipping; domain is only indicative.</li>
+<li><strong>CLIP</strong> : clipped to the closest value in the range.</li>
+<li><strong>LOW</strong> : only clips values lower than the min.</li>
+<li><strong>HIGH</strong> : only clips values higher than the max.</li>
+<li><strong>WRAP</strong> : ...</li>
+<li><strong>FOLD</strong> : ...</li>
+</ul>
+
+<p>The default is <strong>FREE</strong>.</p>
+<h2 id='repetition-filter'>Repetition filter</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
+<p>When the repetition filter is enabled, if the same value is sent twice,
+the second time will be filtered.</p>
+<h2 id='units'>Units</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h3 id='list-of-units'>List of units</h3>
+<p>Taken from Jamoma</p>
+<h4 id='position'>Position</h4>
+<ul>
+<li>cart2D</li>
+<li>cart3D</li>
+<li>spherical</li>
+<li>polar</li>
+<li>opengl</li>
+<li>cylindrical</li>
+</ul>
+<h4 id='orientation'>Orientation</h4>
+<ul>
+<li>quaternion:</li>
+<li>euler:</li>
+<li>axis:</li>
+</ul>
+<h4 id='color'>Color</h4>
+<ul>
+<li>argb: all between 0 - 1</li>
+<li>rgba:</li>
+<li>rgb:</li>
+<li>bgr:</li>
+<li>argb8: all between 0 - 255</li>
+<li>hsv:</li>
+<li>cmy8:</li>
+<li>todo: css? (rgb in 0, 1 and alpha in 0, 255)</li>
+</ul>
+<h4 id='angle'>Angle</h4>
+<ul>
+<li>degree</li>
+<li>radian</li>
+</ul>
+<h4 id='distance'>Distance</h4>
+<ul>
+<li>meter</li>
+<li>kilometer</li>
+<li>decimeter</li>
+<li>centimeter</li>
+<li>millimeter</li>
+<li>micrometer</li>
+<li>nanometer</li>
+<li>picometer</li>
+<li>inch</li>
+<li>foot</li>
+<li>mile</li>
+</ul>
+<h4 id='time'>Time</h4>
+<ul>
+<li>second</li>
+<li>bark</li>
+<li>bpm</li>
+<li>cent</li>
+<li>frequency</li>
+<li>mel</li>
+<li>midi_pitch</li>
+<li>millisecond</li>
+<li>playback_speed</li>
+</ul>
+<h4 id='gain'>Gain</h4>
+<ul>
+<li>linear</li>
+<li>midigain</li>
+<li>decibel</li>
+<li>decibel_raw</li>
+</ul>
+<h4 id='speed'>Speed</h4>
+<ul>
+<li>meter_per_second</li>
+<li>miles_per_hour</li>
+<li>kilometer_per_hour</li>
+<li>knot</li>
+<li>foot_per_second</li>
+<li>foot_per_hour</li>
+</ul>
+<h2 id='extended-type'>Extended type</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='instance-bounds'>Instance bounds</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='description'>Description</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='tags'>Tags</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='priority'>Priority</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='refresh-rate'>Refresh rate</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='step-size'>Step size</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='default-value'>Default value</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='zombie'>Zombie</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='critical'>Critical</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='disabled'>Disabled</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='hidden'>Hidden</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h2 id='muted'>Muted</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre><h1 id='communication'>Communication</h1><h2 id='midi-osc-oscquery'>Midi, OSC, OSCQuery</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to create the relevant protocol</p>
-<h2 id='oscquery-instances'>OSCQuery instances</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='oscquery-instances'>OSCQuery instances</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to create and remove objects in reaction to OSCQuery messages</p>
-<h2 id='raw-messages'>Raw messages</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='raw-messages'>Raw messages</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to send messages without the node actually existing in the tree, e.g. like a &quot;basic&quot; OSC library</p>
-<h2 id='pattern-matching'>Pattern matching</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre><pre class="highlight plaintext"><code></code></pre>
+<h2 id='pattern-matching'>Pattern matching</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to send and receive messages according to OSC pattern matching addresses</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="c">C</a>
-                <a href="#" data-language-name="cpp">C++</a>
+                <a href="#" data-language-name="cpp--98">Safe C++</a>
+                <a href="#" data-language-name="cpp--14">Fast C++</a>
                 <a href="#" data-language-name="python">Python</a>
                 <a href="#" data-language-name="qml">QML</a>
-                <a href="#" data-language-name="java">Java</a>
-                <a href="#" data-language-name="cpp">ofx</a>
-                <a href="#" data-language-name="text">Unity</a>
-                <a href="#" data-language-name="text">Pd</a>
-                <a href="#" data-language-name="text">Max</a>
-                <a href="#" data-language-name="text">SuperCollider</a>
+                <a href="#" data-language-name="cpp--ofx">OFX</a>
+                <a href="#" data-language-name="csharp">Unity3D</a>
+                <a href="#" data-language-name="plaintext--pd">Pd</a>
+                <a href="#" data-language-name="plaintext--max">Max</a>
+                <a href="#" data-language-name="smalltalk">SuperCollider</a>
           </div>
       </div>
     </div>
