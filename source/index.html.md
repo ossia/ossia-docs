@@ -99,10 +99,10 @@ cl.exe device.c -Iossia/include ossia/lib/ossia.lib
 ```
 
 ```python
-// device.py:
+# device.py:
 import ossia_python as ossia
 
-// Run with ossia_python.{so,dll,dylib} in the current folder
+# Run with ossia_python.{so,dll,dylib} in the current folder
 python device.py
 ```
 
@@ -140,10 +140,7 @@ qmlscene Device.qml
 ```smalltalk
 ```
 
-
-
-# Architecture
-
+# Basic networking
 
 ## Local OSCQuery device
 
@@ -219,29 +216,21 @@ to [https://localhost:5678](https://localhost:5678).
 
 For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
 
-
-## Creating nodes and adresses
-
+## Creating nodes
 ```c
 #include <ossia-c/ossia-c.h>
 ...
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
 ossia_device_t dev = ossia_device_create(proto, "supersoftware");
 ossia_node_t root = ossia_device_get_root_node(dev);
-ossia_node_t a_node = ossia_node_create(dev, "/foo/blu");
-
-ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
-ossia_address_push_f(an_address, 345.);
+ossia_node_t a_node = ossia_node_create(root, "/foo/blu");
 ```
 
 ```cpp--98
 #include <ossia-cpp/ossia-cpp98.hpp>
 ...
 opp::oscquery_server dev("supersoftware");
-dev.get_root_node()
-   .create_node("/foo/blu")
-   .create_float()
-   .set_value(2.34);
+opp::node n = dev.get_root_node().create_node("/foo/blu"));
 ```
 
 ```cpp--14
@@ -251,8 +240,6 @@ ossia::net::generic_device dev{
     std::make_unique<ossia::oscquery::oscquery_server_protocol>(1234, 5678),
     "supersoftware"};
 auto& n1 = ossia::net::create_node(dev, "/foo/bar");
-n1.create_address(val_type::FLOAT);
-n1.push_value(3.56);
 ```
 
 ```python
@@ -274,11 +261,9 @@ ApplicationWindow {
     // There is no explicit address to add in QML.
     // Either you create a Node without addresss
     Ossia.Node { node: "/foo/bar" }
-
-    // Or you create a parameter which is node + address.
-    Ossia.Parameter {
-        node: "/tata"
-        valueType: Ossia.Type.Float
+    Item {
+        // Will give /foo/bar/hello
+        Ossia.Node { node: "hello" }
     }
 
     Component.onCompleted: device.recreate(root)
@@ -300,12 +285,141 @@ ApplicationWindow {
 ```smalltalk
 ```
 
+> When multiple nodes with the same name are created, they will take instance numbers: 
+
+```c
+#include <ossia-c/ossia-c.h>
+...
+ossia_node_t root = ...;
+ossia_node_create(root, "/foo/blu"); // /foo/blu
+ossia_node_create(root, "/foo/blu"); // /foo/blu.1
+ossia_node_create(root, "/foo/blu"); // /foo/blu.2
+```
+
+```cpp--98
+#include <ossia-cpp/ossia-cpp98.hpp>
+...
+opp::oscquery_server dev = ...;
+
+// /foo/blu
+dev.get_root_node().create_node("/foo/blu"));
+// /foo/blu.1
+dev.get_root_node().create_node("/foo/blu"));
+// /foo/blu.2
+dev.get_root_node().create_node("/foo/blu"));
+```
+
+```cpp--14
+#include <ossia/ossia.hpp>
+...
+ossia::net::generic_device dev = ...;
+
+// /foo/bar
+ossia::net::create_node(dev, "/foo/bar");
+// /foo/bar.1
+ossia::net::create_node(dev, "/foo/bar");
+// /foo/bar.2
+ossia::net::create_node(dev, "/foo/bar");
+```
+
+```python
+```
+
+```qml
+    // Creates /foo/bar, /foo/bar.1, /foo/bar.2
+    Repeater { 
+        model: 3
+        Ossia.Node { node: "/foo/bar" }
+    }
+}
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
 
 The nodes in the device are simply called "nodes" in the API.
 Nodes are identified with the OSC address syntax: `/foo/bar`.
 
 **Nodes** per se don't carry any value; they have to be extended with **adresses**
 to be able to send and receive messages.
+
+## Creating adresses
+
+```c
+#include <ossia-c/ossia-c.h>
+...
+ossia_node_t a_node = ...;
+
+ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
+ossia_address_push_f(an_address, 345.);
+```
+
+```cpp--98
+#include <ossia-cpp/ossia-cpp98.hpp>
+...
+opp::node n = ...;
+n.create_float().set_value(2.34);
+```
+
+```cpp--14
+#include <ossia/ossia.hpp>
+...
+ossia::net::node_base& n = ...;
+auto addr = n.create_address(val_type::FLOAT);
+addr->push_value(3.56);
+```
+
+```python
+```
+
+```qml
+// A parameter is node + address.
+Ossia.Parameter {
+  id: param
+  node: "/tata"
+  valueType: Ossia.Type.Float
+  onValueChanged: console.log(value)
+}
+
+// Used for valueless parameters
+Ossia.Signal {
+  id: sig
+  node: "/toto"
+  onTriggered: console.log("hi");
+}
+
+onSomething: {
+  param.value = 123;
+  sig.trigger();
+}
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
 
 Each node can only have a single address.
 Addresses can have the following types:
@@ -326,62 +440,26 @@ Values can be written to an address, and fetched from it.
 This example shows how to create a node, an address, and send a value to
 the address.
 
-
-
 ## Property binding
 
 ```qml
-    Rectangle {
-        // Creates /rect
-        Ossia.Node
-        { node: "rect" }
+Rectangle {
+  // Creates /rect
+  Ossia.Node
+  { node: "rect" }
 
-        // Creates /rect/width of type float
-        Ossia.Property on width
-        { }
+  // Creates /rect/width of type float
+  Ossia.Property on width
+  { }
 
-        // Creates /some/node of type float
-        Ossia.Property on height
-        { node: "/some/node" }
-    }
+  // Creates /some/node of type float
+  Ossia.Property on height
+  { node: "/some/node" }
+}
 ```
 
 This show how, for environments that support it, ossia objects can integrate
 with existing property environments.
-
-## Extended properties
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
-
-Being able to get & set less common properties: critical, hidden, etc
 
 ## Address callbacks
 ```c
@@ -510,7 +588,9 @@ Ossia.OSCQueryMirror {
 This shows how to connect to an existing OSCquery device, and refresh the image that
 we have of it.
 
-## Logging
+
+# Advanced networking
+## Midi, OSC, OSCQuery
 ```c
 ```
 
@@ -542,9 +622,9 @@ we have of it.
 ```
 
 
-Being able to use the libossia logging facilities
+Being able to create the relevant protocol
 
-## Preset
+## OSCQuery instances
 ```c
 ```
 
@@ -576,9 +656,9 @@ Being able to use the libossia logging facilities
 ```
 
 
-Being able to load & save preset files
+Being able to create and remove objects in reaction to OSCQuery messages
 
-## Preset instances
+## Raw messages
 ```c
 ```
 
@@ -610,12 +690,47 @@ Being able to load & save preset files
 ```
 
 
-Being able to create new objects in reaction to the loading of a preset
+Being able to send messages without the node actually existing in the tree, e.g. like a "basic" OSC library
+
+## Pattern matching
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+
+Being able to send and receive messages according to OSC pattern matching addresses
+
 
 # Node attributes
+This part presents the attributes that can be set on nodes and addresses.
 
 ## Access mode
-
 
 ```c
 ```
@@ -656,10 +771,11 @@ as :
 * **BI** : read-write
 
 The default is "BI".
-
+Only meaningful for nodes with addresses.
 
 ## Domain (min/max)
 
+> This sets a node's range between -5 and 5.
 ```c
 ```
 
@@ -692,6 +808,84 @@ ossia::net::set_domain(node, dom);
 
 ```smalltalk
 ```
+
+
+> If the domain is an array, it is possible to filter per value, or with a single, shared, min / max.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+auto dom = ossia::net::make_domain({0, 0, 0}, {1, 10, 10});
+ossia::net::set_domain(node, dom);
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+> Instead of a min / max, it is also possible to give a set of accepted values.
+> Values that don't fit will be rounded to the closest accepted value.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+
+auto dom = ossia::net::init_domain(ossia::val_type::INT);
+ossia::net::set_values(dom, {-1, 1, 2, 3, 5, 10});
+ossia::net::set_domain(node, dom);
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+Domains allow to set a range of accepted values for a given address.
+Only meaningful for nodes with addresses.
+
 
 ## Clip mode
 
@@ -746,6 +940,8 @@ The default is **FREE**.
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 ```
 
 ```python
@@ -781,6 +977,15 @@ the second time will be filtered.
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+
+// every unit has a type
+ossia::net::set_unit(node, ossia::rgba_u{});
+
+// they can also be set from text
+auto unit = ossia::parse_pretty_unit("color.hsv");
+ossia::net::set_unit(node, unit);
+
 ```
 
 ```python
@@ -803,6 +1008,8 @@ the second time will be filtered.
 
 ```smalltalk
 ```
+
+Units give a semantic meaning to the value of an address.
 
 ### List of units
 
@@ -889,6 +1096,8 @@ Taken from Jamoma
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```
 
 ```python
@@ -911,6 +1120,17 @@ Taken from Jamoma
 
 ```smalltalk
 ```
+
+Extended types, just like units, are here to give an indicative meaning to an address.
+They can also be used to enable some optimizations.
+
+libossia proposes the following types: 
+* File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
+* Generic buffer : when a string should be interpreted as a a raw binary blob.
+* Float array : when an address has a fixed number of floating point values, like vec2f.
+* Float list : when a tuple consists exclusively of values of type float.
+* Same for int list and string list.
+* Dynamic array : when a tuple's size may change during execution.
 
 ## Instance bounds
 
@@ -943,6 +1163,8 @@ Taken from Jamoma
 
 ```smalltalk
 ```
+
+
 
 ## Description
 
@@ -1296,8 +1518,43 @@ Taken from Jamoma
 ```smalltalk
 ```
 
-# Communication
-## Midi, OSC, OSCQuery
+# Preset support
+## Loading a preset
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+## Saving a preset
+
+Being able to load & save preset files
+
+## Preset instances
 ```c
 ```
 
@@ -1329,9 +1586,12 @@ Taken from Jamoma
 ```
 
 
-Being able to create the relevant protocol
+Being able to create new objects in reaction to the loading of a preset
 
-## OSCQuery instances
+
+# Utilities
+
+## Logging
 ```c
 ```
 
@@ -1363,75 +1623,8 @@ Being able to create the relevant protocol
 ```
 
 
-Being able to create and remove objects in reaction to OSCQuery messages
+Being able to use the libossia logging facilities
 
-## Raw messages
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
-
-Being able to send messages without the node actually existing in the tree, e.g. like a "basic" OSC library
-
-## Pattern matching
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
-
-Being able to send and receive messages according to OSC pattern matching addresses
 
 
 
