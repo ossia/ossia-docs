@@ -122,7 +122,8 @@ qmlscene Device.qml
 ```
 
 ```cpp--ofx
-// Like every other ofx addon
+// Like every other ofx addon: clone the repository
+// https://github.com/OSSIA/ofxOssia in the ofx addons folder
 ```
 
 ```csharp
@@ -130,7 +131,7 @@ qmlscene Device.qml
 ```
 
 ```plaintext--pd
-// Install with Deken
+// Install with Deken or extract in ~/pd-externals
 ```
 
 ```plaintext--max
@@ -185,6 +186,10 @@ Ossia.OSCQueryServer {
 ```
 
 ```csharp
+using Ossia;
+...
+var proto = new Ossia.OSCQuery(1234, 5678);
+var dev = new Ossia.Device(proto, "supersoftware");
 ```
 
 ```plaintext--pd
@@ -212,30 +217,25 @@ implementation.
 
 We use OSCQuery as an example of protocol here.
 Once a device has been created, it is possible to check what's in it by going
-to [https://localhost:5678](https://localhost:5678).
+to [http://localhost:5678](http://localhost:5678).
 
 For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
 
 ## Creating nodes
 ```c
-#include <ossia-c/ossia-c.h>
-...
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
 ossia_device_t dev = ossia_device_create(proto, "supersoftware");
 ossia_node_t root = ossia_device_get_root_node(dev);
+
 ossia_node_t a_node = ossia_node_create(root, "/foo/blu");
 ```
 
 ```cpp--98
-#include <ossia-cpp/ossia-cpp98.hpp>
-...
 opp::oscquery_server dev("supersoftware");
 opp::node n = dev.get_root_node().create_node("/foo/blu"));
 ```
 
 ```cpp--14
-#include <ossia/ossia.hpp>
-...
 ossia::net::generic_device dev{
     std::make_unique<ossia::oscquery::oscquery_server_protocol>(1234, 5678),
     "supersoftware"};
@@ -274,6 +274,7 @@ ApplicationWindow {
 ```
 
 ```csharp
+dev.GetRootNode().AddChild ("scene");
 ```
 
 ```plaintext--pd
@@ -285,11 +286,9 @@ ApplicationWindow {
 ```smalltalk
 ```
 
-> When multiple nodes with the same name are created, they will take instance numbers: 
+> When multiple nodes with the same name are created, they will take instance numbers:
 
 ```c
-#include <ossia-c/ossia-c.h>
-...
 ossia_node_t root = ...;
 ossia_node_create(root, "/foo/blu"); // /foo/blu
 ossia_node_create(root, "/foo/blu"); // /foo/blu.1
@@ -297,8 +296,6 @@ ossia_node_create(root, "/foo/blu"); // /foo/blu.2
 ```
 
 ```cpp--98
-#include <ossia-cpp/ossia-cpp98.hpp>
-...
 opp::oscquery_server dev = ...;
 
 // /foo/blu
@@ -310,8 +307,6 @@ dev.get_root_node().create_node("/foo/blu"));
 ```
 
 ```cpp--14
-#include <ossia/ossia.hpp>
-...
 ossia::net::generic_device dev = ...;
 
 // /foo/bar
@@ -326,11 +321,10 @@ ossia::net::create_node(dev, "/foo/bar");
 ```
 
 ```qml
-    // Creates /foo/bar, /foo/bar.1, /foo/bar.2
-    Repeater { 
-        model: 3
-        Ossia.Node { node: "/foo/bar" }
-    }
+// Creates /foo/bar, /foo/bar.1, /foo/bar.2
+Repeater {
+    model: 3
+    Ossia.Node { node: "/foo/bar" }
 }
 ```
 
@@ -357,28 +351,21 @@ to be able to send and receive messages.
 
 ## Creating adresses
 
+> First we create an address
 ```c
-#include <ossia-c/ossia-c.h>
-...
 ossia_node_t a_node = ...;
 
 ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
-ossia_address_push_f(an_address, 345.);
 ```
 
 ```cpp--98
-#include <ossia-cpp/ossia-cpp98.hpp>
-...
-opp::node n = ...;
-n.create_float().set_value(2.34);
+opp::node root = ...;
+opp::node n = root.create_float("/foo/bar");
 ```
 
 ```cpp--14
-#include <ossia/ossia.hpp>
-...
 ossia::net::node_base& n = ...;
 auto addr = n.create_address(val_type::FLOAT);
-addr->push_value(3.56);
 ```
 
 ```python
@@ -390,16 +377,48 @@ Ossia.Parameter {
   id: param
   node: "/tata"
   valueType: Ossia.Type.Float
-  onValueChanged: console.log(value)
 }
 
 // Used for valueless parameters
 Ossia.Signal {
   id: sig
   node: "/toto"
-  onTriggered: console.log("hi");
 }
+```
 
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+> Then we can send values to this address
+
+```c
+ossia_address_push_f(an_address, 345.);
+```
+
+```cpp--98
+n.set_value(2.34);
+```
+
+```cpp--14
+addr->push_value(3.56);
+```
+
+```python
+```
+
+```qml
 onSomething: {
   param.value = 123;
   sig.trigger();
@@ -421,6 +440,61 @@ onSomething: {
 ```smalltalk
 ```
 
+> And read them
+
+```c
+/* Get the current value */
+ossia_value_t val = ossia_address_clone_value(an_address);
+
+/* Request the value to the server if any */
+ossia_value_t val = ossia_address_fetch_value(an_address);
+```
+
+```cpp--98
+/* Get the current value */
+opp::value v = n.get_value();
+
+/* Request the value to the server if any */
+opp::value v = n.fetch_value();
+```
+
+```cpp--14
+// Get the current value
+addr->value();
+
+// Request the value to the server if any and wait until it is received to return it.
+addr->fetch_value();
+
+// Just request the value.
+addr->request_value();
+
+// Request the value and get a std::future that can be used later.
+auto fut = addr->pull_value_async();
+```
+
+```python
+```
+
+```qml
+console.log(param.value)
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+
 Each node can only have a single address.
 Addresses can have the following types:
 
@@ -440,6 +514,81 @@ Values can be written to an address, and fetched from it.
 This example shows how to create a node, an address, and send a value to
 the address.
 
+## Address callbacks
+```c
+void my_callback(void* n, ossia_value_t v)
+{
+  /* 0 if it's not a float */
+  float f = ossia_value_to_float(v);
+
+  /* safe */
+  float g = ossia_value_convert_float(v);
+
+  /* ownership of the value is transfered to the callback */
+  ossia_value_free(v);
+}
+...
+
+ossia_address_t an_address = ...;
+ossia_address_push_callback(an_address, my_callback, NULL);
+```
+
+```cpp--98
+void my_callback(void* ctx, const opp::value& v)
+{
+  float f = v.to_float();
+}
+...
+
+opp::node n = ...;
+n.set_value_callback(my_callback, 0);
+```
+
+```cpp--14
+ossia::net::node_base& n = ...;
+auto addr = n.create_address(val_type::FLOAT);
+addr->add_callback([] (const ossia::value& v) {
+  // if you are sure of the type, this is fast:
+  float f = v.get<float>();
+
+  // if you are not, this is safe:
+  float maybe_f = ossia::convert<float>(v);
+});
+```
+
+```python
+```
+
+```qml
+Ossia.Parameter {
+  onValueChanged: console.log(value)
+}
+
+Ossia.Signal {
+  onTriggered: console.log("hi");
+}
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```smalltalk
+```
+
+Address callbacks will inform you every time an address receives a message.
+On environments that support this, this will enable listening on the remote end.
+That is, if a remote device has no callbacks, network messages won't be sent upon
+modification.
+
 ## Property binding
 
 ```qml
@@ -458,42 +607,25 @@ Rectangle {
 }
 ```
 
+```csharp
+// Add the Ossia.Object script to your GameObject.
+// It will create a new node with the name of your object.
+// Child objects with the script will be placed as childs in the
+// node hierarchy.
+
+// Afterwards, other behaviours can expose properties like this:
+public class Banana : MonoBehaviour {
+    // Creates /Frequency
+	[Ossia.Expose]
+	public int Frequency;
+
+    // Creates /Foo
+	[Ossia.Expose("Foo")]
+	public int Bar;
+}
+```
 This show how, for environments that support it, ossia objects can integrate
 with existing property environments.
-
-## Address callbacks
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```smalltalk
-```
-
-
-Being able to do something in reaction to a value being received through the network
 
 ## Device callbacks
 ```c
@@ -503,12 +635,29 @@ Being able to do something in reaction to a value being received through the net
 ```
 
 ```cpp--14
+#include <ossia/ossia.hpp>
+#include <ossia/network/oscquery/oscquery_mirror.hpp>
+...
+struct MyObject
+    : public Nano::Observer
+{
+  ossia::net::generic_device device;
+  MyObject()
+  {
+    device.on_node_created.connect<MyObject, &MyObject::node_created>(*this);
+    device.on_node_removing.connect<MyObject, &MyObject::node_removing>(*this);
+  }
+
+  void node_created(const ossia::net::node_base&) { }
+  void node_removing(const ossia::net::node_base&) { }
+}
 ```
 
 ```python
 ```
 
 ```qml
+N/A
 ```
 
 ```cpp--ofx
@@ -518,16 +667,19 @@ Being able to do something in reaction to a value being received through the net
 ```
 
 ```plaintext--pd
+N/A
 ```
 
 ```plaintext--max
+N/A
 ```
 
 ```smalltalk
 ```
 
 
-Being able to do something in reaction to a node being created, removed, etc
+Device callbacks can be used to react to creation or removal of nodes in a
+given device.
 
 ## Remote OSCQuery Device
 ```c
@@ -590,7 +742,7 @@ we have of it.
 
 
 # Advanced networking
-## Midi, OSC, OSCQuery
+## Midi
 ```c
 ```
 
@@ -623,6 +775,8 @@ we have of it.
 
 
 Being able to create the relevant protocol
+
+## OSC
 
 ## OSCQuery instances
 ```c
@@ -1124,7 +1278,7 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 Extended types, just like units, are here to give an indicative meaning to an address.
 They can also be used to enable some optimizations.
 
-libossia proposes the following types: 
+libossia proposes the following types:
 * File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
 * Generic buffer : when a string should be interpreted as a a raw binary blob.
 * Float array : when an address has a fixed number of floating point values, like vec2f.
