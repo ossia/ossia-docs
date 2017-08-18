@@ -258,8 +258,6 @@ ApplicationWindow {
         name: "supersoftware"
     }
 
-    // There is no explicit address to add in QML.
-    // Either you create a Node without addresss
     Ossia.Node { node: "/foo/bar" }
     Item {
         // Will give /foo/bar/hello
@@ -344,18 +342,19 @@ Repeater {
 ```
 
 The nodes in the device are simply called "nodes" in the API.
-Nodes are identified with the OSC address syntax: `/foo/bar`.
+Nodes are identified with the OSC parameter syntax: `/foo/bar`.
 
-**Nodes** per se don't carry any value; they have to be extended with **adresses**
+**Nodes** per se don't carry any value; they have to be extended with **parameters**
 to be able to send and receive messages.
 
-## Creating adresses
+## Creating parameters
 
-> First we create an address
+> First we create a parameter
+
 ```c
 ossia_node_t a_node = ...;
 
-ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
+ossia_parameter_t a_parameter = ossia_node_create_parameter(a_node, FLOAT_T);
 ```
 
 ```cpp--98
@@ -365,14 +364,14 @@ opp::node n = root.create_float("/foo/bar");
 
 ```cpp--14
 ossia::net::node_base& n = ...;
-auto addr = n.create_address(val_type::FLOAT);
+auto param = n.create_parameter(val_type::FLOAT);
 ```
 
 ```python
 ```
 
 ```qml
-// A parameter is node + address.
+// A parameter is node + parameter.
 Ossia.Parameter {
   id: param
   node: "/tata"
@@ -401,10 +400,10 @@ Ossia.Signal {
 ```smalltalk
 ```
 
-> Then we can send values to this address
+> Then we can send values to this parameter
 
 ```c
-ossia_address_push_f(an_address, 345.);
+ossia_parameter_push_f(a_parameter, 345.);
 ```
 
 ```cpp--98
@@ -412,7 +411,7 @@ n.set_value(2.34);
 ```
 
 ```cpp--14
-addr->push_value(3.56);
+param->push_value(3.56);
 ```
 
 ```python
@@ -444,10 +443,10 @@ onSomething: {
 
 ```c
 /* Get the current value */
-ossia_value_t val = ossia_address_clone_value(an_address);
+ossia_value_t val = ossia_parameter_clone_value(a_parameter);
 
 /* Request the value to the server if any */
-ossia_value_t val = ossia_address_fetch_value(an_address);
+ossia_value_t val = ossia_parameter_fetch_value(a_parameter);
 ```
 
 ```cpp--98
@@ -460,16 +459,16 @@ opp::value v = n.fetch_value();
 
 ```cpp--14
 // Get the current value
-addr->value();
+param->value();
 
 // Request the value to the server if any and wait until it is received to return it.
-addr->fetch_value();
+param->fetch_value();
 
 // Just request the value.
-addr->request_value();
+param->request_value();
 
 // Request the value and get a std::future that can be used later.
-auto fut = addr->pull_value_async();
+auto fut = param->pull_value_async();
 ```
 
 ```python
@@ -495,8 +494,8 @@ console.log(param.value)
 ```
 
 
-Each node can only have a single address.
-Addresses can have the following types:
+Each node can only have a single parameter.
+parameteres can have the following types:
 
 * Integer: 32-bit int.
 * Floating-point: 32-bit float.
@@ -509,12 +508,12 @@ Addresses can have the following types:
 As an optimisation, specific types for 2, 3, and 4 floats are provided;
 they are referred to as Vec2f, Vec3f, Vec4f through the code.
 
-Values can be written to an address, and fetched from it.
+Values can be written to a parameter, and fetched from it.
 
-This example shows how to create a node, an address, and send a value to
-the address.
+This example shows how to create a node, a parameter, and send a value to
+the parameter.
 
-## Address callbacks
+## parameter callbacks
 ```c
 void my_callback(void* n, ossia_value_t v)
 {
@@ -529,8 +528,8 @@ void my_callback(void* n, ossia_value_t v)
 }
 ...
 
-ossia_address_t an_address = ...;
-ossia_address_push_callback(an_address, my_callback, NULL);
+ossia_parameter_t a_parameter = ...;
+ossia_parameter_push_callback(a_parameter, my_callback, NULL);
 ```
 
 ```cpp--98
@@ -546,8 +545,8 @@ n.set_value_callback(my_callback, 0);
 
 ```cpp--14
 ossia::net::node_base& n = ...;
-auto addr = n.create_address(val_type::FLOAT);
-addr->add_callback([] (const ossia::value& v) {
+auto param = n.create_parameter(val_type::FLOAT);
+param->add_callback([] (const ossia::value& v) {
   // if you are sure of the type, this is fast:
   float f = v.get<float>();
 
@@ -584,7 +583,7 @@ Ossia.Signal {
 ```smalltalk
 ```
 
-Address callbacks will inform you every time an address receives a message.
+parameter callbacks will inform you every time a parameter receives a message.
 On environments that support this, this will enable listening on the remote end.
 That is, if a remote device has no callbacks, network messages won't be sent upon
 modification.
@@ -878,11 +877,11 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```
 
 
-Being able to send and receive messages according to OSC pattern matching addresses
+Being able to send and receive messages according to OSC pattern matching parameteres
 
 
 # Node attributes
-This part presents the attributes that can be set on nodes and addresses.
+This part presents the attributes that can be set on nodes and parameteres.
 
 ## Access mode
 
@@ -918,14 +917,14 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```smalltalk
 ```
 
-An indicative value that says is a particular address should be considered
+An indicative value that says is a particular parameter should be considered
 as :
 * **GET** : read-only (e.g. a VU-meter)
 * **SET** : write-only (e.g. a "Play" button)
 * **BI** : read-write
 
 The default is "BI".
-Only meaningful for nodes with addresses.
+Only meaningful for nodes with parameteres.
 
 ## Domain (min/max)
 
@@ -1037,8 +1036,8 @@ ossia::net::set_domain(node, dom);
 ```smalltalk
 ```
 
-Domains allow to set a range of accepted values for a given address.
-Only meaningful for nodes with addresses.
+Domains allow to set a range of accepted values for a given parameter.
+Only meaningful for nodes with parameteres.
 
 
 ## Clip mode
@@ -1163,7 +1162,7 @@ ossia::net::set_unit(node, unit);
 ```smalltalk
 ```
 
-Units give a semantic meaning to the value of an address.
+Units give a semantic meaning to the value of a parameter.
 
 ### List of units
 
@@ -1275,13 +1274,13 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```smalltalk
 ```
 
-Extended types, just like units, are here to give an indicative meaning to an address.
+Extended types, just like units, are here to give an indicative meaning to a parameter.
 They can also be used to enable some optimizations.
 
 libossia proposes the following types:
 * File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
 * Generic buffer : when a string should be interpreted as a a raw binary blob.
-* Float array : when an address has a fixed number of floating point values, like vec2f.
+* Float array : when a parameter has a fixed number of floating point values, like vec2f.
 * Float list : when a tuple consists exclusively of values of type float.
 * Same for int list and string list.
 * Dynamic array : when a tuple's size may change during execution.
