@@ -248,10 +248,10 @@
                     <a href="#creating-nodes" class="toc-h2 toc-link" data-title="Basic networking">Creating nodes</a>
                   </li>
                   <li>
-                    <a href="#creating-adresses" class="toc-h2 toc-link" data-title="Basic networking">Creating adresses</a>
+                    <a href="#creating-parameters" class="toc-h2 toc-link" data-title="Basic networking">Creating parameters</a>
                   </li>
                   <li>
-                    <a href="#address-callbacks" class="toc-h2 toc-link" data-title="Basic networking">Address callbacks</a>
+                    <a href="#parameter-callbacks" class="toc-h2 toc-link" data-title="Basic networking">parameter callbacks</a>
                   </li>
                   <li>
                     <a href="#property-binding" class="toc-h2 toc-link" data-title="Basic networking">Property binding</a>
@@ -531,8 +531,6 @@ to <a href="http://localhost:5678">http://localhost:5678</a>.</p>
         <span class="nl">name</span><span class="p">:</span> <span class="s2">"supersoftware"</span>
     <span class="p">}</span>
 
-    <span class="c1">// There is no explicit address to add in QML.</span>
-    <span class="c1">// Either you create a Node without addresss</span>
     <span class="kt">Ossia.Node</span> <span class="p">{</span> <span class="nl">node</span><span class="p">:</span> <span class="s2">"/foo/bar"</span> <span class="p">}</span>
     <span class="kt">Item</span> <span class="p">{</span>
         <span class="c1">// Will give /foo/bar/hello</span>
@@ -573,24 +571,22 @@ to <a href="http://localhost:5678">http://localhost:5678</a>.</p>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>The nodes in the device are simply called &quot;nodes&quot; in the API.
-Nodes are identified with the OSC address syntax: <code>/foo/bar</code>.</p>
+Nodes are identified with the OSC parameter syntax: <code>/foo/bar</code>.</p>
 
-<p><strong>Nodes</strong> per se don&#39;t carry any value; they have to be extended with <strong>adresses</strong>
+<p><strong>Nodes</strong> per se don&#39;t carry any value; they have to be extended with <strong>parameters</strong>
 to be able to send and receive messages.</p>
-<h2 id='creating-adresses'>Creating adresses</h2>
+<h2 id='creating-parameters'>Creating parameters</h2>
 <blockquote>
-<p>First we create an address
-```c
-ossia_node_t a_node = ...;</p>
+<p>First we create a parameter</p>
 </blockquote>
+<pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">a_node</span> <span class="o">=</span> <span class="p">...;</span>
 
-<p>ossia_address_t an_address = ossia_node_create_address(a_node, FLOAT_T);
-```</p>
-<pre class="highlight cpp tab-cpp--98"><code><span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">root</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia_parameter_t</span> <span class="n">a_parameter</span> <span class="o">=</span> <span class="n">ossia_node_create_parameter</span><span class="p">(</span><span class="n">a_node</span><span class="p">,</span> <span class="n">FLOAT_T</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">root</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">create_float</span><span class="p">(</span><span class="s">"/foo/bar"</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">n</span> <span class="o">=</span> <span class="p">...;</span>
-<span class="k">auto</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">create_address</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// A parameter is node + address.</span>
+<span class="k">auto</span> <span class="n">param</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// A parameter is node + parameter.</span>
 <span class="kt">Ossia.Parameter</span> <span class="p">{</span>
   <span class="nl">id</span><span class="p">:</span> <span class="nx">param</span>
   <span class="nl">node</span><span class="p">:</span> <span class="s2">"/tata"</span>
@@ -604,11 +600,11 @@ ossia_node_t a_node = ...;</p>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <blockquote>
-<p>Then we can send values to this address</p>
+<p>Then we can send values to this parameter</p>
 </blockquote>
-<pre class="highlight c tab-c"><code><span class="n">ossia_address_push_f</span><span class="p">(</span><span class="n">an_address</span><span class="p">,</span> <span class="mi">345</span><span class="p">.);</span>
+<pre class="highlight c tab-c"><code><span class="n">ossia_parameter_push_f</span><span class="p">(</span><span class="n">a_parameter</span><span class="p">,</span> <span class="mi">345</span><span class="p">.);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">n</span><span class="p">.</span><span class="n">set_value</span><span class="p">(</span><span class="mf">2.34</span><span class="p">);</span>
-</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">addr</span><span class="o">-&gt;</span><span class="n">push_value</span><span class="p">(</span><span class="mf">3.56</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">param</span><span class="o">-&gt;</span><span class="n">push_value</span><span class="p">(</span><span class="mf">3.56</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="nx">onSomething</span><span class="p">:</span> <span class="p">{</span>
   <span class="nx">param</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
   <span class="nx">sig</span><span class="p">.</span><span class="nx">trigger</span><span class="p">();</span>
@@ -618,30 +614,30 @@ ossia_node_t a_node = ...;</p>
 <p>And read them</p>
 </blockquote>
 <pre class="highlight c tab-c"><code><span class="cm">/* Get the current value */</span>
-<span class="n">ossia_value_t</span> <span class="n">val</span> <span class="o">=</span> <span class="n">ossia_address_clone_value</span><span class="p">(</span><span class="n">an_address</span><span class="p">);</span>
+<span class="n">ossia_value_t</span> <span class="n">val</span> <span class="o">=</span> <span class="n">ossia_parameter_clone_value</span><span class="p">(</span><span class="n">a_parameter</span><span class="p">);</span>
 
 <span class="cm">/* Request the value to the server if any */</span>
-<span class="n">ossia_value_t</span> <span class="n">val</span> <span class="o">=</span> <span class="n">ossia_address_fetch_value</span><span class="p">(</span><span class="n">an_address</span><span class="p">);</span>
+<span class="n">ossia_value_t</span> <span class="n">val</span> <span class="o">=</span> <span class="n">ossia_parameter_fetch_value</span><span class="p">(</span><span class="n">a_parameter</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="cm">/* Get the current value */</span>
 <span class="n">opp</span><span class="o">::</span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">get_value</span><span class="p">();</span>
 
 <span class="cm">/* Request the value to the server if any */</span>
 <span class="n">opp</span><span class="o">::</span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">fetch_value</span><span class="p">();</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// Get the current value
-</span><span class="n">addr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
+</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
 
 <span class="c1">// Request the value to the server if any and wait until it is received to return it.
-</span><span class="n">addr</span><span class="o">-&gt;</span><span class="n">fetch_value</span><span class="p">();</span>
+</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">fetch_value</span><span class="p">();</span>
 
 <span class="c1">// Just request the value.
-</span><span class="n">addr</span><span class="o">-&gt;</span><span class="n">request_value</span><span class="p">();</span>
+</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">request_value</span><span class="p">();</span>
 
 <span class="c1">// Request the value and get a std::future that can be used later.
-</span><span class="k">auto</span> <span class="n">fut</span> <span class="o">=</span> <span class="n">addr</span><span class="o">-&gt;</span><span class="n">pull_value_async</span><span class="p">();</span>
+</span><span class="k">auto</span> <span class="n">fut</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">pull_value_async</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">param</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Each node can only have a single address.
-Addresses can have the following types:</p>
+<p>Each node can only have a single parameter.
+parameteres can have the following types:</p>
 
 <ul>
 <li>Integer: 32-bit int.</li>
@@ -656,11 +652,11 @@ Addresses can have the following types:</p>
 <p>As an optimisation, specific types for 2, 3, and 4 floats are provided;
 they are referred to as Vec2f, Vec3f, Vec4f through the code.</p>
 
-<p>Values can be written to an address, and fetched from it.</p>
+<p>Values can be written to a parameter, and fetched from it.</p>
 
-<p>This example shows how to create a node, an address, and send a value to
-the address.</p>
-<h2 id='address-callbacks'>Address callbacks</h2><pre class="highlight c tab-c"><code><span class="kt">void</span> <span class="nf">my_callback</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">ossia_value_t</span> <span class="n">v</span><span class="p">)</span>
+<p>This example shows how to create a node, a parameter, and send a value to
+the parameter.</p>
+<h2 id='parameter-callbacks'>parameter callbacks</h2><pre class="highlight c tab-c"><code><span class="kt">void</span> <span class="nf">my_callback</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">ossia_value_t</span> <span class="n">v</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="cm">/* 0 if it's not a float */</span>
   <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ossia_value_to_float</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
@@ -673,8 +669,8 @@ the address.</p>
 <span class="p">}</span>
 <span class="p">...</span>
 
-<span class="n">ossia_address_t</span> <span class="n">an_address</span> <span class="o">=</span> <span class="p">...;</span>
-<span class="n">ossia_address_push_callback</span><span class="p">(</span><span class="n">an_address</span><span class="p">,</span> <span class="n">my_callback</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="n">ossia_parameter_t</span> <span class="n">a_parameter</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia_parameter_push_callback</span><span class="p">(</span><span class="n">a_parameter</span><span class="p">,</span> <span class="n">my_callback</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="kt">void</span> <span class="nf">my_callback</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">opp</span><span class="o">::</span><span class="n">value</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">to_float</span><span class="p">();</span>
@@ -684,8 +680,8 @@ the address.</p>
 <span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">n</span><span class="p">.</span><span class="n">set_value_callback</span><span class="p">(</span><span class="n">my_callback</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">n</span> <span class="o">=</span> <span class="p">...;</span>
-<span class="k">auto</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">create_address</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
-<span class="n">addr</span><span class="o">-&gt;</span><span class="n">add_callback</span><span class="p">([]</span> <span class="p">(</span><span class="k">const</span> <span class="n">ossia</span><span class="o">::</span><span class="n">value</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">auto</span> <span class="n">param</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
+<span class="n">param</span><span class="o">-&gt;</span><span class="n">add_callback</span><span class="p">([]</span> <span class="p">(</span><span class="k">const</span> <span class="n">ossia</span><span class="o">::</span><span class="n">value</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// if you are sure of the type, this is fast:
 </span>  <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
 
@@ -700,7 +696,7 @@ the address.</p>
   <span class="nl">onTriggered</span><span class="p">:</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"hi"</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Address callbacks will inform you every time an address receives a message.
+<p>parameter callbacks will inform you every time a parameter receives a message.
 On environments that support this, this will enable listening on the remote end.
 That is, if a remote device has no callbacks, network messages won&#39;t be sent upon
 modification.</p>
@@ -792,20 +788,20 @@ we have of it.</p>
 <h2 id='raw-messages'>Raw messages</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
 <p>Being able to send messages without the node actually existing in the tree, e.g. like a &quot;basic&quot; OSC library</p>
 <h2 id='pattern-matching'>Pattern matching</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Being able to send and receive messages according to OSC pattern matching addresses</p>
+<p>Being able to send and receive messages according to OSC pattern matching parameteres</p>
 <h1 id='node-attributes'>Node attributes</h1>
-<p>This part presents the attributes that can be set on nodes and addresses.</p>
+<p>This part presents the attributes that can be set on nodes and parameteres.</p>
 <h2 id='access-mode'>Access mode</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_access_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">access_mode</span><span class="o">::</span><span class="n">BI</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>An indicative value that says is a particular address should be considered
+<p>An indicative value that says is a particular parameter should be considered
 as :
 * <strong>GET</strong> : read-only (e.g. a VU-meter)
 * <strong>SET</strong> : write-only (e.g. a &quot;Play&quot; button)
 * <strong>BI</strong> : read-write</p>
 
 <p>The default is &quot;BI&quot;.
-Only meaningful for nodes with addresses.</p>
+Only meaningful for nodes with parameteres.</p>
 <h2 id='domain-min-max'>Domain (min/max)</h2>
 <blockquote>
 <p>This sets a node&#39;s range between -5 and 5.
@@ -833,8 +829,8 @@ Values that don&#39;t fit will be rounded to the closest accepted value.</p>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_values</span><span class="p">(</span><span class="n">dom</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_domain</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">dom</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Domains allow to set a range of accepted values for a given address.
-Only meaningful for nodes with addresses.</p>
+<p>Domains allow to set a range of accepted values for a given parameter.
+Only meaningful for nodes with parameteres.</p>
 <h2 id='clip-mode'>Clip mode</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_bounding_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">bounding_mode</span><span class="o">::</span><span class="n">CLIP</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
@@ -865,7 +861,7 @@ the second time will be filtered.</p>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_unit</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
 
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Units give a semantic meaning to the value of an address.</p>
+<p>Units give a semantic meaning to the value of a parameter.</p>
 <h3 id='list-of-units'>List of units</h3>
 <p>Taken from Jamoma</p>
 <h4 id='position'>Position</h4>
@@ -944,13 +940,13 @@ the second time will be filtered.</p>
 <h2 id='extended-type'>Extended type</h2><pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_extended_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">generic_buffer_type</span><span class="p">());</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight smalltalk tab-smalltalk"><code></code></pre>
-<p>Extended types, just like units, are here to give an indicative meaning to an address.
+<p>Extended types, just like units, are here to give an indicative meaning to a parameter.
 They can also be used to enable some optimizations.</p>
 
 <p>libossia proposes the following types:
 * File path : used for when a string is a filesystem path, like <code>/home/self/sound.wav</code> or <code>c:\document.txt</code>
 * Generic buffer : when a string should be interpreted as a a raw binary blob.
-* Float array : when an address has a fixed number of floating point values, like vec2f.
+* Float array : when a parameter has a fixed number of floating point values, like vec2f.
 * Float list : when a tuple consists exclusively of values of type float.
 * Same for int list and string list.
 * Dynamic array : when a tuple&#39;s size may change during execution.</p>
