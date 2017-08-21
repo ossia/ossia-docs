@@ -11,7 +11,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - csharp: Unity3D
   - plaintext--pd: Pd
   - plaintext--max: Max
-  - smalltalk: SuperCollider
+  - javascript: SuperCollider
 
 toc_footers:
   - <a href='https://github.com/OSSIA/libossia'>Get libossia on Github</a>
@@ -138,7 +138,7 @@ qmlscene Device.qml
 // Extract the ossia package to Documents/Max 7/Packages.
 ```
 
-```smalltalk
+```javascript
 ```
 
 # Basic networking
@@ -198,7 +198,9 @@ var dev = new Ossia.Device(proto, "supersoftware");
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/ossia.device.png" /></pre>
 
 
-```smalltalk
+```javascript
+~some_protocol = OSSIA_Protocol.oscquery(osc_addr: 1234, ws_addr: 5678);
+~some_device = OSSIA_Device(protocol: ~some_protocol, device_name: "supersoftware");
 ```
 
 A device represents a tree of parameters.
@@ -281,7 +283,10 @@ dev.GetRootNode().AddChild ("scene");
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+~some_protocol = OSSIA_Protocol.oscquery(1234, 5678);
+~some_device = OSSIA_Device(~some_protocol, "supersoftware");
+~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
 ```
 
 > When multiple nodes with the same name are created, they will take instance numbers:
@@ -338,7 +343,11 @@ Repeater {
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+// Creates /foo/bar, /foo/bar.1, /foo/bar.2
+~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
+~node1 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
+~node2 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
 ```
 
 The nodes in the device are simply called "nodes" in the API.
@@ -397,7 +406,10 @@ Ossia.Signal {
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+// A parameter is node + parameter
+~param = OSSIA_Parameter(~some_device, 'int_test', Integer);
+~sigparam = OSSIA_Parameter(~some_device, 'signal_test', Signal);
 ```
 
 > Then we can send values to this parameter
@@ -436,7 +448,11 @@ onSomething: {
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+~param.setValue(347);
+// equivalent to: (faster for livecoding)
+~param.v_(347) // 1st shortcut
+~param.sv(347) // 2nd shortcut
 ```
 
 > And read them
@@ -490,7 +506,8 @@ console.log(param.value)
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+~param.v.postln;
 ```
 
 
@@ -580,7 +597,10 @@ Ossia.Signal {
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+~param.callback = { |value|
+	format("value received: %", value).postln;
+}
 ```
 
 parameter callbacks will inform you every time a parameter receives a message.
@@ -673,9 +693,18 @@ N/A
 N/A
 ```
 
-```smalltalk
-```
+```javascript
+// This shows how to automatically wait for the device to be instantiated
+// before creating your own tree of nodes & parameters
 
+(
+~some_device = OSSIA_GLOBAL.initDefault() // <-- creates default oscquery server device
+~some_device.onInstantiated({
+	n = OSSIA_Node(~some_device, 'foo');
+	p = OSSIA_Parameter(n, 'bar', Float);
+});
+)
+```
 
 Device callbacks can be used to react to creation or removal of nodes in a
 given device.
@@ -733,7 +762,7 @@ Ossia.OSCQueryMirror {
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 This shows how to connect to an existing OSCquery device, and refresh the image that
@@ -769,7 +798,7 @@ we have of it.
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -805,7 +834,7 @@ Being able to create the relevant protocol
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -839,7 +868,7 @@ Being able to create and remove objects in reaction to OSCQuery messages
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -873,7 +902,7 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -914,7 +943,7 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 An indicative value that says is a particular parameter should be considered
@@ -959,7 +988,11 @@ ossia::net::set_domain(node, dom);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+// Set domain either at parameter creation, or later on...
+p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017]);
+q = OSSIA_Parameter(~some_device, 'intparam', Integer, nil);
+q.set_domain([0, 127]);
 ```
 
 
@@ -995,7 +1028,7 @@ ossia::net::set_domain(node, dom);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 > Instead of a min / max, it is also possible to give a set of accepted values.
@@ -1033,7 +1066,7 @@ ossia::net::set_domain(node, dom);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 Domains allow to set a range of accepted values for a given parameter.
@@ -1071,7 +1104,10 @@ ossia::net::set_bounding_mode(node, ossia::bounding_mode::CLIP);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+// same as domain:
+p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017], bounding_mode: 'clip');
+p.set_bounding_mode = 'high';
 ```
 
 The clip mode tells what happens when a value is outside of the min / max:
@@ -1115,7 +1151,9 @@ ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+p = OSSIA_Parameter(~some_device, 'param', Float, [0, 1], repetition_filter: true);
+p.set_repetition_filter(false);
 ```
 
 When the repetition filter is enabled, if the same value is sent twice,
@@ -1159,7 +1197,7 @@ ossia::net::set_unit(node, unit);
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 Units give a semantic meaning to the value of a parameter.
@@ -1271,7 +1309,7 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 Extended types, just like units, are here to give an indicative meaning to a parameter.
@@ -1314,7 +1352,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -1348,7 +1386,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Tags
@@ -1380,7 +1418,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Priority
@@ -1412,7 +1450,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Refresh rate
@@ -1444,7 +1482,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Step size
@@ -1476,7 +1514,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Default value
@@ -1508,7 +1546,8 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
 ```
 
 ## Zombie
@@ -1540,7 +1579,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Critical
@@ -1572,7 +1611,9 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
+p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
+p.set_critical(false);
 ```
 
 ## Disabled
@@ -1604,7 +1645,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Hidden
@@ -1636,7 +1677,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Muted
@@ -1668,7 +1709,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 # Preset support
@@ -1700,7 +1741,7 @@ libossia proposes the following types:
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 ## Saving a preset
@@ -1735,7 +1776,7 @@ Being able to load & save preset files
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
@@ -1772,7 +1813,7 @@ Being able to create new objects in reaction to the loading of a preset
 ```plaintext--max
 ```
 
-```smalltalk
+```javascript
 ```
 
 
