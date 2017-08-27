@@ -887,28 +887,54 @@ Being able to send messages without the node actually existing in the tree, e.g.
 
 ## Pattern matching
 
-Being able to send and receive messages according to OSC pattern matching parameters
+Being able to send and receive messages according to OSC 1.1 pattern matching parameters.
 
+Valid patterns are for instance:
+
+* /foo/bar.* -> matches /foo/bar.0, /foo/bar.100, /foo/bar.bob
+* /{foo,boo}/bar -> matches /foo/bar, /boo/bar
+* /foo[1-5] -> matches /foo1, /foo2, ... /foor5
+* //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
+* //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo
+
+
+> Getting all nodes that match a pattern
 
 ```c
+ossia_node_t node = ...;
+ossia_node_t* data;
+size_t sz;
+ossia_node_find_pattern(node, "/foo/bar.*", &data, &sz);
+...
+ossia_node_array_free(data);
 ```
 
 ```cpp--98
 ```
 
 ```cpp--14
+// The path object can be cached if it is going to be reused.
+ossia::net::node_base& node = ...;
+auto path = make_path("/foo/bar.*");
+
+std::vector<ossia::net::node_base*> vec{&node};
+ossia::traversal::apply(path, vec);
+// vec now contains the matching nodes.
 ```
 
 ```python
 ```
 
 ```qml
+N/A
 ```
 
 ```cpp--ofx
 ```
 
 ```csharp
+Node root = ...;
+Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```
 
 ```plaintext--pd
@@ -920,6 +946,130 @@ Being able to send and receive messages according to OSC pattern matching parame
 ```javascript
 ```
 
+> Sending messages to multiple nodes
+
+```c
+// Do a loop
+```
+
+```cpp--98
+// Do a loop
+```
+
+```cpp--14
+// Do a loop
+```
+
+```python
+```
+
+```qml
+N/A
+```
+
+```cpp--ofx
+```
+
+```csharp
+// Do a loop
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
+> Receiving messages from multiple nodes
+
+```c
+N/A
+```
+
+```cpp--98
+N/A
+```
+
+```cpp--14
+N/A
+```
+
+```python
+```
+
+```qml
+N/A
+```
+
+```cpp--ofx
+```
+
+```csharp
+N/A
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
+## Brace expressions
+
+Brace expressions allow to create a set of node with regex-like expressions
+similar to the ones used when doing pattern matching.
+
+Only [] and { } are possible. e.g.
+
+/foo/{bar,baz}.[0-9][0-9]
+
+```c
+ossia_node_t node = ...;
+ossia_node_t* data;
+size_t sz;
+ossia_node_create_pattern(node, "/foo/bar.*", &data, &sz);
+...
+ossia_node_array_free(data);
+```
+
+```cpp--98
+```
+
+```cpp--14
+// The path object can be cached if it is going to be reused.
+ossia::net::node_base& node = ...;
+auto nodes = ossia::net::create_nodes(node, "/foo/{bar,baz}.[0-9][0-9]");
+```
+
+```python
+```
+
+```qml
+N/A
+```
+
+```cpp--ofx
+```
+
+```csharp
+Node root = ...;
+Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
 
 # Node attributes
 This part presents the attributes that can be set on nodes and parameters.
