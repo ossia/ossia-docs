@@ -127,8 +127,10 @@ qmlscene Device.qml
 ```
 
 ```csharp
-// Create a new empty GameObject and add the script OssiaDevice.cs to it.
+// Create a new empty GameObject named OssiaController
+// Add the Controller script to it : 
 ```
+<pre class="highlight plaintext tab-csharp"><img src="/images/unity/Controller.png" /></pre>
 
 ```plaintext--pd
 // Install with Deken or extract in ~/pd-externals
@@ -144,6 +146,26 @@ qmlscene Device.qml
 # Basic networking
 
 ## Local OSCQuery device
+A device represents a tree of parameters.
+
+Local devices map to real parameters on the executable libossia is used with.
+For instance the frequency of a filter, etc.
+
+Remote devices are **mirror images** of local devices on other applications:
+remote controls, mobile apps, etc.
+Every parameter in a local device will be synchronized with the remote
+devices that connected to it.
+
+Devices can be mapped to different protocols: **Minuit**, **OSCQuery**, etc.
+For the sake of simplicity, some bindings tie together device and protocol
+implementation.
+
+We use OSCQuery as an example of protocol here.
+Once a device has been created, it is possible to check what's in it by going
+to [http://localhost:5678](http://localhost:5678).
+
+For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
+
 
 ```c
 #include <ossia-c/ossia-c.h>
@@ -203,27 +225,15 @@ var dev = new Ossia.Device(proto, "supersoftware");
 ~some_device = OSSIA_Device(protocol: ~some_protocol, device_name: "supersoftware");
 ```
 
-A device represents a tree of parameters.
-
-Local devices map to real parameters on the executable libossia is used with.
-For instance the frequency of a filter, etc.
-
-Remote devices are **mirror images** of local devices on other applications:
-remote controls, mobile apps, etc.
-Every parameter in a local device will be synchronized with the remote
-devices that connected to it.
-
-Devices can be mapped to different protocols: **Minuit**, **OSCQuery**, etc.
-For the sake of simplicity, some bindings tie together device and protocol
-implementation.
-
-We use OSCQuery as an example of protocol here.
-Once a device has been created, it is possible to check what's in it by going
-to [http://localhost:5678](http://localhost:5678).
-
-For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
 
 ## Creating nodes
+
+The nodes in the device are simply called "nodes" in the API.
+Nodes are identified with the OSC parameter syntax: `/foo/bar`.
+
+**Nodes** per se don't carry any value; they have to be extended with **parameters**
+to be able to send and receive messages.
+
 ```c
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
 ossia_device_t dev = ossia_device_create(proto, "supersoftware");
@@ -350,13 +360,26 @@ Repeater {
 ~node2 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
 ```
 
-The nodes in the device are simply called "nodes" in the API.
-Nodes are identified with the OSC parameter syntax: `/foo/bar`.
-
-**Nodes** per se don't carry any value; they have to be extended with **parameters**
-to be able to send and receive messages.
-
 ## Creating parameters
+
+Each node can only have a single parameter.
+Parameters can have the following types:
+
+* Integer: 32-bit int.
+* Floating-point: 32-bit float.
+* Boolean: true/false.
+* Impulse: no value; just a message.
+* ASCII Character: 'a', '0', '$'...
+* String
+* Tuple: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
+
+As an optimisation, specific types for 2, 3, and 4 floats are provided;
+they are referred to as Vec2f, Vec3f, Vec4f through the code.
+
+Values can be written to a parameter, and fetched from it.
+
+This example shows how to create a node, a parameter, and send a value to
+the parameter.
 
 > First we create a parameter
 
@@ -511,26 +534,14 @@ console.log(param.value)
 ```
 
 
-Each node can only have a single parameter.
-parameteres can have the following types:
 
-* Integer: 32-bit int.
-* Floating-point: 32-bit float.
-* Boolean: true/false.
-* Impulse: no value; just a message.
-* ASCII Character: 'a', '0', '$'...
-* String
-* Tuple: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
+## Parameter callbacks
 
-As an optimisation, specific types for 2, 3, and 4 floats are provided;
-they are referred to as Vec2f, Vec3f, Vec4f through the code.
+Parameter callbacks will inform you every time a parameter receives a message.
+On environments that support this, this will enable listening on the remote end.
+That is, if a remote device has no callbacks, network messages won't be sent upon
+modification.
 
-Values can be written to a parameter, and fetched from it.
-
-This example shows how to create a node, a parameter, and send a value to
-the parameter.
-
-## parameter callbacks
 ```c
 void my_callback(void* n, ossia_value_t v)
 {
@@ -603,12 +614,10 @@ Ossia.Signal {
 }
 ```
 
-parameter callbacks will inform you every time a parameter receives a message.
-On environments that support this, this will enable listening on the remote end.
-That is, if a remote device has no callbacks, network messages won't be sent upon
-modification.
-
 ## Property binding
+This show how, for environments that support it, ossia objects can integrate
+with existing property environments.
+
 
 ```qml
 Rectangle {
@@ -643,10 +652,12 @@ public class Banana : MonoBehaviour {
 	public int Bar;
 }
 ```
-This show how, for environments that support it, ossia objects can integrate
-with existing property environments.
 
 ## Device callbacks
+
+Device callbacks can be used to react to creation or removal of nodes in a
+given device.
+
 ```c
 ```
 
@@ -706,10 +717,11 @@ N/A
 )
 ```
 
-Device callbacks can be used to react to creation or removal of nodes in a
-given device.
-
 ## Remote OSCQuery Device
+
+This shows how to connect to an existing OSCquery device, and refresh the image that
+we have of it.
+
 ```c
 #include <ossia-c/ossia-c.h>
 ...
@@ -765,12 +777,12 @@ Ossia.OSCQueryMirror {
 ```javascript
 ```
 
-This shows how to connect to an existing OSCquery device, and refresh the image that
-we have of it.
-
 
 # Advanced networking
 ## Midi
+
+Being able to create the relevant protocol
+
 ```c
 ```
 
@@ -800,47 +812,13 @@ we have of it.
 
 ```javascript
 ```
-
-
-Being able to create the relevant protocol
 
 ## OSC
 
 ## OSCQuery instances
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```javascript
-```
-
 
 Being able to create and remove objects in reaction to OSCQuery messages
 
-## Raw messages
 ```c
 ```
 
@@ -871,10 +849,47 @@ Being able to create and remove objects in reaction to OSCQuery messages
 ```javascript
 ```
 
+
+
+## Raw messages
 
 Being able to send messages without the node actually existing in the tree, e.g. like a "basic" OSC library
 
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
 ## Pattern matching
+
+Being able to send and receive messages according to OSC pattern matching parameters
+
+
 ```c
 ```
 
@@ -906,18 +921,35 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```
 
 
-Being able to send and receive messages according to OSC pattern matching parameteres
-
-
 # Node attributes
-This part presents the attributes that can be set on nodes and parameteres.
+This part presents the attributes that can be set on nodes and parameters.
+
+When using OSCQuery, all attribute changes will propagate across the network, except 
+mute which is local. The "enabled/disabled" attribute has the same effect but does propagate.
+
 
 ## Access mode
 
+Access mode is a metadata that categorizes parameters between:
+
+* **GET**: read-only
+* **SET**: write-only
+* **BI**: read-write
+
+For instance: 
+
+* The value of a vu-meter should be GET
+* A "play" button should be SET.
+* The cutoff of a filter or a controllable color should be BI.
+
 ```c
+ossia_parameter_t param = ...;
+ossia_parameter_set_access_mode(param, BI);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_access(Bi);
 ```
 
 ```cpp--14
@@ -929,6 +961,9 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```
 
 ```qml
+Ossia.Parameter { 
+  access: Ossia.Bi
+}
 ```
 
 ```cpp--ofx
@@ -946,22 +981,31 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```javascript
 ```
 
-An indicative value that says is a particular parameter should be considered
-as :
-* **GET** : read-only (e.g. a VU-meter)
-* **SET** : write-only (e.g. a "Play" button)
-* **BI** : read-write
-
-The default is "BI".
-Only meaningful for nodes with parameteres.
 
 ## Domain (min/max)
 
+Domains allow to set a range of accepted values for a given parameter.
+Only meaningful for nodes with parameters.
+
 > This sets a node's range between -5 and 5.
+
 ```c
+ossia_node_t node = ...;
+ossia_value_t min = ossia_value_create_int(-5);
+ossia_value_t max = ossia_value_create_int(5);
+
+ossia_domain_t dom = ossia_domain_make_min_max(min, max);
+ossia_parameter_set_domain(dom);
+
+ossia_value_free(min);
+ossia_value_free(max);
+ossia_domain_free(dom);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_min(-5);
+node.set_max(5);
 ```
 
 ```cpp--14
@@ -974,12 +1018,20 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```qml
+Ossia.Parameter {
+  ..
+  min: -5
+  max: 5
+}
 ```
 
 ```cpp--ofx
 ```
 
 ```csharp
+Ossia.Parameter param = ...;
+param.SetMin(new Value(-5));
+param.SetMax(new Value(5));
 ```
 
 ```plaintext--pd
@@ -994,7 +1046,6 @@ p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017]);
 q = OSSIA_Parameter(~some_device, 'intparam', Integer, nil);
 q.set_domain([0, 127]);
 ```
-
 
 > If the domain is an array, it is possible to filter per value, or with a single, shared, min / max.
 
@@ -1069,16 +1120,27 @@ ossia::net::set_domain(node, dom);
 ```javascript
 ```
 
-Domains allow to set a range of accepted values for a given parameter.
-Only meaningful for nodes with parameteres.
+## Bounding mode
 
+The bounding mode tells what happens when a value is outside of the min / max:
 
-## Clip mode
+* **FREE** : no clipping; domain is only indicative.
+* **CLIP** : clipped to the closest value in the range.
+* **LOW** : only clips values lower than the min.
+* **HIGH** : only clips values higher than the max.
+* **WRAP** : ...
+* **FOLD** : ...
+
+The default is **FREE**.
 
 ```c
+ossia_parameter_t param = ...;
+ossia_parameter_set_bounding_mode(param, CLIP);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_bounding(Clip);
 ```
 
 ```cpp--14
@@ -1090,6 +1152,9 @@ ossia::net::set_bounding_mode(node, ossia::bounding_mode::CLIP);
 ```
 
 ```qml
+Ossia.Parameter { 
+  bounding: Ossia.Clip
+}
 ```
 
 ```cpp--ofx
@@ -1110,22 +1175,19 @@ p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017], bounding_mode:
 p.set_bounding_mode = 'high';
 ```
 
-The clip mode tells what happens when a value is outside of the min / max:
-
-* **FREE** : no clipping; domain is only indicative.
-* **CLIP** : clipped to the closest value in the range.
-* **LOW** : only clips values lower than the min.
-* **HIGH** : only clips values higher than the max.
-* **WRAP** : ...
-* **FOLD** : ...
-
-The default is **FREE**.
 ## Repetition filter
 
+When the repetition filter is enabled, if the same value is sent twice,
+the second time will be filtered.
+
 ```c
+ossia_parameter_t param = ...;
+ossia_parameter_set_repetition_filter(param, 1);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_repetition_filter(true);
 ```
 
 ```cpp--14
@@ -1137,6 +1199,9 @@ ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 ```
 
 ```qml
+Ossia.Parameter { 
+  filterRepetitions: Ossia.Filtered
+}
 ```
 
 ```cpp--ofx
@@ -1156,21 +1221,24 @@ p = OSSIA_Parameter(~some_device, 'param', Float, [0, 1], repetition_filter: tru
 p.set_repetition_filter(false);
 ```
 
-When the repetition filter is enabled, if the same value is sent twice,
-the second time will be filtered.
-
 ## Units
 
+Units give a semantic meaning to the value of a parameter.
+
 ```c
+ossia_parameter_t param = ...;
+ossia_parameter_set_unit(param, "color.rgba");
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_unit("color.rgba");
 ```
 
 ```cpp--14
 ossia::net::node_base& node = ...;
 
-// every unit has a type
+// In the core library, units are part of the type system
 ossia::net::set_unit(node, ossia::rgba_u{});
 
 // they can also be set from text
@@ -1183,6 +1251,17 @@ ossia::net::set_unit(node, unit);
 ```
 
 ```qml
+Ossia.Parameter { 
+  unit: "color.hsv"
+}
+// When bound to a specific value, the unit is matched if possible.
+Ossia.Property on color { 
+  // will be argb
+}
+Ossia.Property on position { 
+  // will be xy
+}
+// etc for all common Qt types
 ```
 
 ```cpp--ofx
@@ -1200,7 +1279,6 @@ ossia::net::set_unit(node, unit);
 ```javascript
 ```
 
-Units give a semantic meaning to the value of a parameter.
 
 ### List of units
 
@@ -1280,10 +1358,25 @@ Taken from Jamoma
 
 ## Extended type
 
+Extended types, just like units, are here to give an indicative meaning to a parameter.
+They can also be used to enable some optimizations.
+
+libossia proposes the following types:
+
+* File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
+* Generic buffer : when a string should be interpreted as a a raw binary blob.
+* Float array : when a parameter has a fixed number of floating point values, like vec2f.
+* Float list : when a tuple consists exclusively of values of type float.
+* Same for int list and string list.
+* Dynamic array : when a tuple's size may change during execution.
+
 ```c
+ossia_parameter_t param = ...;
+ossia_parameter_set_extended_type(param, "filepath");
 ```
 
 ```cpp--98
+// TODO node.set_type(std::string);
 ```
 
 ```cpp--14
@@ -1295,6 +1388,9 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```
 
 ```qml
+Ossia.Node { 
+  extendedType: "filepath"
+}
 ```
 
 ```cpp--ofx
@@ -1312,32 +1408,47 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```javascript
 ```
 
-Extended types, just like units, are here to give an indicative meaning to a parameter.
-They can also be used to enable some optimizations.
-
-libossia proposes the following types:
-* File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
-* Generic buffer : when a string should be interpreted as a a raw binary blob.
-* Float array : when a parameter has a fixed number of floating point values, like vec2f.
-* Float list : when a tuple consists exclusively of values of type float.
-* Same for int list and string list.
-* Dynamic array : when a tuple's size may change during execution.
 
 ## Instance bounds
 
+For nodes that can have instantiatable children, this sets the minimum and
+maximum number of children that can exist. This is not enforced and is only 
+to be relied upon as a metadata.
+
+This is an optional attribute.
+
+> This sets the instance bounds to [0 - 100].
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_instance_bounds(node, 0, 100);
+ossia_node_unset_instance_bounds(node);
+
+int min, max;
+int ok;
+ossia_node_get_instance_bounds(node, &min, &max, &ok);
+if(ok) { 
+  // min and max are meaningful
+}
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_instance_bounds(0, 100);
+node.unset_instance_bounds();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_instance_bounds(node, {0, 100});
+ossia::net::set_instance_bounds(node, ossia::none);
 ```
 
 ```python
 ```
 
 ```qml
+// TODO
 ```
 
 ```cpp--ofx
@@ -1359,19 +1470,34 @@ libossia proposes the following types:
 
 ## Description
 
+An optional textual description.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_description(node, "a pretty node");
+ossia_node_unset_description(node);
+
+const char* desc  = ossia_node_get_description(node);
+ossia_string_free(desc);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_description("a pretty node");
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_description(node, "a pretty node");
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  description: "a pretty node"
+}
 ```
 
 ```cpp--ofx
@@ -1391,19 +1517,31 @@ libossia proposes the following types:
 
 ## Tags
 
+An optional array of tags for nodes.
+
 ```c
+ossia_node_t node = ...;
+const char* tags[2] = {"video", "funny"};
+ossia_node_set_tags(node, tags, 2);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_tags({"video", "funny"});
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_tags(node, {"video", "funny"});
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  tags: ["video", "funny"] 
+}
 ```
 
 ```cpp--ofx
@@ -1423,19 +1561,33 @@ libossia proposes the following types:
 
 ## Priority
 
+Nodes with the highest priority should execute first.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_priority(node, 10);
+ossia_node_unset_priority(node);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_priority(10);
+node.unset_priority();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_priority(node, 10);
+ossia::net::set_priority(node, ossia::none);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  priority: 10
+}
 ```
 
 ```cpp--ofx
@@ -1455,19 +1607,34 @@ libossia proposes the following types:
 
 ## Refresh rate
 
+An optional value that says how often a value should be updated. 
+Currently does nothing.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_refresh_rate(node, 10);
+ossia_node_unset_refresh_rate(node);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_refresh_rate(10);
+node.unset_refresh_rate();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_refresh_rate(node, 10);
+ossia::net::set_refresh_rate(node, ossia::none);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  refresh_rate: 10
+}
 ```
 
 ```cpp--ofx
@@ -1487,19 +1654,34 @@ libossia proposes the following types:
 
 ## Step size
 
+An optional value that says by which increment a value should change, 
+for instance in a value editor.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_value_step_size(node, 10);
+ossia_node_unset_value_step_size(node);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_value_step_size(10);
+node.unset_value_step_size();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_value_step_size(node, 10);
+ossia::net::set_value_step_size(node, ossia::none);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  stepSize: 10
+}
 ```
 
 ```cpp--ofx
@@ -1519,19 +1701,42 @@ libossia proposes the following types:
 
 ## Default value
 
+A default value for a given node.
+Useful for resetting to a default state.
+
 ```c
+ossia_node_t node = ...;
+ossia_value_t val = ossia_value_create_float(23.4);
+
+ossia_node_set_default_value(node, val);
+ossia_value_free(val);
+
+val = ossia_node_get_default_value(node);
+if(val)
+  ossia_value_free(val);
+
+ossia_node_set_default_value(node, NULL);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_default_value(23.4);
+node.unset_default_value();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_default_value(node, 23.4);
+ossia::net::set_default_value(node, ossia::none);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  defaultValue: 23.4
+}
 ```
 
 ```cpp--ofx
@@ -1552,19 +1757,30 @@ p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
 
 ## Zombie
 
+This is a read-only attribute: it informs of whether a node is in a zombie state.
+A zombie node is an node in a remote device, whose source has been removed.
+It is kept in the mirrors but marked as such.
+
 ```c
+ossia_node_t node = ...;
+int z = ossia_node_get_zombie(node);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+bool z = node.get_zombie();
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+bool z = ossia::net::get_zombie(node);
 ```
 
 ```python
 ```
 
 ```qml
+N/A
 ```
 
 ```cpp--ofx
@@ -1584,19 +1800,33 @@ p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
 
 ## Critical
 
+This attribute informs the network protocol that the value has a particular importance 
+and should if possible use a protocol not subject to message loss, eg TCP instead of UDP.
+This is useful for instance for "play" messages.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_critical(node, 1);
+ossia_node_set_critical(node, 0);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_critical(true);
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_critical(node, true);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  critical: true
+}
 ```
 
 ```cpp--ofx
@@ -1616,21 +1846,32 @@ p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
 p.set_critical(false);
 ```
 
-## Disabled
+## Enabled/Disabled
+
+This attribute will disable a node: it will stop sending messages to the network.
 
 ```c
+ossia_node_t node = ...;
+ossia_node_set_disabled(node, 1);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_disabled(true);
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_disabled(node, true);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  disabled: true
+}
 ```
 
 ```cpp--ofx
@@ -1650,19 +1891,30 @@ p.set_critical(false);
 
 ## Hidden
 
+This attribute is to use for nodes that are not to be exposed to the network.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_hidden(node, 1);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_hidden(true);
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_hidden(node, true);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  hidden: true
+}
 ```
 
 ```cpp--ofx
@@ -1682,19 +1934,31 @@ p.set_critical(false);
 
 ## Muted
 
+This attribute will disable a node: it will stop sending messages to the network.
+Unlike the "enabled/disabled" attribute, it won't propagate to other computers.
+
 ```c
+ossia_node_t node = ...;
+ossia_node_set_muted(node, 1);
 ```
 
 ```cpp--98
+opp::node& node = ...;
+node.set_muted(true);
 ```
 
 ```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_muted(node, true);
 ```
 
 ```python
 ```
 
 ```qml
+Ossia.Node { 
+  muted: true
+}
 ```
 
 ```cpp--ofx
@@ -1713,8 +1977,16 @@ p.set_critical(false);
 ```
 
 # Preset support
-## Loading a preset
+## Loading and saving presets
+
+Ossia provides preset handling. Files can be loaded and save to the disk to
+set the state of the device tree.
+
+> Create a preset from a device: 
+
 ```c
+ossia_preset_t preset;
+ossia_devices_make_preset(device, &preset);
 ```
 
 ```cpp--98
@@ -1744,48 +2016,166 @@ p.set_critical(false);
 ```javascript
 ```
 
-## Saving a preset
+> Write the preset to a file: 
 
-Being able to load & save preset files
+```c
+ossia_presets_write_json(preset, "root_name", "foo/preset.json");
+```
 
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
+> Load the preset: 
+
+```c
+ossia_preset_t preset;
+ossia_preset_result res = ossia_presets_read_json(
+                                "path/to/mypreset.json", 
+                                &preset);
+if(res != OSSIA_PRESETS_OK) {
+  ...
+}
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
+> Apply the loaded preset to a device:
+
+```c
+ossia_preset_t preset;
+
+res = ossia_devices_apply_preset(device, preset);
+if(res == OSSIA_PRESETS_OK) { 
+  // the preset was successfuly applied
+}
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+// Add a PresetController script somewhere
+// Set the following script order : 
+```
+<pre class="highlight plaintext tab-csharp"><img src="/images/unity/ScriptOrder.png" /></pre>
+
+```csharp
+On the PresetController, press "Load preset":
+```
+<pre class="highlight plaintext tab-csharp"><img src="/images/unity/PresetController.png" /></pre>
+
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
 ## Preset instances
-```c
-```
-
-```cpp--98
-```
-
-```cpp--14
-```
-
-```python
-```
-
-```qml
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```javascript
-```
-
 
 Being able to create new objects in reaction to the loading of a preset
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
 
 
 # Utilities
 
 ## Logging
+
+Being able to use the libossia logging facilities
+
 ```c
 ```
 
@@ -1817,7 +2207,6 @@ Being able to create new objects in reaction to the loading of a preset
 ```
 
 
-Being able to use the libossia logging facilities
 
 
 
