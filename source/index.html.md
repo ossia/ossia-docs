@@ -221,8 +221,13 @@ var dev = new Ossia.Device(proto, "supersoftware");
 
 
 ```javascript
-~some_protocol = OSSIA_Protocol.oscquery(osc_addr: 1234, ws_addr: 5678);
-~some_device = OSSIA_Device(protocol: ~some_protocol, device_name: "supersoftware");
+~some_device = OSSIA_Device('supersoftware');
+~some_device.exposeOSCQueryServer(1234, 5678);
+
+// or
+
+~some_device = OSSIA_Device.newOSCQueryServer('supersoftware', 1234, 5678);
+
 ```
 
 
@@ -294,8 +299,9 @@ dev.GetRootNode().AddChild ("scene");
 ```
 
 ```javascript
-~some_protocol = OSSIA_Protocol.oscquery(1234, 5678);
-~some_device = OSSIA_Device(~some_protocol, "supersoftware");
+~some_device = OSSIA_Device('supersoftware');
+~some_device.exposeOSCQueryServer(1234, 5678);
+
 ~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
 ```
 
@@ -472,7 +478,7 @@ onSomething: {
 ```
 
 ```javascript
-~param.setValue(347);
+~param.value = 347;
 // equivalent to: (faster for livecoding)
 ~param.v_(347) // 1st shortcut
 ~param.sv(347) // 2nd shortcut
@@ -530,6 +536,7 @@ console.log(param.value)
 ```
 
 ```javascript
+~param.value.postln;
 ~param.v.postln;
 ```
 
@@ -707,13 +714,13 @@ N/A
 ```javascript
 // This shows how to automatically wait for the device to be instantiated
 // before creating your own tree of nodes & parameters
+// necessary if you want to build all in a single code region:
 
 (
-~some_device = OSSIA_GLOBAL.initDefault() // <-- creates default oscquery server device
-~some_device.onInstantiated({
-	n = OSSIA_Node(~some_device, 'foo');
-	p = OSSIA_Parameter(n, 'bar', Float);
-});
+~some_device = OSSIA_Device.newOSCQueryServer('supersoftware', 1234, 5678, {
+	~foo = OSSIA_Node(~some_device, 'foo');
+	~bar = OSSIA_Parameter(~foo, 'bar', Float);
+}
 )
 ```
 
@@ -775,6 +782,7 @@ Ossia.OSCQueryMirror {
 ```
 
 ```javascript
+~mirror = OSSIA_Device.newOSCQueryMirror(name: 'my_mirror', host: "ws://localhost:5678");
 ```
 
 
@@ -1129,6 +1137,9 @@ Ossia.Parameter {
 ```
 
 ```javascript
+~some_parameter.access_mode = OSSIA_access_mode.bi; 
+~some_parameter.access_mode = 'bi'; // equivalent #1
+~some_parameter.access_mode = 'rw'; // equivalent #2
 ```
 
 
@@ -1192,9 +1203,9 @@ param.SetMax(new Value(5));
 
 ```javascript
 // Set domain either at parameter creation, or later on...
-p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017]);
-q = OSSIA_Parameter(~some_device, 'intparam', Integer, nil);
-q.set_domain([0, 127]);
+~param_1 = OSSIA_Parameter(~some_device, 'floatparam', Float, [-5, 5]);
+~param_2 = OSSIA_Parameter(~some_device, 'intparam', Integer, nil);
+~param_2.domain = [-5, 5];
 ```
 
 > If the domain is an array, it is possible to filter per value, or with a single, shared, min / max.
@@ -1230,6 +1241,9 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```javascript
+~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
+~param.domain = [-5, 5]; // all the values share the min/max range
+~param.domain = [[-5, 5], [-10, 10], [-20, 20]]; // unique min/max ranges for each value
 ```
 
 > Instead of a min / max, it is also possible to give a set of accepted values.
@@ -1268,6 +1282,9 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```javascript
+~param = OSSIA_Parameter(~some_device, 'param', Integer);
+~param.domain = [0, 5, 10, 20]; // if array size is > 2
+~param.domain = OSSIA.domain_list(0, 5); // accepted values will be 0 or 5
 ```
 
 ## Bounding mode
@@ -1321,8 +1338,9 @@ Ossia.Parameter {
 
 ```javascript
 // same as domain:
-p = OSSIA_Parameter(~some_device, 'floatparam', Float, [0, 2017], bounding_mode: 'clip');
-p.set_bounding_mode = 'high';
+~param = OSSIA_Parameter(~some_device, 'param', Float, [0, 2017], bounding_mode: 'clip');
+~param.bounding_mode = OSSIA_bounding_mode.high;
+~param.bounding_mode = 'high'; // equivalent;
 ```
 
 ## Repetition filter
@@ -1367,8 +1385,8 @@ Ossia.Parameter {
 ```
 
 ```javascript
-p = OSSIA_Parameter(~some_device, 'param', Float, [0, 1], repetition_filter: true);
-p.set_repetition_filter(false);
+p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
+p.repetition_filter = false;
 ```
 
 ## Units
@@ -1427,6 +1445,8 @@ Ossia.Property on position {
 ```
 
 ```javascript
+~color = OSSIA_Parameter(~some_device, 'color', Vec4f);
+p.unit = OSSIA_color.rgba;
 ```
 
 
@@ -1556,6 +1576,7 @@ Ossia.Node {
 ```
 
 ```javascript
+//TBI
 ```
 
 
@@ -1614,6 +1635,7 @@ ossia::net::set_instance_bounds(node, ossia::none);
 ```
 
 ```javascript
+// TBI
 ```
 
 
@@ -1663,6 +1685,8 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'pretty_node');
+n.description = "a pretty node";
 ```
 
 ## Tags
@@ -1707,6 +1731,9 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'synth_1');
+n.tags = ['physical_model', "awesome"];
+
 ```
 
 ## Priority
@@ -1753,6 +1780,8 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'super_important_node');
+n.priority = 10;
 ```
 
 ## Refresh rate
@@ -1800,6 +1829,8 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'laggy_node');
+n.refresh_rate = 500;
 ```
 
 ## Step size
@@ -1993,7 +2024,7 @@ Ossia.Node {
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
-p.set_critical(false);
+p.critical = false;
 ```
 
 ## Enabled/Disabled
@@ -2037,6 +2068,8 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'some_node');
+n.disabled = true;
 ```
 
 ## Hidden
@@ -2080,6 +2113,7 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
 ```
 
 ## Muted
@@ -2124,6 +2158,8 @@ Ossia.Node {
 ```
 
 ```javascript
+n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
+n.muted = false;
 ```
 
 # Preset support
