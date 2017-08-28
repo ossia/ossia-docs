@@ -511,8 +511,13 @@ to <a href="http://localhost:5678">http://localhost:5678</a>.</p>
 <span class="kt">var</span> <span class="n">dev</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Ossia</span><span class="p">.</span><span class="nf">Device</span><span class="p">(</span><span class="n">proto</span><span class="p">,</span> <span class="s">"supersoftware"</span><span class="p">);</span>
 </code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre>
 <pre class="highlight plaintext tab-plaintext--max"><img src="images/ossia.device.png" /></pre>
-<pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">some_protocol</span> <span class="o">=</span> <span class="nx">OSSIA_Protocol</span><span class="p">.</span><span class="nx">oscquery</span><span class="p">(</span><span class="nx">osc_addr</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span> <span class="nx">ws_addr</span><span class="p">:</span> <span class="mi">5678</span><span class="p">);</span>
-<span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">(</span><span class="nx">protocol</span><span class="p">:</span> <span class="o">~</span><span class="nx">some_protocol</span><span class="p">,</span> <span class="nx">device_name</span><span class="p">:</span> <span class="s2">"supersoftware"</span><span class="p">);</span>
+<pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">(</span><span class="s1">'supersoftware'</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">some_device</span><span class="p">.</span><span class="nx">exposeOSCQueryServer</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
+
+<span class="c1">// or</span>
+
+<span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">.</span><span class="nx">newOSCQueryServer</span><span class="p">(</span><span class="s1">'supersoftware'</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
+
 </code></pre><h2 id='creating-nodes'>Creating nodes</h2>
 <p>The nodes in the device are simply called &quot;nodes&quot; in the API.
 Nodes are identified with the OSC parameter syntax: <code>/foo/bar</code>.</p>
@@ -551,8 +556,9 @@ to be able to send and receive messages.</p>
     <span class="nl">Component.onCompleted</span><span class="p">:</span> <span class="nx">device</span><span class="p">.</span><span class="nx">recreate</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code><span class="n">dev</span><span class="p">.</span><span class="nf">GetRootNode</span><span class="p">().</span><span class="nf">AddChild</span> <span class="p">(</span><span class="s">"scene"</span><span class="p">);</span>
-</code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">some_protocol</span> <span class="o">=</span> <span class="nx">OSSIA_Protocol</span><span class="p">.</span><span class="nx">oscquery</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
-<span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">(</span><span class="o">~</span><span class="nx">some_protocol</span><span class="p">,</span> <span class="s2">"supersoftware"</span><span class="p">);</span>
+</code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">(</span><span class="s1">'supersoftware'</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">some_device</span><span class="p">.</span><span class="nx">exposeOSCQueryServer</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">);</span>
+
 <span class="o">~</span><span class="nx">node</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="nx">parent</span><span class="p">:</span> <span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="nx">name</span><span class="p">:</span> <span class="s2">"/foo/bar"</span><span class="p">)</span>
 </code></pre>
 <blockquote>
@@ -645,7 +651,7 @@ the parameter.</p>
   <span class="nx">param</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
   <span class="nx">sig</span><span class="p">.</span><span class="nx">trigger</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="mi">347</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">347</span><span class="p">;</span>
 <span class="c1">// equivalent to: (faster for livecoding)</span>
 <span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">v_</span><span class="p">(</span><span class="mi">347</span><span class="p">)</span> <span class="c1">// 1st shortcut</span>
 <span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">sv</span><span class="p">(</span><span class="mi">347</span><span class="p">)</span> <span class="c1">// 2nd shortcut</span>
@@ -675,7 +681,8 @@ the parameter.</p>
 <span class="c1">// Request the value and get a std::future that can be used later.
 </span><span class="k">auto</span> <span class="n">fut</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">pull_value_async</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">param</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">v</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">v</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
 </code></pre><h2 id='parameter-callbacks'>Parameter callbacks</h2>
 <p>Parameter callbacks will inform you every time a parameter receives a message.
 On environments that support this, this will enable listening on the remote end.
@@ -778,13 +785,13 @@ given device.</p>
 </code></pre><pre class="highlight plaintext tab-plaintext--max"><code>N/A
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// This shows how to automatically wait for the device to be instantiated</span>
 <span class="c1">// before creating your own tree of nodes &amp; parameters</span>
+<span class="c1">// necessary if you want to build all in a single code region:</span>
 
 <span class="p">(</span>
-<span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_GLOBAL</span><span class="p">.</span><span class="nx">initDefault</span><span class="p">()</span> <span class="c1">// &lt;-- creates default oscquery server device</span>
-<span class="o">~</span><span class="nx">some_device</span><span class="p">.</span><span class="nx">onInstantiated</span><span class="p">({</span>
-    <span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'foo'</span><span class="p">);</span>
-    <span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">);</span>
-<span class="p">});</span>
+<span class="o">~</span><span class="nx">some_device</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">.</span><span class="nx">newOSCQueryServer</span><span class="p">(</span><span class="s1">'supersoftware'</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="p">{</span>
+    <span class="o">~</span><span class="nx">foo</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'foo'</span><span class="p">);</span>
+    <span class="o">~</span><span class="nx">bar</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">foo</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">);</span>
+<span class="p">}</span>
 <span class="p">)</span>
 </code></pre><h2 id='remote-oscquery-device'>Remote OSCQuery Device</h2>
 <p>This shows how to connect to an existing OSCquery device, and refresh the image that
@@ -814,7 +821,8 @@ we have of it.</p>
     <span class="nl">name</span><span class="p">:</span> <span class="s2">"my_mirror"</span>
     <span class="nl">host</span><span class="p">:</span> <span class="s2">"ws://localhost:5678"</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h1 id='advanced-networking'>Advanced networking</h1><h2 id='midi'>Midi</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">mirror</span> <span class="o">=</span> <span class="nx">OSSIA_Device</span><span class="p">.</span><span class="nx">newOSCQueryMirror</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="s1">'my_mirror'</span><span class="p">,</span> <span class="nx">host</span><span class="p">:</span> <span class="s2">"ws://localhost:5678"</span><span class="p">);</span>
+</code></pre><h1 id='advanced-networking'>Advanced networking</h1><h2 id='midi'>Midi</h2>
 <p>Being able to create the relevant protocol</p>
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='osc'>OSC</h2><h2 id='oscquery-instances'>OSCQuery instances</h2>
 <p>Being able to create and remove objects in reaction to OSCQuery messages</p>
@@ -919,7 +927,10 @@ mute which is local. The &quot;enabled/disabled&quot; attribute has the same eff
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">access</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Bi</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='domain-min-max'>Domain (min/max)</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">some_parameter</span><span class="p">.</span><span class="nx">access_mode</span> <span class="o">=</span> <span class="nx">OSSIA_access_mode</span><span class="p">.</span><span class="nx">bi</span><span class="p">;</span> 
+<span class="o">~</span><span class="nx">some_parameter</span><span class="p">.</span><span class="nx">access_mode</span> <span class="o">=</span> <span class="s1">'bi'</span><span class="p">;</span> <span class="c1">// equivalent #1</span>
+<span class="o">~</span><span class="nx">some_parameter</span><span class="p">.</span><span class="nx">access_mode</span> <span class="o">=</span> <span class="s1">'rw'</span><span class="p">;</span> <span class="c1">// equivalent #2</span>
+</code></pre><h2 id='domain-min-max'>Domain (min/max)</h2>
 <p>Domains allow to set a range of accepted values for a given parameter.
 Only meaningful for nodes with parameters.</p>
 
@@ -951,9 +962,9 @@ Only meaningful for nodes with parameters.</p>
 <span class="n">param</span><span class="p">.</span><span class="nf">SetMin</span><span class="p">(</span><span class="k">new</span> <span class="nf">Value</span><span class="p">(-</span><span class="m">5</span><span class="p">));</span>
 <span class="n">param</span><span class="p">.</span><span class="nf">SetMax</span><span class="p">(</span><span class="k">new</span> <span class="nf">Value</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
 </code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Set domain either at parameter creation, or later on...</span>
-<span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'floatparam'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2017</span><span class="p">]);</span>
-<span class="nx">q</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'intparam'</span><span class="p">,</span> <span class="nx">Integer</span><span class="p">,</span> <span class="nx">nil</span><span class="p">);</span>
-<span class="nx">q</span><span class="p">.</span><span class="nx">set_domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">127</span><span class="p">]);</span>
+<span class="o">~</span><span class="nx">param_1</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'floatparam'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]);</span>
+<span class="o">~</span><span class="nx">param_2</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'intparam'</span><span class="p">,</span> <span class="nx">Integer</span><span class="p">,</span> <span class="nx">nil</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">param_2</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
 </code></pre>
 <blockquote>
 <p>If the domain is an array, it is possible to filter per value, or with a single, shared, min / max.</p>
@@ -961,7 +972,10 @@ Only meaningful for nodes with parameters.</p>
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="k">auto</span> <span class="n">dom</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">make_domain</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_domain</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">dom</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'vector'</span><span class="p">,</span> <span class="nx">OSSIA_Vec3f</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span> <span class="c1">// all the values share the min/max range</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">]];</span> <span class="c1">// unique min/max ranges for each value</span>
+</code></pre>
 <blockquote>
 <p>Instead of a min / max, it is also possible to give a set of accepted values.
 Values that don&#39;t fit will be rounded to the closest accepted value.</p>
@@ -971,7 +985,10 @@ Values that don&#39;t fit will be rounded to the closest accepted value.</p>
 <span class="k">auto</span> <span class="n">dom</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">init_domain</span><span class="p">(</span><span class="n">ossia</span><span class="o">::</span><span class="n">val_type</span><span class="o">::</span><span class="n">INT</span><span class="p">);</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_values</span><span class="p">(</span><span class="n">dom</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_domain</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">dom</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='bounding-mode'>Bounding mode</h2>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">param</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'param'</span><span class="p">,</span> <span class="nx">Integer</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">];</span> <span class="c1">// if array size is &gt; 2</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="nx">OSSIA</span><span class="p">.</span><span class="nx">domain_list</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="c1">// accepted values will be 0 or 5</span>
+</code></pre><h2 id='bounding-mode'>Bounding mode</h2>
 <p>The bounding mode tells what happens when a value is outside of the min / max:</p>
 
 <ul>
@@ -994,8 +1011,9 @@ Values that don&#39;t fit will be rounded to the closest accepted value.</p>
   <span class="nl">bounding</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Clip</span>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// same as domain:</span>
-<span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'floatparam'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2017</span><span class="p">],</span> <span class="nx">bounding_mode</span><span class="p">:</span> <span class="s1">'clip'</span><span class="p">);</span>
-<span class="nx">p</span><span class="p">.</span><span class="nx">set_bounding_mode</span> <span class="o">=</span> <span class="s1">'high'</span><span class="p">;</span>
+<span class="o">~</span><span class="nx">param</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'param'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2017</span><span class="p">],</span> <span class="nx">bounding_mode</span><span class="p">:</span> <span class="s1">'clip'</span><span class="p">);</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">bounding_mode</span> <span class="o">=</span> <span class="nx">OSSIA_bounding_mode</span><span class="p">.</span><span class="nx">high</span><span class="p">;</span>
+<span class="o">~</span><span class="nx">param</span><span class="p">.</span><span class="nx">bounding_mode</span> <span class="o">=</span> <span class="s1">'high'</span><span class="p">;</span> <span class="c1">// equivalent;</span>
 </code></pre><h2 id='repetition-filter'>Repetition filter</h2>
 <p>When the repetition filter is enabled, if the same value is sent twice,
 the second time will be filtered.</p>
@@ -1008,8 +1026,8 @@ the second time will be filtered.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">filterRepetitions</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Filtered</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'param'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">repetition_filter</span><span class="p">:</span> <span class="kc">true</span><span class="p">);</span>
-<span class="nx">p</span><span class="p">.</span><span class="nx">set_repetition_filter</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'p'</span><span class="p">,</span> <span class="nx">Float</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">repetition_filter</span><span class="p">:</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">repetition_filter</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 </code></pre><h2 id='units'>Units</h2>
 <p>Units give a semantic meaning to the value of a parameter.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_parameter_t</span> <span class="n">param</span> <span class="o">=</span> <span class="p">...;</span>
@@ -1036,7 +1054,9 @@ the second time will be filtered.</p>
   <span class="c1">// will be xy</span>
 <span class="p">}</span>
 <span class="c1">// etc for all common Qt types</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h3 id='list-of-units'>List of units</h3>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="nx">Vec4f</span><span class="p">);</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">unit</span> <span class="o">=</span> <span class="nx">OSSIA_color</span><span class="p">.</span><span class="nx">rgba</span><span class="p">;</span>
+</code></pre><h3 id='list-of-units'>List of units</h3>
 <p>Taken from Jamoma</p>
 <h4 id='position'>Position</h4>
 <ul>
@@ -1133,7 +1153,8 @@ They can also be used to enable some optimizations.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">extendedType</span><span class="p">:</span> <span class="s2">"filepath"</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='instance-bounds'>Instance bounds</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">//TBI</span>
+</code></pre><h2 id='instance-bounds'>Instance bounds</h2>
 <p>For nodes that can have instantiatable children, this sets the minimum and
 maximum number of children that can exist. This is not enforced and is only 
 to be relied upon as a metadata.</p>
@@ -1160,7 +1181,8 @@ to be relied upon as a metadata.</p>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_instance_bounds</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">});</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_instance_bounds</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">none</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// TODO</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='description'>Description</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// TBI</span>
+</code></pre><h2 id='description'>Description</h2>
 <p>An optional textual description.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia_node_set_description</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s">"a pretty node"</span><span class="p">);</span>
@@ -1175,7 +1197,9 @@ to be relied upon as a metadata.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">description</span><span class="p">:</span> <span class="s2">"a pretty node"</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='tags'>Tags</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'pretty_node'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="s2">"a pretty node"</span><span class="p">;</span>
+</code></pre><h2 id='tags'>Tags</h2>
 <p>An optional array of tags for nodes.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">tags</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"video"</span><span class="p">,</span> <span class="s">"funny"</span><span class="p">};</span>
@@ -1187,7 +1211,10 @@ to be relied upon as a metadata.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">tags</span><span class="p">:</span> <span class="p">[</span><span class="s2">"video"</span><span class="p">,</span> <span class="s2">"funny"</span><span class="p">]</span> 
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='priority'>Priority</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'synth_1'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'physical_model'</span><span class="p">,</span> <span class="s2">"awesome"</span><span class="p">];</span>
+
+</code></pre><h2 id='priority'>Priority</h2>
 <p>Nodes with the highest priority should execute first.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia_node_set_priority</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
@@ -1201,7 +1228,9 @@ to be relied upon as a metadata.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">priority</span><span class="p">:</span> <span class="mi">10</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='refresh-rate'>Refresh rate</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'super_important_node'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">priority</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre><h2 id='refresh-rate'>Refresh rate</h2>
 <p>An optional value that says how often a value should be updated. 
 Currently does nothing.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
@@ -1216,7 +1245,9 @@ Currently does nothing.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">refresh_rate</span><span class="p">:</span> <span class="mi">10</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='step-size'>Step size</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'laggy_node'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">refresh_rate</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+</code></pre><h2 id='step-size'>Step size</h2>
 <p>An optional value that says by which increment a value should change, 
 for instance in a value editor.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
@@ -1281,7 +1312,7 @@ This is useful for instance for &quot;play&quot; messages.</p>
   <span class="nl">critical</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">p</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'foo'</span><span class="p">,</span> <span class="nx">Signal</span><span class="p">,</span> <span class="nx">critical</span><span class="p">:</span> <span class="kc">true</span><span class="p">);</span>
-<span class="nx">p</span><span class="p">.</span><span class="nx">set_critical</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">critical</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 </code></pre><h2 id='enabled-disabled'>Enabled/Disabled</h2>
 <p>This attribute will disable a node: it will stop sending messages to the network.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
@@ -1293,7 +1324,9 @@ This is useful for instance for &quot;play&quot; messages.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">disabled</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='hidden'>Hidden</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'some_node'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</code></pre><h2 id='hidden'>Hidden</h2>
 <p>This attribute is to use for nodes that are not to be exposed to the network.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia_node_set_hidden</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
@@ -1304,7 +1337,8 @@ This is useful for instance for &quot;play&quot; messages.</p>
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">hidden</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='muted'>Muted</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'hidden_node'</span><span class="p">).</span><span class="nx">hidden_</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</code></pre><h2 id='muted'>Muted</h2>
 <p>This attribute will disable a node: it will stop sending messages to the network.
 Unlike the &quot;enabled/disabled&quot; attribute, it won&#39;t propagate to other computers.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
@@ -1316,7 +1350,9 @@ Unlike the &quot;enabled/disabled&quot; attribute, it won&#39;t propagate to oth
 </code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Node</span> <span class="p">{</span> 
   <span class="nl">muted</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h1 id='preset-support'>Preset support</h1><h2 id='loading-and-saving-presets'>Loading and saving presets</h2>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'muted_node'</span><span class="p">).</span><span class="nx">muted_</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">muted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</code></pre><h1 id='preset-support'>Preset support</h1><h2 id='loading-and-saving-presets'>Loading and saving presets</h2>
 <p>Ossia provides preset handling. Files can be loaded and save to the disk to
 set the state of the device tree.</p>
 
