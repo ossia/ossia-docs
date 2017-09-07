@@ -217,8 +217,7 @@ var dev = new Ossia.Device(proto, "supersoftware");
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/ossia.device.png" /></pre>
-
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-device.png" /></pre>
 
 ```javascript
 ~some_device = OSSIA_Device('supersoftware');
@@ -295,8 +294,8 @@ dev.GetRootNode().AddChild ("scene");
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-model.png" /></pre>
+
 
 ```javascript
 ~some_device = OSSIA_Device('supersoftware');
@@ -356,8 +355,7 @@ Repeater {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-model2.png" /></pre>
 
 ```javascript
 // Creates /foo/bar, /foo/bar.1, /foo/bar.2
@@ -474,8 +472,6 @@ onSomething: {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
 
 ```javascript
 ~param.value = 347;
@@ -532,8 +528,7 @@ console.log(param.value)
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-parameter.png" /></pre>
 
 ```javascript
 ~param.value.postln;
@@ -778,8 +773,7 @@ Ossia.OSCQueryMirror {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-client.png" /></pre>
 
 ```javascript
 ~mirror = OSSIA_Device.newOSCQueryMirror(name: 'my_mirror', host: "ws://localhost:5678");
@@ -948,8 +942,7 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-pattern.png" /></pre>
 
 ```javascript
 ```
@@ -1073,8 +1066,7 @@ Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-brace.png" /></pre>
 
 ```javascript
 ```
@@ -1133,8 +1125,7 @@ Ossia.Parameter {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-mode.png" /></pre>
 
 ```javascript
 ~some_parameter.access_mode = OSSIA_access_mode.bi; 
@@ -1198,8 +1189,7 @@ param.SetMax(new Value(5));
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-range.png" /></pre>
 
 ```javascript
 // Set domain either at parameter creation, or later on...
@@ -1237,8 +1227,7 @@ ossia::net::set_domain(node, dom);
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-range2.png" /></pre>
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
@@ -1333,8 +1322,7 @@ Ossia.Parameter {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-clip.png" /></pre>
 
 ```javascript
 // same as domain:
@@ -1381,8 +1369,7 @@ Ossia.Parameter {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-repetitions.png" /></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
@@ -1441,8 +1428,7 @@ Ossia.Property on position {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-unit.png" /></pre>
 
 ```javascript
 ~color = OSSIA_Parameter(~some_device, 'color', Vec4f);
@@ -1681,8 +1667,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-description.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'pretty_node');
@@ -1727,8 +1712,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-tags.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'synth_1');
@@ -1776,8 +1760,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-priority.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'super_important_node');
@@ -1825,8 +1808,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-rate.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'laggy_node');
@@ -1929,8 +1911,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-default.png" /></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
@@ -2064,8 +2045,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-enable.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'some_node');
@@ -2109,8 +2089,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-enable.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
@@ -2154,8 +2133,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-mute.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
