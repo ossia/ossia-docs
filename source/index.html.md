@@ -23,8 +23,8 @@ search: true
 
 # Introduction
 
-**libossia** is a modern C++, cross-environment distributed object model for creative coding and interaction scoring.
-It allows to expose the parameters of your creative coding application over the network, and score them in time.
+**libossia** is a modern C++, cross-environment distributed object model for creative coding.
+It allows to expose the parameters of your creative coding application over the network.
 
 It handles various protocols such as OSC, MIDI, Minuit and OSCQuery.
 It offers bindings for many environments (PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider).
@@ -45,7 +45,7 @@ Here's a quick explanation of the bindings:
 
 # Setup
 
-## Compilation
+## Installation/Compilation
 
 ```c
 // device.c:
@@ -899,6 +899,11 @@ Valid patterns are for instance:
 * //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
 * //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo
 
+Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
+
+Brace extension is also implemented, which allows for more matching, such as:
+* /foo.{5..23} will match /foo.5 to /foo.23
+* /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
 
 > Getting all nodes that match a pattern
 
@@ -1028,7 +1033,7 @@ similar to the ones used when doing pattern matching.
 
 Only [] and { } are possible. e.g.
 
-/foo/{bar,baz}.[0-9][0-9]
+/foo/{bar,baz}.[0-9][0-9]/bob.{3..12..2}
 
 ```c
 ossia_node_t node = ...;
@@ -1770,7 +1775,7 @@ n.priority = 10;
 ## Refresh rate
 
 An optional value that says how often a value should be updated. 
-Currently does nothing.
+Currently does not work in all implementations.
 
 ```c
 ossia_node_t node = ...;
