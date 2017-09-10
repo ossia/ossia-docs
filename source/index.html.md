@@ -122,6 +122,7 @@ qmlscene Device.qml
 ```
 
 ```cpp--ofx
+//due to a bug in the boost library , you’ll have to use openframework in versions >= 1.0 (i.e. from the nightly builds)
 // Like every other ofx addon: clone the repository
 // https://github.com/OSSIA/ofxOssia in the ofx addons folder
 ```
@@ -133,11 +134,12 @@ qmlscene Device.qml
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/Controller.png" /></pre>
 
 ```plaintext--pd
-// Install with Deken or extract in ~/pd-externals
+Extract in ~/pd-externals. (Install with Deken will be possible upon public release)
 ```
 
 ```plaintext--max
-// Extract the ossia package to Documents/Max 7/Packages.
+Extract the ossia package to Documents/Max 7/Packages. 
+(Installing from Max's Package Manager will be possible upon public release)
 ```
 
 ```javascript
@@ -216,8 +218,12 @@ var dev = new Ossia.Device(proto, "supersoftware");
 
 ```plaintext--pd
 ```
+<pre class="highlight plaintext tab-plaintext--max">By default, Max creates a global device under which <br>all parameters and models will be registered <br>This global device can be configured with the [ossia] object.<br><br><img src="/images/max/global_device.png" /><br><br>Sending the (expose oscquery) message to the ossia object <br>will expose this global device <br>with the default OSCquery ports, i.e. 9999 for OSC and 5678 for WS<br></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-device.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/max/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
+
+
+
 
 ```javascript
 ~some_device = OSSIA_Device('supersoftware');
@@ -294,7 +300,7 @@ dev.GetRootNode().AddChild ("scene");
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-model.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/max-model.png" /></pre>
 
 
 ```javascript
@@ -430,8 +436,8 @@ Ossia.Signal {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-parameter.png" /></pre>
+
 
 ```javascript
 // A parameter is node + parameter
@@ -471,6 +477,8 @@ onSomething: {
 
 ```plaintext--pd
 ```
+
+<pre class="highlight plaintext tab-plaintext--max">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/max/parameter-numbers.png" /></pre>
 
 
 ```javascript
@@ -528,7 +536,7 @@ console.log(param.value)
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-parameter.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/max/remote.png" /></pre>
 
 ```javascript
 ~param.value.postln;
@@ -608,6 +616,7 @@ Ossia.Signal {
 ```
 
 ```plaintext--max
+N/A
 ```
 
 ```javascript
@@ -653,6 +662,11 @@ public class Banana : MonoBehaviour {
 	[Ossia.Expose("Foo")]
 	public int Bar;
 }
+```
+
+```plaintext--max
+N/A yet - the [ossia.declare] object is planned to be implemented in the future 
+for automatically declaring atributes of complex objects (such as jit.gl.*) 
 ```
 
 ## Device callbacks
@@ -1289,8 +1303,8 @@ The bounding mode tells what happens when a value is outside of the min / max:
 * **CLIP** : clipped to the closest value in the range.
 * **LOW** : only clips values lower than the min.
 * **HIGH** : only clips values higher than the max.
-* **WRAP** : ...
-* **FOLD** : ...
+* **WRAP** : wraps values around the range
+* **FOLD** : folds back values into the range
 
 The default is **FREE**.
 
@@ -1325,9 +1339,16 @@ Ossia.Parameter {
 ```
 
 ```plaintext--pd
+In pd, this is done with the '@clip' attribute.<br>
+Also, clipping on both ends is done with 'both' (instead of 'CLIP')
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-clip.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">
+In Max, this is done with the '@clip' attribute.<br>
+Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
+<br>
+<img src="/images/max/max-clip.png" /></pre>
+
 
 ```javascript
 // same as domain:
@@ -1374,7 +1395,11 @@ Ossia.Parameter {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-repetitions.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">
+In Max, this is done reversely, with the '@repetitions' attribute.<br>
+When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
+<br>
+<img src="/images/max/max-repetitions.png" /></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
@@ -1432,8 +1457,18 @@ Ossia.Property on position {
 
 ```plaintext--pd
 ```
+<pre class="highlight plaintext tab-plaintext--max">
+Units can be specified, with the @unit argument, by providing their full names.<br>
+i.e. using the syntax "category.unit"<br>
+<img src="/images/max/max-unit.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-unit.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">They can also be provided by their unit name only (unit names being unique)<br><br><img src="/images/max/units-short.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--max">Remotes can be specified a unit belonging to the same category as the parameter's unit<br>
+and they will automatically convert parameter values to/from this unit<br><br><img src="/images/max/unit-conversion.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--max">As the type is deduced from the unit, we can omit it, or even provide the unit<br>
+directly under the @type attribute:<br><br><img src="/images/max/unit-shorter.png" /></pre>
 
 ```javascript
 ~color = OSSIA_Parameter(~some_device, 'color', Vec4f);
@@ -1452,6 +1487,8 @@ Taken from Jamoma
 * polar
 * opengl
 * cylindrical
+
+
 
 #### Orientation
 
@@ -1563,8 +1600,10 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-```plaintext--max
+
+```plaintext--Max
 ```
+
 
 ```javascript
 //TBI
@@ -2182,6 +2221,10 @@ ossia_devices_make_preset(device, &preset);
 ```plaintext--max
 ```
 
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
+
+
+
 ```javascript
 ```
 
@@ -2252,8 +2295,9 @@ if(res != OSSIA_PRESETS_OK) {
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-load.png" />
+<br>This will also work on ossia.device and ossia.client</pre>
+
 
 ```javascript
 ```
@@ -2298,9 +2342,7 @@ On the PresetController, press "Load preset":
 
 ```plaintext--pd
 ```
-
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
 
 ```javascript
 ```
@@ -2369,8 +2411,7 @@ Being able to use the libossia logging facilities
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/logger.png" /></pre>
 
 ```javascript
 ```
