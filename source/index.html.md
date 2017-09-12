@@ -122,9 +122,21 @@ qmlscene Device.qml
 ```
 
 ```cpp--ofx
-//due to a bug in the boost library , you’ll have to use openframework in versions >= 1.0 (i.e. from the nightly builds)
-// Like every other ofx addon: clone the repository
-// https://github.com/OSSIA/ofxOssia in the ofx addons folder
+
+//Due to a bug in the boost library , you’ll have to use  openframework in versions >= 1.0 (i.e. from the nightly builds) and ofxOSSIA's ofx0.10 git branch
+
+//Then, like every other ofx addon: clone the repository https://github.com/OSSIA/ofxOssia in the ofx addons folder
+
+//At the installation, or for libossia updates, you'll have to clone and compile libossia and dependenices for this, run the build script in the lib folder as is described in the README.md file
+
+//Then:
+//in ofApp.h
+#include "ofxOssia.h"
+
+private:
+    
+    ofxOssia ossia;
+
 ```
 
 ```csharp
@@ -207,6 +219,8 @@ Ossia.OSCQueryServer {
 ```
 
 ```cpp--ofx
+   // setup ofxOssia, by default it uses oscquery protocol on ports 3456 and 5678
+    ossia.setup();
 ```
 
 ```csharp
@@ -291,6 +305,14 @@ ApplicationWindow {
 ```
 
 ```cpp--ofx
+// If you want one, pass a parent node to yourClass::setup() method
+c.setup(ossia.get_root_node());
+
+//Then you can create nodes on top of that (called ParameterGroup):
+ossia::ParameterGroup _myGroup
+
+_myGroup.setup(_parent_node, "theOSCNameOfMyGroup");
+
 ```
 
 ```csharp
@@ -353,6 +375,9 @@ Repeater {
 ```
 
 ```cpp--ofx
+_myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr
+_myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.1
+_myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 ```
 
 ```csharp
@@ -428,6 +453,29 @@ Ossia.Signal {
 ```
 
 ```cpp--ofx
+    ossia::Parameter<float> _mySize;
+    ossia::Parameter<ofVec2f> _myPosition;
+    ossia::Parameter<bool> _myBool;
+    ossia::Parameter<ofColor> _myColor;
+
+    _mySize.setup(_myParent,"theSize",ofRandomf()*99+1,1.,100.);
+    _myPosition.setup(_myParent,
+                    "thePosition",
+                    ofVec2f(ofRandomWidth(), ofRandomHeight()),
+                    ofVec2f(0., 0.), // Min
+                    ofVec2f(ofGetWidth(), ofGetHeight())); // Max
+                    
+    //Here we create a subNode for colors
+    //This was declared first in the .h file as:
+    //     ossia::ParameterGroup _colorParams;
+    _colorParams.setup(_myColorNode, "colorParams");
+    _myColor.setup(_myColorNode,
+                 "theColor",
+                 ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255.),
+                 ofColor(0., 0., 0., 0.),
+                 ofColor(255., 255., 255., 255.));
+    _myBool.setup(_myColorNode,"fill",false);
+
 ```
 
 ```csharp
@@ -470,6 +518,7 @@ onSomething: {
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -528,6 +577,8 @@ console.log(param.value)
 ```
 
 ```cpp--ofx
+    ofSetColor(_myColor.get());
+    ofDrawCircle(_myPosition.get(),_mySize.get());
 ```
 
 ```csharp
