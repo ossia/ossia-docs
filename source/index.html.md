@@ -300,7 +300,7 @@ dev.GetRootNode().AddChild ("scene");
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/max-model.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/model.png" /></pre>
 
 
 ```javascript
@@ -361,7 +361,7 @@ Repeater {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-model2.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/model2.png" /></pre>
 
 ```javascript
 // Creates /foo/bar, /foo/bar.1, /foo/bar.2
@@ -436,7 +436,7 @@ Ossia.Signal {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-parameter.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/parameter.png" /></pre>
 
 
 ```javascript
@@ -787,7 +787,7 @@ Ossia.OSCQueryMirror {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-client.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/client.png" /></pre>
 
 ```javascript
 ~mirror = OSSIA_Device.newOSCQueryMirror(name: 'my_mirror', host: "ws://localhost:5678");
@@ -916,6 +916,7 @@ Valid patterns are for instance:
 Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
 
 Brace expansion is also implemented, which allows for more matching, such as:
+
 * /foo.{5..23} will match /foo.5 to /foo.23
 * /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
 
@@ -961,7 +962,7 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-pattern.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern.png" /></pre>
 
 ```javascript
 ```
@@ -997,8 +998,7 @@ N/A
 ```plaintext--pd
 ```
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern-complex.png" /></pre>
 
 ```javascript
 ```
@@ -1085,7 +1085,7 @@ Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-brace.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png" /></pre>
 
 ```javascript
 ```
@@ -1144,7 +1144,7 @@ Ossia.Parameter {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-mode.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mode.png" /></pre>
 
 ```javascript
 ~some_parameter.access_mode = OSSIA_access_mode.bi; 
@@ -1208,7 +1208,7 @@ param.SetMax(new Value(5));
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-range.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range.png" /></pre>
 
 ```javascript
 // Set domain either at parameter creation, or later on...
@@ -1246,7 +1246,7 @@ ossia::net::set_domain(node, dom);
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-range2.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range2.png" /></pre>
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
@@ -1347,7 +1347,7 @@ Also, clipping on both ends is done with 'both' (instead of 'CLIP')
 In Max, this is done with the '@clip' attribute.<br>
 Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
 <br>
-<img src="/images/max/max-clip.png" /></pre>
+<img src="/images/max/clip.png" /></pre>
 
 
 ```javascript
@@ -1399,7 +1399,7 @@ Ossia.Parameter {
 In Max, this is done reversely, with the '@repetitions' attribute.<br>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
 <br>
-<img src="/images/max/max-repetitions.png" /></pre>
+<img src="/images/max/repetitions.png" /></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
@@ -1460,7 +1460,7 @@ Ossia.Property on position {
 <pre class="highlight plaintext tab-plaintext--max">
 Units can be specified, with the @unit argument, by providing their full names.<br>
 i.e. using the syntax "category.unit"<br>
-<img src="/images/max/max-unit.png" /></pre>
+<img src="/images/max/unit.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">They can also be provided by their unit name only (unit names being unique)<br><br><img src="/images/max/units-short.png" /></pre>
 
@@ -1711,7 +1711,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-description.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/description.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'pretty_node');
@@ -1756,7 +1756,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-tags.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/tags.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'synth_1');
@@ -1804,7 +1804,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-priority.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/priority.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'super_important_node');
@@ -1852,7 +1852,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-rate.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/rate.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'laggy_node');
@@ -1955,7 +1955,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-default.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/default.png" /></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
@@ -2089,7 +2089,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-enable.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'some_node');
@@ -2133,7 +2133,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-enable.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
@@ -2177,7 +2177,7 @@ Ossia.Node {
 ```plaintext--pd
 ```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/max-mute.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mute.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
