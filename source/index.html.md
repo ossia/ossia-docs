@@ -915,7 +915,7 @@ Valid patterns are for instance:
 
 Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
 
-Brace extension is also implemented, which allows for more matching, such as:
+Brace expansion is also implemented, which allows for more matching, such as:
 * /foo.{5..23} will match /foo.5 to /foo.23
 * /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
 
