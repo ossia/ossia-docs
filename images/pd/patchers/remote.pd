@@ -1,0 +1,10 @@
+#N canvas 0 22 321 215 10;
+#X obj 80 45 ossia.remote foo;
+#X floatatom 45 46 5 0 0 0 - - -, f 5;
+#X obj 45 113 ossia.param foo;
+#X floatatom 45 90 5 0 0 0 - - -, f 5;
+#X floatatom 45 135 5 0 0 0 - - -, f 5;
+#X connect 0 0 1 0;
+#X connect 1 0 0 0;
+#X connect 2 0 4 0;
+#X connect 3 0 2 0;

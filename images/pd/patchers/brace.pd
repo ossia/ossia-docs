@@ -1,0 +1,8 @@
+#N canvas 392 449 544 198 10;
+#X obj 47 49 ossia.model Multiples;
+#X obj 47 74 print;
+#X msg 47 24 namespace;
+#X obj 43 124 ossia.param my_spat.<1..5>/source.<1..3>/gain.<L|R|C|Ls|Rs|LFE>
+, f 64;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;

@@ -1,0 +1,4 @@
+#N canvas 399 510 272 210 10;
+#X obj 38 78 ossia.param foo;
+#X obj 39 37 ø.model my_model;
+#X obj 38 105 ossia.param bar;
