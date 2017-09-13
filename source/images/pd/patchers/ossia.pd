@@ -1,0 +1,6 @@
+#N canvas 0 88 137 141 10;
+#X obj 24 66 ossia;
+#X msg 24 40 namespace;
+#X obj 24 97 print;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;

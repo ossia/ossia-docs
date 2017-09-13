@@ -1,0 +1,7 @@
+#N canvas 141 218 356 266 10;
+#X msg 54 47 preset save /some/path;
+#X obj 54 72 ø.device my-device;
+#X obj 53 171 ø.model aNode;
+#X msg 53 146 preset load /some/path;
+#X connect 0 0 1 0;
+#X connect 3 0 2 0;

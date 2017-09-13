@@ -1,0 +1,11 @@
+#N canvas 0 22 416 409 10;
+#X obj 64 49 ossia.param foo;
+#X obj 62 130 ossia.param bar @unit color.rgba @default 1 0 0 1 @description
+"My beautiful red" @tags color beautiful @bounding_mode clip @access_mode
+bi @range 0 2, f 34;
+#X obj 63 93 ossia.param sub/level/bar;
+#X floatatom 61 321 5 0 0 0 - - -, f 5;
+#X floatatom 61 279 5 0 0 0 - - -, f 5;
+#X obj 61 299 ossia.param foo;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;

@@ -1,0 +1,18 @@
+#N canvas 87 222 399 244 10;
+#X obj 75 136 ossia.param dummy;
+#X obj 219 136 ossia.param foo;
+#X obj 219 156 ossia.param bar;
+#N canvas 148 265 358 226 model 0;
+#X obj 101 109 ossia.model fruh;
+#X obj 102 164 ossia.param stuck;
+#X text 18 137 Here \, the stuck parameter is placed under the fruh
+node;
+#X text 20 22 The [ossia.model] object allows to nest (or group) parameters
+under a sub-node This can be done recursively with sub-models in further
+sub-patchers, f 53;
+#X restore 75 161 pd model;
+#X msg 78 42 expose oscquery;
+#X msg 216 42 name funny_name;
+#X obj 78 78 ossia;
+#X connect 4 0 6 0;
+#X connect 5 0 6 0;

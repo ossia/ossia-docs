@@ -1,0 +1,15 @@
+#N canvas 15 207 276 128 10;
+#X obj 25 39 ø.device pd-device-help;
+#X obj 22 71 ø.param bar @type bool;
+#X obj 22 97 ø.param foo @type float;
+#N canvas 986 403 215 139 sub 0;
+#X floatatom 26 65 5 0 0 0 - - -, f 5;
+#X floatatom 26 109 5 0 0 0 - - -, f 5;
+#X obj 25 28 ø.model sub;
+#X obj 26 85 ø.param aParam @type float;
+#X connect 0 0 3 0;
+#X connect 3 0 1 0;
+#X restore 200 98 pd sub;
+#X msg 25 14 expose oscquery 1234 9876;
+#X msg 32 169 expose oscquery;
+#X connect 4 0 0 0;

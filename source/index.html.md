@@ -24,10 +24,15 @@ search: true
 # Introduction
 
 **libossia** is a modern C++, cross-environment distributed object model for creative coding.
-It allows to expose the parameters of your creative coding application over the network.
 
-It handles various protocols such as OSC, MIDI, Minuit and OSCQuery.
-It offers bindings for many environments (PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider).
+It allows to expose the architecture of our creative coding application's functions over the network as a tree of nodes and parameters. These nodes/parameters can have attributes, which allow to declare some of their properties, such as their values, types, units, ranges, etc....
+
+This tree-based architecture (coined "device" in the OSSIA terminology) can then be exposed under several protocols, some of which allow this architecture, and the properties and values of its nodes, to be explored and queried. 
+For now, protocols available in pd are plain OSC, OSCquery, and Minuit - more are to come
+
+libossia offers bindings for many environments: PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider.
+
+
 
 Here's a quick explanation of the bindings:
 
@@ -146,7 +151,8 @@ private:
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/Controller.png" /></pre>
 
 ```plaintext--pd
-Extract in ~/pd-externals. (Install with Deken will be possible upon public release)
+Extract in ~/pd-externals. 
+(Install with Deken will be possible upon public release)
 ```
 
 ```plaintext--max
@@ -234,8 +240,12 @@ var proto = new Ossia.OSCQuery(1234, 5678);
 var dev = new Ossia.Device(proto, "supersoftware");
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">By default, pd creates a global device under which <br>all parameters and models will be registered <br>This global device can be configured with the [ossia] object.<br><br><img src="/images/pd/global_device.png" /><br><br>Sending the (expose oscquery) message to the ossia object <br>will expose this global device <br>with the default OSCquery ports, i.e. 9999 for OSC and 5678 for WS<br></pre>
+
+<pre class="highlight plaintext tab-plaintext--pd">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/pd/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
+
+
+
 <pre class="highlight plaintext tab-plaintext--max">By default, Max creates a global device under which <br>all parameters and models will be registered <br>This global device can be configured with the [ossia] object.<br><br><img src="/images/max/global_device.png" /><br><br>Sending the (expose oscquery) message to the ossia object <br>will expose this global device <br>with the default OSCquery ports, i.e. 9999 for OSC and 5678 for WS<br></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/max/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
@@ -326,9 +336,7 @@ _val.setup(_myGroup, "valOSCName", value, min, max);
 ```csharp
 dev.GetRootNode().AddChild ("scene");
 ```
-
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">In ossia-pd, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/pd/model.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/model.png" /></pre>
 
@@ -391,8 +399,8 @@ _myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/model2.png" /></pre>
+
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/model2.png" /></pre>
 
@@ -489,8 +497,7 @@ Ossia.Signal {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/parameter.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/parameter.png" /></pre>
 
@@ -531,9 +538,7 @@ onSomething: {
 
 ```csharp
 ```
-
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/pd/parameter-numbers.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/max/parameter-numbers.png" /></pre>
 
@@ -592,8 +597,7 @@ console.log(param.value)
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/pd/remote.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/max/remote.png" /></pre>
 
@@ -672,6 +676,7 @@ Ossia.Signal {
 ```
 
 ```plaintext--pd
+N/A
 ```
 
 ```plaintext--max
@@ -843,8 +848,7 @@ Ossia.OSCQueryMirror {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/client.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/client.png" /></pre>
 
@@ -1017,9 +1021,7 @@ N/A
 Node root = ...;
 Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```
-
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/pattern.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern.png" /></pre>
 
@@ -1054,8 +1056,7 @@ N/A
 // Do a loop
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/pattern-complex.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern-complex.png" /></pre>
 
@@ -1141,8 +1142,7 @@ Node root = ...;
 Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/brace.png" /><br>Notice that, due to the tcl/tk graphical framework on which pd is based <br>curly braces: {} are not allowed, so they have to be preplaced with "<>"<br>Also, commas aren't allowed, so you have to replace them with pipes: "|"</pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png" /></pre>
 
@@ -1200,8 +1200,7 @@ Ossia.Parameter {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/mode.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mode.png" /></pre>
 
@@ -1264,8 +1263,7 @@ param.SetMin(new Value(-5));
 param.SetMax(new Value(5));
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range.png" /></pre>
 
@@ -1302,8 +1300,7 @@ ossia::net::set_domain(node, dom);
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range2.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range2.png" /></pre>
 
@@ -1342,11 +1339,9 @@ ossia::net::set_domain(node, dom);
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range-strings.png" /><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
-```plaintext--max
-```
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'param', Integer);
@@ -1397,10 +1392,11 @@ Ossia.Parameter {
 ```csharp
 ```
 
-```plaintext--pd
+<pre class="highlight plaintext tab-plaintext--pd">
 In pd, this is done with the '@clip' attribute.<br>
-Also, clipping on both ends is done with 'both' (instead of 'CLIP')
-```
+Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
+<br>
+<img src="/images/pd/clip.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">
 In Max, this is done with the '@clip' attribute.<br>
@@ -1451,8 +1447,13 @@ Ossia.Parameter {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">
+In pd, this is done reversely, with the '@repetitions' attribute.<br>
+When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
+<br>
+<img src="/images/pd/repetitions.png" /></pre>
+
+
 
 <pre class="highlight plaintext tab-plaintext--max">
 In Max, this is done reversely, with the '@repetitions' attribute.<br>
@@ -1513,9 +1514,22 @@ Ossia.Property on position {
 
 ```csharp
 ```
+<pre class="highlight plaintext tab-plaintext--pd">
+Units can be specified, with the @unit argument, by providing their full names.<br>
+i.e. using the syntax "category.unit"<br>
+<img src="/images/pd/unit.png" /></pre>
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">They can also be provided by their unit name only (unit names being unique)<br><br><img src="/images/pd/units-short.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--pd">Remotes can be specified a unit belonging to the same category as the parameter's unit<br>
+and they will automatically convert parameter values to/from this unit<br><br><img src="/images/pd/unit-conversion.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--pd">As the type is deduced from the unit, we can omit it, or even provide the unit<br>
+directly under the @type attribute:<br><br><img src="/images/pd/unit-shorter.png" /></pre>
+
+
+
+
 <pre class="highlight plaintext tab-plaintext--max">
 Units can be specified, with the @unit argument, by providing their full names.<br>
 i.e. using the syntax "category.unit"<br>
@@ -1767,8 +1781,7 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/description.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/description.png" /></pre>
 
@@ -1812,8 +1825,7 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/tags.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/tags.png" /></pre>
 
@@ -1859,9 +1871,7 @@ Ossia.Node {
 
 ```csharp
 ```
-
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/priority.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/priority.png" /></pre>
 
@@ -1908,8 +1918,7 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/rate.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/rate.png" /></pre>
 
@@ -2011,10 +2020,9 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/default.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/default.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><br>Due to a bug, the attribute is currently called '@defval'<img src="/images/max/default.png" /><br></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
@@ -2145,8 +2153,7 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
@@ -2189,8 +2196,7 @@ Ossia.Node {
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
@@ -2232,11 +2238,15 @@ Ossia.Node {
 
 ```csharp
 ```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/mute.png" /><br><br>This will prevent ossia.parameter from outputting local (i.e. fed from the input) values <br>Remote values will still come out</pre>
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd">This also works (locally) with remotes: they will stop sending and receiving to the bound parameter.<br><br><img src="/images/pd/remote-mute.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mute.png" /></pre>
+
+
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mute.png" /><br><br>This will prevent ossia.parameter from outputting local (i.e. fed from the input) values <br>Remote values will still come out</pre>
+
+<pre class="highlight plaintext tab-plaintext--max">This also works (locally) with remotes: they will stop sending and receiving to the bound parameter.<br><br><img src="/images/max/remote-mute.png" /></pre>
 
 ```javascript
 n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
@@ -2274,13 +2284,10 @@ ossia_devices_make_preset(device, &preset);
 ```csharp
 ```
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
-```plaintext--max
-```
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 
 
@@ -2350,12 +2357,11 @@ if(res != OSSIA_PRESETS_OK) {
 ```csharp
 
 ```
-
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-load.png" />
+<br><br>This will also work on ossia.device and ossia.client</pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-load.png" />
-<br>This will also work on ossia.device and ossia.client</pre>
+<br><br>This will also work on ossia.device and ossia.client</pre>
 
 
 ```javascript
@@ -2399,8 +2405,9 @@ On the PresetController, press "Load preset":
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/PresetController.png" /></pre>
 
 
-```plaintext--pd
-```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
+
+
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
 
 ```javascript
@@ -2468,6 +2475,7 @@ Being able to use the libossia logging facilities
 ```
 
 ```plaintext--pd
+TBI
 ```
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/logger.png" /></pre>

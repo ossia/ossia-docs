@@ -1,0 +1,10 @@
+#N canvas 350 218 328 233 10;
+#X msg 27 23 connect oscquery ws://127.0.0.1:9876;
+#X msg 55 66 connect pd-device-help;
+#X msg 107 104 namespace;
+#X obj 26 150 ø.client pd-device-help;
+#X obj 26 179 print;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;

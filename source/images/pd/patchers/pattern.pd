@@ -1,0 +1,16 @@
+#N canvas 902 22 455 518 10;
+#X obj 25 70 ossia.remote my_spat.<2..3>/source.<1..3>/gain;
+#X obj 26 145 ossia.parameter my_spat.<1..5>/source.<1..3>/gain;
+#X text 26 37 this:;
+#X text 24 110 will match some of the parameters created by:;
+#X text 26 266 will match some of the parameters created by:;
+#X text 28 193 this more complex expresson:;
+#X obj 27 226 ossia.remote my_sp[ai]t.[1-3a-c]/source*/gain;
+#X obj 60 434 ossia;
+#X obj 60 457 print;
+#X msg 60 412 namespace;
+#X obj 26 307 ossia.parameter spit.[a-c]/source<.<1..3>|d>/gain, f
+50;
+#X obj 27 335 ossia.parameter spat.<1..5>/source.<1..3>/gain;
+#X connect 7 0 8 0;
+#X connect 9 0 7 0;
