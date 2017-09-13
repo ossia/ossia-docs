@@ -221,6 +221,10 @@ Ossia.OSCQueryServer {
 ```cpp--ofx
    // setup ofxOssia, by default it uses oscquery protocol on ports 3456 and 5678
     ossia.setup();
+    
+   // you can specify your parameters by adding customs value in setup fonction :
+   // void setup("OSCQuery","customName",localportOSC, localPortWS);
+
 ```
 
 ```csharp
@@ -305,13 +309,17 @@ ApplicationWindow {
 ```
 
 ```cpp--ofx
-// If you want one, pass a parent node to yourClass::setup() method
-c.setup(ossia.get_root_node());
+_parent_node = ossia.getRootNode();
 
-//Then you can create nodes on top of that (called ParameterGroup):
-ossia::ParameterGroup _myGroup
+//Then you can create nodes on top of that :
+ossia::ParameterGroup _myGroup;
+ossia::Parameter<float> _val ;
 
 _myGroup.setup(_parent_node, "theOSCNameOfMyGroup");
+_val.setup(_myGroup, "valOSCName", value, min, max);
+
+// ossia::ParameterGroup and ossia::Parameter are based on top of of::ParameterGroup and of::Parameter. The main difference is that YOU HAVE to give a root node. The adding method of parameter into parameterGroup is then called during the setup fonction.
+// should also work on deletion.
 
 ```
 
