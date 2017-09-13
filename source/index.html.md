@@ -1339,9 +1339,9 @@ ossia::net::set_domain(node, dom);
 ```csharp
 ```
 
-<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range-strings.png" /><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'param', Integer);
@@ -1393,15 +1393,13 @@ Ossia.Parameter {
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd">
-In pd, this is done with the '@clip' attribute.<br>
+In pd, this is done with the '@clip' attribute.<cr>
 Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
-<br>
 <img src="/images/pd/clip.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">
-In Max, this is done with the '@clip' attribute.<br>
+In Max, this is done with the '@clip' attribute.<cr>
 Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
-<br>
 <img src="/images/max/clip.png" /></pre>
 
 
@@ -1448,17 +1446,15 @@ Ossia.Parameter {
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd">
-In pd, this is done reversely, with the '@repetitions' attribute.<br>
+In pd, this is done reversely, with the '@repetitions' attribute.<cr>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
-<br>
 <img src="/images/pd/repetitions.png" /></pre>
 
 
 
 <pre class="highlight plaintext tab-plaintext--max">
-In Max, this is done reversely, with the '@repetitions' attribute.<br>
+In Max, this is done reversely, with the '@repetitions' attribute.<cr>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
-<br>
 <img src="/images/max/repetitions.png" /></pre>
 
 ```javascript
@@ -1515,32 +1511,32 @@ Ossia.Property on position {
 ```csharp
 ```
 <pre class="highlight plaintext tab-plaintext--pd">
-Units can be specified, with the @unit argument, by providing their full names.<br>
+Units can be specified, with the @unit argument, by providing their full names.<cr>
 i.e. using the syntax "category.unit"<br>
 <img src="/images/pd/unit.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--pd">They can also be provided by their unit name only (unit names being unique)<br><br><img src="/images/pd/units-short.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--pd">Remotes can be specified a unit belonging to the same category as the parameter's unit<br>
+<pre class="highlight plaintext tab-plaintext--pd">Remotes can be specified a unit belonging to the same category as the parameter's unit<cr>
 and they will automatically convert parameter values to/from this unit<br><br><img src="/images/pd/unit-conversion.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--pd">As the type is deduced from the unit, we can omit it, or even provide the unit<br>
+<pre class="highlight plaintext tab-plaintext--pd">As the type is deduced from the unit, we can omit it, or even provide the unit<cr>
 directly under the @type attribute:<br><br><img src="/images/pd/unit-shorter.png" /></pre>
 
 
 
 
 <pre class="highlight plaintext tab-plaintext--max">
-Units can be specified, with the @unit argument, by providing their full names.<br>
+Units can be specified, with the @unit argument, by providing their full names.<cr>
 i.e. using the syntax "category.unit"<br>
 <img src="/images/max/unit.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">They can also be provided by their unit name only (unit names being unique)<br><br><img src="/images/max/units-short.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max">Remotes can be specified a unit belonging to the same category as the parameter's unit<br>
+<pre class="highlight plaintext tab-plaintext--max">Remotes can be specified a unit belonging to the same category as the parameter's unit<cr>
 and they will automatically convert parameter values to/from this unit<br><br><img src="/images/max/unit-conversion.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max">As the type is deduced from the unit, we can omit it, or even provide the unit<br>
+<pre class="highlight plaintext tab-plaintext--max">As the type is deduced from the unit, we can omit it, or even provide the unit<cr>
 directly under the @type attribute:<br><br><img src="/images/max/unit-shorter.png" /></pre>
 
 ```javascript
@@ -2405,10 +2401,10 @@ On the PresetController, press "Load preset":
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/PresetController.png" /></pre>
 
 
-<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br>This will also work on ossia.model and ossia.client</pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 ```javascript
 ```
