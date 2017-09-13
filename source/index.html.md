@@ -476,13 +476,13 @@ Ossia.Signal {
     //Here we create a subNode for colors
     //This was declared first in the .h file as:
     //     ossia::ParameterGroup _colorParams;
-    _colorParams.setup(_myColorNode, "colorParams");
-    _myColor.setup(_myColorNode,
+    _colorParams.setup(_myParent, "colorParams");
+    _myColor.setup(_colorParams,
                  "theColor",
                  ofColor(ofRandom(255), ofRandom(255), ofRandom(255), 255.),
                  ofColor(0., 0., 0., 0.),
                  ofColor(255., 255., 255., 255.));
-    _myBool.setup(_myColorNode,"fill",false);
+    _myBool.setup(_colorParams,"fill",false);
 
 ```
 
