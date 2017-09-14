@@ -48,6 +48,10 @@ Here's a quick explanation of the bindings:
 * **SuperCollider**: Requires a custom build of SuperCollider.
 * **Faust**: A Faust architecture file is provided. It should be modified however to tailor your own system.
 
+
+The interactive sequencer [*score*](https://github.com/OSSIA/score) is an example of software based on *libossia*.
+
+
 # Setup
 
 ## Installation/Compilation
