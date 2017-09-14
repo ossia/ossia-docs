@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 61.0, 438.0, 734.0, 492.0 ],
+		"rect" : [ 244.0, 507.0, 734.0, 492.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"editing_bgcolor" : [ 0.239216, 0.254902, 0.278431, 1.0 ],
 		"bglocked" : 0,
@@ -72,7 +72,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 71.0, 191.0, 174.0, 20.0 ],
 					"style" : "",
-					"text" : "this more complex expresson: "
+					"text" : "this more complex expression: "
 				}
 
 			}
@@ -86,7 +86,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 66.0, 290.0, 283.0, 22.0 ],
 					"style" : "",
-					"text" : "ossia.parameter my_spit.[a-c]/source{.{1..3}\\,d}/gain"
+					"text" : "ossia.parameter my_spit.[a-c]/source{.{1..3}|d}/gain"
 				}
 
 			}
@@ -152,7 +152,7 @@
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 66.0, 223.0, 261.0, 22.0 ],
 					"style" : "",
-					"text" : "ossia.remote my_sp{a\\,i}t.[1-3a-c]/source*/gain"
+					"text" : "ossia.remote my_sp{a|i}t.[1-3a-c]/source*/gain"
 				}
 
 			}

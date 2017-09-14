@@ -1025,6 +1025,7 @@ N/A
 Node root = ...;
 Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/pattern.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern.png" /></pre>
@@ -1060,9 +1061,9 @@ N/A
 // Do a loop
 ```
 
-<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/pattern-complex.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--pd">Notice that, due to the tcl/tk graphical framework on which pd is based <br>curly braces: {} are not allowed, so they have to be preplaced with '<>'<br>Also, commas aren't allowed, so you have to replace them with pipes: '|'<br><br><img src="/images/pd/pattern-complex.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern-complex.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max">Notice that, due to the use of commas as message separators in Max, <br>you'll have to  use pipes instead: "|"<br><br><img src="/images/max/pattern-complex.png" /></pre>
 
 ```javascript
 ```
@@ -1146,9 +1147,9 @@ Node root = ...;
 Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 ```
 
-<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/brace.png" /><br>Notice that, due to the tcl/tk graphical framework on which pd is based <br>curly braces: {} are not allowed, so they have to be preplaced with "<>"<br>Also, commas aren't allowed, so you have to replace them with pipes: "|"</pre>
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/brace.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png" /></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png"/></pre>
 
 ```javascript
 ```
