@@ -217,7 +217,8 @@ ossia::net::generic_device dev{
 
 ```python
 import ossia_python as ossia
-local_device = ossia.LocalDevice("supersoftware")
+local_device = ossia.LocalDevice("super software")
+local_device.create_oscquery_server(3456, 5678, False)
 ```
 
 ```qml
@@ -297,6 +298,7 @@ auto& n1 = ossia::net::create_node(dev, "/foo/bar");
 ```
 
 ```python
+foo_bar = local_device.add_node("/foo/bar/")
 ```
 
 ```qml
@@ -384,6 +386,9 @@ ossia::net::create_node(dev, "/foo/bar");
 ```
 
 ```python
+# This is not the case with python
+foo_bar_2 = local_device.add_node("/foo/bar")
+print(foo_bar, foo_bar_2)
 ```
 
 ```qml
@@ -455,6 +460,8 @@ auto param = n.create_parameter(val_type::FLOAT);
 ```
 
 ```python
+float_node = local_device.add_node("/test/numeric/float")
+float_parameter = float_node.create_parameter(ossia.ValueType.Float)
 ```
 
 ```qml
@@ -527,6 +534,7 @@ param->push_value(3.56);
 ```
 
 ```python
+float_parameter.value = 2.5
 ```
 
 ```qml
@@ -587,6 +595,11 @@ auto fut = param->pull_value_async();
 ```
 
 ```python
+# Get the current value
+float_parameter.value.clone_value()
+
+# Request the value to the server if any
+ossia_value_t val = ossia_parameter_fetch_value(a_parameter)
 ```
 
 ```qml
@@ -661,6 +674,38 @@ param->add_callback([] (const ossia::value& v) {
 ```
 
 ```python
+# work in progress
+# it might change in the next beta releases
+# two ways to do it for nom
+
+
+# FIRST WAY : attach a callback function to the float parameter
+def float_value_callback(v):
+  print(v)
+float_parameter.add_callback(float_value_callback)
+
+# SECOND WAY : create a message queue attached to a device, ot to a parameter
+messq = ossia.MessageQueue(local_device)
+globq = ossia.GlobalMessageQueue(local_device)
+messq.register(parameter)
+
+node = local_device.add_node("/test/str")
+parameter = node.create_parameter(ossia.ValueType.String)
+parameter.value = "a string"
+
+while(True):
+  res = messq.pop()
+  if(res != None):
+    parameter, value = res
+    print("messq: Got " +  str(parameter.node) + " => " + str(value))
+
+  res = globq.pop()
+  if(res != None):
+    parameter, value = res
+    print("globq: Got " +  str(parameter.node) + " => " + str(value))
+
+  time.sleep(0.1)
+
 ```
 
 ```qml
@@ -768,6 +813,7 @@ struct MyObject
 ```
 
 ```python
+# TODO
 ```
 
 ```qml
@@ -835,6 +881,35 @@ dev.get_protocol()->update(dev);
 ```
 
 ```python
+# try to connect to a remote device using OSCQuery protocol
+remote_oscquery_device = ossia.OSCQueryDevice("remoteOSCQueryDevice", "ws://127.0.0.1:5678", 9998)
+
+# update the remote OSCQuery device namespace
+remote_oscquery_device.update()
+
+
+# iterate on remote OSCQuery device namespace
+print("\nREMOTE OSCQUERY DEVICE NAMESPACE")
+# a function to iterate on node's tree recursively
+def iterate_on_children(node):
+
+  for child in node.children():
+    if child.parameter:
+      print('PARAMETER -> ' + str(child) + " " + str(child.parameter) + " <" + str(child.parameter.value_type) + ", " + str(child.parameter.access_mode) + ">")
+      
+      ### TODO : remove this test
+      # displaying the domain bounds for the float parameter crashes ... ???
+      if (child.parameter.value_type == ossia.ValueType.Float):
+        continue
+
+      if child.parameter.have_domain():
+        print("min : " + str(child.parameter.domain.min) + ", max : " + str(child.parameter.domain.max))
+    else:
+      print('\nNODE -> ' + str(child))
+      print('--------------')
+    iterate_on_children(child)
+
+iterate_on_children(remote_oscquery_device.root_node)
 ```
 
 ```qml
@@ -1048,6 +1123,7 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```
 
 ```python
+# Do a loop
 ```
 
 ```qml
@@ -1083,6 +1159,7 @@ N/A
 ```
 
 ```python
+N/A
 ```
 
 ```qml
@@ -1191,6 +1268,9 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 ```
 
 ```python
+float_parameter.access_mode = ossia.AccessMode.Get
+float_parameter.access_mode = ossia.AccessMode.Set
+float_parameter.access_mode = ossia.AccessMode.Bi
 ```
 
 ```qml
@@ -1249,6 +1329,8 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```python
+float_parameter.make_domain(-5, 5)
+float_parameter.apply_domain()
 ```
 
 ```qml
@@ -1383,6 +1465,7 @@ ossia::net::set_bounding_mode(node, ossia::bounding_mode::CLIP);
 ```
 
 ```python
+float_parameter.bounding_mode = ossia.BoundingMode.Clip
 ```
 
 ```qml
@@ -1436,6 +1519,7 @@ ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 ```
 
 ```python
+# TODO
 ```
 
 ```qml
