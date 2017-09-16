@@ -155,7 +155,7 @@ private:
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/Controller.png" /></pre>
 
 ```plaintext--pd
-Extract in ~/pd-externals. 
+Extract in ~/pd-externals on Linux, ~/Documents/Pd/externals on Mac
 (Install with Deken will be possible upon public release)
 ```
 
