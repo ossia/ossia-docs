@@ -481,7 +481,13 @@ For now, protocols available in the implemenations are: plain OSC, OSCquery, and
 (Install with Deken will be possible upon public release)
 </code></pre><pre class="highlight plaintext tab-plaintext--max"><code>Extract the ossia package to Documents/Max 7/Packages. 
 (Installing from Max's Package Manager will be possible upon public release)
-</code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h1 id='basic-networking'>Basic networking</h1><h2 id='local-oscquery-device'>Local OSCQuery device</h2>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">Notice</span> <span class="nx">that</span> <span class="nx">ossia</span><span class="o">-</span><span class="nx">sc</span> <span class="nx">has</span> <span class="nx">only</span> <span class="nx">been</span> <span class="nx">tested</span> <span class="nx">on</span> <span class="nx">Mac</span><span class="p">,</span> <span class="nx">so</span> <span class="nx">far</span><span class="p">.</span>
+<span class="nx">to</span> <span class="nx">install</span><span class="p">,</span> <span class="nx">run</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">commands</span>
+<span class="nx">git</span> <span class="nx">clone</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/pchdev/ossia-sc.git</span>
+<span class="nx">cd</span> <span class="nx">ossia</span><span class="o">-</span><span class="nx">sc</span>
+<span class="p">.</span><span class="o">/</span><span class="nx">build</span><span class="p">.</span><span class="nx">sh</span>
+<span class="o">-&gt;</span> <span class="nx">SuperCollider</span> <span class="nx">folder</span> <span class="kd">with</span> <span class="nx">application</span> <span class="nx">should</span> <span class="nx">be</span> <span class="nx">installed</span> <span class="k">in</span> <span class="nx">build</span><span class="o">/</span><span class="nx">SuperCollider</span>
+</code></pre><h1 id='basic-networking'>Basic networking</h1><h2 id='local-oscquery-device'>Local OSCQuery device</h2>
 <p>A device represents a tree of parameters.</p>
 
 <p>Local devices map to real parameters on the executable libossia is used with.
