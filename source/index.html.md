@@ -1,4 +1,4 @@
----
+q---
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
@@ -25,12 +25,12 @@ search: true
 
 **libossia** is a modern C++, cross-environment distributed object model for creative coding.
 
-It allows to expose the architecture of your creative coding application's functions over the network as a **tree of OSC nodes and parameters**. These nodes/parameters can have attributes, which allow to declare some of their properties, such as their values, types, units, ranges, etc....
+It allows to declare the architecture of your creative coding application's functions as a **tree of OSC nodes and parameters**. These nodes/parameters can have attributes, which allow to declare many of their properties, such as their values, types, units, ranges, etc....
 
-This OSC tree-based architecture (coined "device" in the OSSIA terminology) can then be exposed under several protocols, some of which allow this architecture, and the properties and values of its nodes, to be explored and queried. 
+This OSC tree-based architecture (coined "device" in the OSSIA terminology) can then be exposed over the network under several protocols, some of which allow this architecture, and the properties and values of its nodes, to be fully explored and queried. 
 For now, protocols available in the implemenations are: plain OSC, OSCquery, and Minuit - more are part of libossia and will be made available in the future.
 
-libossia offers bindings for many environments: PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider.
+libossia offers bindings and implementations for several environments: PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider.
 
 
 
