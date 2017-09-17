@@ -165,6 +165,12 @@ Extract the ossia package to Documents/Max 7/Packages.
 ```
 
 ```javascript
+Notice that ossia-sc has only been tested on Mac, so far.
+to install, run the following commands
+git clone https://github.com/pchdev/ossia-sc.git
+cd ossia-sc
+./build.sh
+-> SuperCollider folder with application should be installed in build/SuperCollider
 ```
 
 # Basic networking
