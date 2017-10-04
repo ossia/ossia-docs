@@ -444,8 +444,8 @@ they are referred to as Vec2f, Vec3f, Vec4f through the code.
 
 Values can be written to a parameter, and fetched from it.
 
-This example shows how to create a node, a parameter, and send a value to
-the parameter.
+This example shows how to create a node, a parameter, send a value to
+the parameter and how to read it back.
 
 > First we create a parameter
 
