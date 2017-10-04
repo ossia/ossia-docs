@@ -601,11 +601,12 @@ auto fut = param->pull_value_async();
 ```
 
 ```python
-# Get the current value
-float_parameter.value.clone_value()
+# Get the value (request to the server if any)
+val_sync = float_parameter.value
 
-# Request the value to the server if any
-ossia_value_t val = ossia_parameter_fetch_value(a_parameter)
+# Copy the value (without any request to the server if any)
+val_copy = float_parameter.clone_value()
+
 ```
 
 ```qml
