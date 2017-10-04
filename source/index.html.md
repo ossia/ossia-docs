@@ -426,6 +426,51 @@ _myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 ~node2 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
 ```
 
+## Exploring nodes
+
+The node structure is a tree that can be explored from the device root node as deep as needed going thru each child recursively.
+It is also possible to search for a particular node or a set of nodes using #pattern-matching features.
+
+```c
+
+```
+
+```cpp--98
+
+```
+
+```cpp--14
+
+```
+
+```python
+# a function to iterate on node's tree recursively
+def iterate_on_children(node):
+
+  for child in node.children():
+    print(str(child))
+    iterate_on_children(child)
+
+# iterate on local device
+iterate_on_children(local_device.root_node)
+```
+
+```qml
+
+```
+
+```cpp--ofx
+
+```
+
+```csharp
+
+```
+
+```javascript
+
+```
+
 ## Creating parameters
 
 Each node can only have a single parameter.
