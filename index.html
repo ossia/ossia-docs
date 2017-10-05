@@ -789,7 +789,13 @@ the parameter and how to read it back.</p>
 <pre class="highlight c tab-c"><code><span class="n">ossia_parameter_push_f</span><span class="p">(</span><span class="n">a_parameter</span><span class="p">,</span> <span class="mi">345</span><span class="p">.);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">n</span><span class="p">.</span><span class="n">set_value</span><span class="p">(</span><span class="mf">2.34</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">param</span><span class="o">-&gt;</span><span class="n">push_value</span><span class="p">(</span><span class="mf">3.56</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">float_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">2.5</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">bool_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">int_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">float_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">char_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s">'a'</span>
+<span class="n">string_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s">"hello world !"</span>
+<span class="n">vec3f_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">146.5</span><span class="p">,</span> <span class="mi">207</span><span class="p">]</span>
+<span class="n">list_parameter</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">44100</span><span class="p">,</span> <span class="s">"test.wav"</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="nx">onSomething</span><span class="p">:</span> <span class="p">{</span>
   <span class="nx">param</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
   <span class="nx">sig</span><span class="p">.</span><span class="nx">trigger</span><span class="p">();</span>
