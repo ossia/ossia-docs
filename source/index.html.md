@@ -451,7 +451,7 @@ def iterate_on_children(node):
     print(str(child))
     iterate_on_children(child)
 
-# iterate on local device
+# iterate on local device from the root
 iterate_on_children(local_device.root_node)
 ```
 
@@ -938,30 +938,6 @@ remote_oscquery_device = ossia.OSCQueryDevice("remoteOSCQueryDevice", "ws://127.
 
 # update the remote OSCQuery device namespace
 remote_oscquery_device.update()
-
-
-# iterate on remote OSCQuery device namespace
-print("\nREMOTE OSCQUERY DEVICE NAMESPACE")
-# a function to iterate on node's tree recursively
-def iterate_on_children(node):
-
-  for child in node.children():
-    if child.parameter:
-      print('PARAMETER -> ' + str(child) + " " + str(child.parameter) + " <" + str(child.parameter.value_type) + ", " + str(child.parameter.access_mode) + ">")
-      
-      ### TODO : remove this test
-      # displaying the domain bounds for the float parameter crashes ... ???
-      if (child.parameter.value_type == ossia.ValueType.Float):
-        continue
-
-      if child.parameter.have_domain():
-        print("min : " + str(child.parameter.domain.min) + ", max : " + str(child.parameter.domain.max))
-    else:
-      print('\nNODE -> ' + str(child))
-      print('--------------')
-    iterate_on_children(child)
-
-iterate_on_children(remote_oscquery_device.root_node)
 ```
 
 ```qml
