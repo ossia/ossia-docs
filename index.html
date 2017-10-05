@@ -719,27 +719,20 @@ the parameter and how to read it back.</p>
 <span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">create_float</span><span class="p">(</span><span class="s">"/foo/bar"</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">n</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="k">auto</span> <span class="n">param</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">val_type</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">bool_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/numeric/bool"</span><span class="p">)</span>
-<span class="n">bool_parameter</span> <span class="o">=</span> <span class="n">bool_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">Bool</span><span class="p">)</span>
-
-<span class="n">int_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/numeric/int"</span><span class="p">)</span>
-<span class="n">int_parameter</span> <span class="o">=</span> <span class="n">int_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">Int</span><span class="p">)</span>
-
-<span class="n">float_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/numeric/float"</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">float_node</span> <span class="o">=</span> <span class="o">...</span>
 <span class="n">float_parameter</span> <span class="o">=</span> <span class="n">float_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
 
-<span class="n">char_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/misc/char"</span><span class="p">)</span>
-<span class="n">char_parameter</span> <span class="o">=</span> <span class="n">char_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">Char</span><span class="p">)</span>
+<span class="c"># Paremeter types macro :</span>
 
-<span class="n">string_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/misc/string"</span><span class="p">)</span>
-<span class="n">string_parameter</span> <span class="o">=</span> <span class="n">string_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">String</span><span class="p">)</span>
-
-<span class="n">vec3f_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/numeric/vec3f"</span><span class="p">)</span>
-<span class="n">vec3f_parameter</span> <span class="o">=</span> <span class="n">vec3f_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">Vec3f</span><span class="p">)</span>
-
-<span class="n">list_node</span> <span class="o">=</span> <span class="n">local_device</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"/test/misc/list"</span><span class="p">)</span>
-<span class="n">list_parameter</span> <span class="o">=</span> <span class="n">list_node</span><span class="o">.</span><span class="n">create_parameter</span><span class="p">(</span><span class="n">ossia</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">List</span><span class="p">)</span>
-
+<span class="c"># ossia.ValueType.Bool</span>
+<span class="c"># ossia.ValueType.Int</span>
+<span class="c"># ossia.ValueType.Float</span>
+<span class="c"># ossia.ValueType.Char</span>
+<span class="c"># ossia.ValueType.String</span>
+<span class="c"># ossia.ValueType.Vec2f</span>
+<span class="c"># ossia.ValueType.Vec3f</span>
+<span class="c"># ossia.ValueType.Vec4f</span>
+<span class="c"># ossia.ValueType.List</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// A parameter is node + parameter.</span>
 <span class="kt">Ossia.Parameter</span> <span class="p">{</span>
   <span class="nl">id</span><span class="p">:</span> <span class="nx">param</span>
@@ -1311,7 +1304,7 @@ the second time will be filtered.</p>
 <span class="n">node</span><span class="p">.</span><span class="n">set_repetition_filter</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_repetition_filter</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">repetition_filter</span><span class="o">::</span><span class="n">ON</span><span class="p">);</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="c"># TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">int_parameter</span><span class="o">.</span><span class="n">repetition_filter</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">RepetitionFilter</span><span class="o">.</span><span class="n">On</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">filterRepetitions</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Filtered</span>
 <span class="p">}</span>
