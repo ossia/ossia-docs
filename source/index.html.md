@@ -1002,6 +1002,9 @@ Map local device namespace using Midi protocol.
 
 Map local device namespace using OSC protocol.
 
+To be controled by a remote OSC client we need to setup a local port where client OSC messages will arrive.
+Sometimes the local device sends OSC messages back to be observed by a client which needs to setup the client ip and port.
+
 ```c
 ```
 
@@ -1014,8 +1017,8 @@ Map local device namespace using OSC protocol.
 ```python
 # local device is supposed to be created
 
-# enable OSC communication between local device and a remote client without messages logging
-# arguments are : remote client ip, remote client port, local device port, enable logging
+# enable OSC communication to allow a client to control and observe local device
+# arguments are : client ip, client port, local device port, enable logging
 local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 ```
 
@@ -1071,6 +1074,48 @@ Map remote device namespace using Midi protocol.
 ```javascript
 ```
 
+## Remote OSC device
+
+Map remote device namespace using OSC protocol.
+
+To control a remote OSC device we need to setup the remote ip and port.
+Sometimes a remote OSC device also sends OSC messages back which needs to setup a local port.
+
+To send and receive values to each parameter, we also have to declare the namespace as any ossia device.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+# enable to OSC communication to control and observe a remote device
+# arguments are : remote device name, remote device ip, remote device port, client port
+remote_osc_device = ossia.OSCDevice("remoteOSCDevice", "127.0.0.1", 10000, 10001)
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
 ## OSCQuery instances
 
 Being able to create and remove objects in reaction to OSCQuery messages
@@ -1104,8 +1149,6 @@ Being able to create and remove objects in reaction to OSCQuery messages
 
 ```javascript
 ```
-
-
 
 ## Raw messages
 
