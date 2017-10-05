@@ -511,27 +511,20 @@ auto param = n.create_parameter(val_type::FLOAT);
 ```
 
 ```python
-bool_node = local_device.add_node("/test/numeric/bool")
-bool_parameter = bool_node.create_parameter(ossia.ValueType.Bool)
-
-int_node = local_device.add_node("/test/numeric/int")
-int_parameter = int_node.create_parameter(ossia.ValueType.Int)
-
-float_node = local_device.add_node("/test/numeric/float")
+float_node = ...
 float_parameter = float_node.create_parameter(ossia.ValueType.Float)
 
-char_node = local_device.add_node("/test/misc/char")
-char_parameter = char_node.create_parameter(ossia.ValueType.Char)
+# Paremeter types macro :
 
-string_node = local_device.add_node("/test/misc/string")
-string_parameter = string_node.create_parameter(ossia.ValueType.String)
-
-vec3f_node = local_device.add_node("/test/numeric/vec3f")
-vec3f_parameter = vec3f_node.create_parameter(ossia.ValueType.Vec3f)
-
-list_node = local_device.add_node("/test/misc/list")
-list_parameter = list_node.create_parameter(ossia.ValueType.List)
-
+# ossia.ValueType.Bool
+# ossia.ValueType.Int
+# ossia.ValueType.Float
+# ossia.ValueType.Char
+# ossia.ValueType.String
+# ossia.ValueType.Vec2f
+# ossia.ValueType.Vec3f
+# ossia.ValueType.Vec4f
+# ossia.ValueType.List
 ```
 
 ```qml
@@ -1685,7 +1678,7 @@ ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 ```
 
 ```python
-# TODO
+int_parameter.repetition_filter = ossia.RepetitionFilter.On
 ```
 
 ```qml
