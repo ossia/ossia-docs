@@ -865,7 +865,6 @@ struct MyObject
 ```
 
 ```python
-# TODO
 ```
 
 ```qml
