@@ -964,9 +964,9 @@ Ossia.OSCQueryMirror {
 
 
 # Advanced networking
-## Midi
+## Local Midi device
 
-Being able to create the relevant protocol
+Map local device namespace using Midi protocol.
 
 ```c
 ```
@@ -998,7 +998,78 @@ Being able to create the relevant protocol
 ```javascript
 ```
 
-## OSC
+## Local OSC device
+
+Map local device namespace using OSC protocol.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+# local device is supposed to be created
+
+# enable OSC communication between local device and a remote client without messages logging
+# arguments are : remote client ip, remote client port, local device port, enable logging
+local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
+
+## Remote Midi device
+
+Map remote device namespace using Midi protocol.
+
+```c
+```
+
+```cpp--98
+```
+
+```cpp--14
+```
+
+```python
+```
+
+```qml
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+```
 
 ## OSCQuery instances
 
