@@ -604,7 +604,13 @@ param->push_value(3.56);
 ```
 
 ```python
+bool_parameter.value = True
+int_parameter.value = 9
 float_parameter.value = 2.5
+char_parameter.value = 'a'
+string_parameter.value = "hello world !"
+vec3f_parameter.value = [0, 146.5, 207]
+list_parameter.value = [44100, "test.wav", 0.9]
 ```
 
 ```qml
