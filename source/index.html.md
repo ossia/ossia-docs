@@ -1428,8 +1428,12 @@ ossia::net::set_access_mode(node, ossia::access_mode::BI);
 
 ```python
 float_parameter.access_mode = ossia.AccessMode.Get
-float_parameter.access_mode = ossia.AccessMode.Set
-float_parameter.access_mode = ossia.AccessMode.Bi
+
+# Parameter access mode macro :
+
+# ossia.AccessMode.Get
+# ossia.AccessMode.Set
+# ossia.AccessMode.Bi
 ```
 
 ```qml
@@ -1625,6 +1629,15 @@ ossia::net::set_bounding_mode(node, ossia::bounding_mode::CLIP);
 
 ```python
 float_parameter.bounding_mode = ossia.BoundingMode.Clip
+
+# Parameter bounding mode macro :
+
+# ossia.BoundingMode.Free
+# ossia.BoundingMode.Clip
+# ossia.BoundingMode.Low
+# ossia.BoundingMode.High
+# ossia.BoundingMode.Wrap
+# ossia.BoundingMode.Fold
 ```
 
 ```qml
@@ -1679,6 +1692,11 @@ ossia::net::set_repetition_filter(node, ossia::repetition_filter::ON);
 
 ```python
 int_parameter.repetition_filter = ossia.RepetitionFilter.On
+
+# Parameter repetition filter macro :
+
+# ossia.RepetitionFilter.Off
+# ossia.RepetitionFilter.On
 ```
 
 ```qml
@@ -1795,7 +1813,6 @@ p.unit = OSSIA_color.rgba;
 
 ### List of units
 
-Taken from Jamoma
 #### Position
 
 * cart2D
