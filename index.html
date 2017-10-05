@@ -1174,8 +1174,12 @@ mute which is local. The &quot;enabled/disabled&quot; attribute has the same eff
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_access_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">access_mode</span><span class="o">::</span><span class="n">BI</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">float_parameter</span><span class="o">.</span><span class="n">access_mode</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">AccessMode</span><span class="o">.</span><span class="n">Get</span>
-<span class="n">float_parameter</span><span class="o">.</span><span class="n">access_mode</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">AccessMode</span><span class="o">.</span><span class="n">Set</span>
-<span class="n">float_parameter</span><span class="o">.</span><span class="n">access_mode</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">AccessMode</span><span class="o">.</span><span class="n">Bi</span>
+
+<span class="c"># Parameter access mode macro :</span>
+
+<span class="c"># ossia.AccessMode.Get</span>
+<span class="c"># ossia.AccessMode.Set</span>
+<span class="c"># ossia.AccessMode.Bi</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">access</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Bi</span>
 <span class="p">}</span>
@@ -1278,6 +1282,15 @@ Values that don&#39;t fit will be rounded to the closest accepted value.</p>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_bounding_mode</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">bounding_mode</span><span class="o">::</span><span class="n">CLIP</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">float_parameter</span><span class="o">.</span><span class="n">bounding_mode</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">BoundingMode</span><span class="o">.</span><span class="n">Clip</span>
+
+<span class="c"># Parameter bounding mode macro :</span>
+
+<span class="c"># ossia.BoundingMode.Free</span>
+<span class="c"># ossia.BoundingMode.Clip</span>
+<span class="c"># ossia.BoundingMode.Low</span>
+<span class="c"># ossia.BoundingMode.High</span>
+<span class="c"># ossia.BoundingMode.Wrap</span>
+<span class="c"># ossia.BoundingMode.Fold</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">bounding</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Clip</span>
 <span class="p">}</span>
@@ -1305,6 +1318,11 @@ the second time will be filtered.</p>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_repetition_filter</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">repetition_filter</span><span class="o">::</span><span class="n">ON</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">int_parameter</span><span class="o">.</span><span class="n">repetition_filter</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">RepetitionFilter</span><span class="o">.</span><span class="n">On</span>
+
+<span class="c"># Parameter repetition filter macro :</span>
+
+<span class="c"># ossia.RepetitionFilter.Off</span>
+<span class="c"># ossia.RepetitionFilter.On</span>
 </code></pre><pre class="highlight qml tab-qml"><code><span class="kt">Ossia.Parameter</span> <span class="p">{</span> 
   <span class="nl">filterRepetitions</span><span class="p">:</span> <span class="nx">Ossia</span><span class="p">.</span><span class="nx">Filtered</span>
 <span class="p">}</span>
@@ -1374,9 +1392,7 @@ and they will automatically convert parameter values to/from this unit<br><br><i
 directly under the @type attribute:<br><br><img src="images/max/unit-shorter.png" /></pre>
 <pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="nx">Vec4f</span><span class="p">);</span>
 <span class="nx">p</span><span class="p">.</span><span class="nx">unit</span> <span class="o">=</span> <span class="nx">OSSIA_color</span><span class="p">.</span><span class="nx">rgba</span><span class="p">;</span>
-</code></pre><h3 id='list-of-units'>List of units</h3>
-<p>Taken from Jamoma</p>
-<h4 id='position'>Position</h4>
+</code></pre><h3 id='list-of-units'>List of units</h3><h4 id='position'>Position</h4>
 <ul>
 <li>cart2D</li>
 <li>cart3D</li>
