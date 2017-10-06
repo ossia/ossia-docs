@@ -1955,6 +1955,7 @@ ossia::net::set_extended_type(node, ossia::generic_buffer_type());
 ```
 
 ```python
+node.extended_type = "filepath"
 ```
 
 ```qml
@@ -2018,6 +2019,7 @@ ossia::net::set_instance_bounds(node, ossia::none);
 ```
 
 ```python
+node.instance_bounds = ossia.InstanceBounds(1, 100)
 ```
 
 ```qml
