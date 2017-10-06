@@ -2028,6 +2028,8 @@ ossia::net::set_description(node, "a pretty node");
 ```
 
 ```python
+node = ...
+node.description = "a pretty node"
 ```
 
 ```qml
