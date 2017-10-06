@@ -420,10 +420,11 @@ _myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/model2.png" /></pre>
 
 ```javascript
-// Creates /foo/bar, /foo/bar.1, /foo/bar.2
-~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
-~node1 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
-~node2 = OSSIA_Node(parent: ~some_device, name: "/foo/bar")
+// this is not the case with ossia-supercollider, because of workflow issues
+// this will simply overwrite the /foo/bar parameter
+~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar");
+~node_1 = OSSIA_Node(parent: ~some_device, name: "/foo/bar");
+
 ```
 
 ## Exploring nodes
@@ -577,7 +578,7 @@ Ossia.Signal {
 
 
 ```javascript
-// A parameter is node + parameter
+
 ~param = OSSIA_Parameter(~some_device, 'int_test', Integer);
 ~sigparam = OSSIA_Parameter(~some_device, 'signal_test', Signal);
 ```
@@ -627,7 +628,7 @@ onSomething: {
 ```javascript
 ~param.value = 347;
 // equivalent to: (faster for livecoding)
-~param.v_(347) // 1st shortcut
+~param.v = (347) // 1st shortcut
 ~param.sv(347) // 2nd shortcut
 ```
 
@@ -852,6 +853,24 @@ N/A yet - the [ossia.declare] object is planned to be implemented in the future
 for automatically declaring atributes of complex objects (such as jit.gl.*) 
 ```
 
+```javascript
+// In SuperCollider, parameters can easily be integrated with a SynthDef using the .aar, .ar and .kr methods.
+
+~freq = OSSIA_Parameter(~some_device, 'freq', Float, [440, 880], 440);
+
+// bind the frequency parameter to the synthdef, becoming an argument
+
+d = SynthDef('sinosc', {
+    Out.ar(0, SinOsc.ar(~freq.kr, 0, 0.25));
+}).add;
+
+// the aar convenience method returns an array with parameter's name and current value
+x = Synth('sinosc', ~freq.aar);
+
+// changing the value of the parameter will automatically update the synth argument's value
+~freq.value = 660;
+```
+
 ## Device callbacks
 
 Device callbacks can be used to react to creation or removal of nodes in a
@@ -977,7 +996,28 @@ Ossia.OSCQueryMirror {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/client.png" /></pre>
 
 ```javascript
-~mirror = OSSIA_Device.newOSCQueryMirror(name: 'my_mirror', host: "ws://localhost:5678");
+// create a local device in any application, for this example, we'll do this directly in SuperCollider
+
+(
+d = OSSIA_Device('my_device').exposeOSCQueryServer(1234, 5678, {
+    p = OSSIA_Parameter(d, 'my_parameter', Float).value_(22.5);
+});
+)
+
+// create a remote mirror image of the device
+m = OSSIA_Device('my_remote');
+m.exposeOSCQueryMirror("ws://localhost:5678");
+
+// get the root node's direct children
+m.children; // posts [ my_parameter ]
+
+// create a mirror image of a parameter and query its value
+q = OSSIA_MirrorParameter(m, '/my_parameter');
+q.value; // posts 22.5
+
+// remotely modify the value of the original parameter
+q.value = 25.0;
+p.value; // posts 25
 ```
 
 
@@ -1519,8 +1559,8 @@ param.SetMax(new Value(5));
 
 ```javascript
 // Set domain either at parameter creation, or later on...
-~param_1 = OSSIA_Parameter(~some_device, 'floatparam', Float, [-5, 5]);
-~param_2 = OSSIA_Parameter(~some_device, 'intparam', Integer, nil);
+~param_1 = OSSIA_Parameter(~some_device, 'float_param', Float, [-5, 5]);
+~param_2 = OSSIA_Parameter(~some_device, 'int_param', Integer, nil);
 ~param_2.domain = [-5, 5];
 ```
 
@@ -1556,8 +1596,7 @@ ossia::net::set_domain(node, dom);
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
-~param.domain = [-5, 5]; // all the values share the min/max range
-~param.domain = [[-5, 5], [-10, 10], [-20, 20]]; // unique min/max ranges for each value
+~param.domain = [[0.0, 1.0, 2.0], [1.0, 5.0, 10.0]]; // unique min/max ranges for each value, first array represents the min values, second array the max values
 ```
 
 > Instead of a min / max, it is also possible to give a set of accepted values.
@@ -1594,9 +1633,8 @@ ossia::net::set_domain(node, dom);
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
 ```javascript
-~param = OSSIA_Parameter(~some_device, 'param', Integer);
-~param.domain = [0, 5, 10, 20]; // if array size is > 2
-~param.domain = OSSIA.domain_list(0, 5); // accepted values will be 0 or 5
+~param = OSSIA_Parameter(~some_device, 'my_param', Integer,
+    OSSIA.domain(values: [1, 3, 5]), 3);
 ```
 
 ## Bounding mode
@@ -2337,6 +2375,7 @@ N/A
 ```
 
 ```javascript
+~some_param.zombie;
 ```
 
 ## Critical
@@ -2429,7 +2468,9 @@ Ossia.Node {
 
 ```javascript
 n = OSSIA_Node(~some_device, 'some_node');
-n.disabled = true;
+n.disable;
+n.enable;
+n.is_disabled;
 ```
 
 ## Hidden
@@ -2564,6 +2605,14 @@ ossia_devices_make_preset(device, &preset);
 
 
 ```javascript
+d = OSSIA_Device('my_device');
+d.exposeOSCQueryServer(1234, 5678, {
+    p = OSSIA_Parameter(d, 'param_1', Float, [0.0, 1.0], 0.5);
+    q = OSSIA_Parameter(d, 'param_2', Integer);
+    g = OSSIA_Parameter(d, 'param_3', String, nil, "hello");
+});
+
+d.save_preset(); // if no path is explicitly specified, this will open a dialog
 ```
 
 > Write the preset to a file: 
@@ -2683,6 +2732,12 @@ On the PresetController, press "Load preset":
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 ```javascript
+p.value = 0.75;
+q.value = 127;
+g.value = "something else";
+
+// reload the original state preset
+d.load_preset();
 ```
 ## Preset instances
 
