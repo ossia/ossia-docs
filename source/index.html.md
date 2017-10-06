@@ -2028,7 +2028,6 @@ ossia::net::set_description(node, "a pretty node");
 ```
 
 ```python
-node = ...
 node.description = "a pretty node"
 ```
 
@@ -2074,6 +2073,7 @@ ossia::net::set_tags(node, {"video", "funny"});
 ```
 
 ```python
+node.tags = ["video", "funny"]
 ```
 
 ```qml
@@ -2121,6 +2121,7 @@ ossia::net::set_priority(node, ossia::none);
 ```
 
 ```python
+node.priority = 10
 ```
 
 ```qml
@@ -2167,6 +2168,7 @@ ossia::net::set_refresh_rate(node, ossia::none);
 ```
 
 ```python
+node.refresh_rate = 10
 ```
 
 ```qml
@@ -2214,6 +2216,7 @@ ossia::net::set_value_step_size(node, ossia::none);
 ```
 
 ```python
+node.value_step_size = 10
 ```
 
 ```qml
@@ -2269,6 +2272,7 @@ ossia::net::set_default_value(node, ossia::none);
 ```
 
 ```python
+node.default_value = 10
 ```
 
 ```qml
@@ -2313,6 +2317,7 @@ bool z = ossia::net::get_zombie(node);
 ```
 
 ```python
+node.zombie = True
 ```
 
 ```qml
@@ -2357,6 +2362,7 @@ ossia::net::set_critical(node, true);
 ```
 
 ```python
+node.critical = True
 ```
 
 ```qml
@@ -2402,6 +2408,7 @@ ossia::net::set_disabled(node, true);
 ```
 
 ```python
+node.disabled = True
 ```
 
 ```qml
@@ -2445,6 +2452,7 @@ ossia::net::set_hidden(node, true);
 ```
 
 ```python
+node.hidden = True
 ```
 
 ```qml
@@ -2488,6 +2496,7 @@ ossia::net::set_muted(node, true);
 ```
 
 ```python
+node.muted = True
 ```
 
 ```qml
