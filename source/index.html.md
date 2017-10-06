@@ -2020,6 +2020,7 @@ ossia::net::set_instance_bounds(node, ossia::none);
 
 ```python
 node.instance_bounds = ossia.InstanceBounds(1, 100)
+print('instance_bounds : {' + str(node.instance_bounds.min) + ', ' + str(node.instance_bounds.max) + '}')
 ```
 
 ```qml
