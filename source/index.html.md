@@ -1797,6 +1797,7 @@ ossia::net::set_unit(node, unit);
 ```
 
 ```python
+parameter.unit = "color.hsv"
 ```
 
 ```qml
