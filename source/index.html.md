@@ -2798,6 +2798,11 @@ Being able to use the libossia logging facilities
 ```
 
 ```python
+# for instance logging facilities are available for network messages
+# by setting up a flag to True when exposing local device to a protocol
+
+local_device.create_oscquery_server(3456, 5678, True)
+local_device.create_osc_server("127.0.0.1", 9997, 9996, True)
 ```
 
 ```qml
