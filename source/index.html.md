@@ -1579,6 +1579,8 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```python
+vec3f_parameter.make_domain([50, 100, 150], [100, 150, 200])
+vec3f_parameter.apply_domain()
 ```
 
 ```qml
@@ -1617,6 +1619,8 @@ ossia::net::set_domain(node, dom);
 ```
 
 ```python
+char_parameter.make_domain(['a', 'b', 'c', 'd'])
+char_parameter.apply_domain()
 ```
 
 ```qml
