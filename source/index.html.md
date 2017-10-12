@@ -747,33 +747,21 @@ param->add_callback([] (const ossia::value& v) {
 ```python
 # two ways to do it
 
-# FIRST WAY : attach a callback function to the float parameter
-def float_value_callback(v):
+# FIRST WAY : attach a callback function to the parameter
+def value_callback(v):
   print(v)
-float_parameter.add_callback(float_value_callback)
+parameter.add_callback(value_callback)
 
-# SECOND WAY : create a message queue attached to a device, ot to a parameter
-messq = ossia.MessageQueue(local_device)
-globq = ossia.GlobalMessageQueue(local_device)
-messq.register(parameter)
-
-node = local_device.add_node("/test/str")
-parameter = node.create_parameter(ossia.ValueType.String)
-parameter.value = "a string"
+# SECOND WAY : attach a message queue to a device and register the parameter to the queue
+messageq = ossia.MessageQueue(device)
+messageq.register(parameter)
 
 while(True):
-  res = messq.pop()
-  if(res != None):
-    parameter, value = res
-    print("messq: Got " +  str(parameter.node) + " => " + str(value))
-
-  res = globq.pop()
-  if(res != None):
-    parameter, value = res
-    print("globq: Got " +  str(parameter.node) + " => " + str(value))
-
-  time.sleep(0.1)
-
+  message = messageq.pop()
+  if(message != None):
+    parameter, value = message
+    print("messageq : " +  str(parameter.node) + " " + str(value))
+  time.sleep(0.01)
 ```
 
 ```qml
@@ -1406,12 +1394,12 @@ N/A
 ```javascript
 ```
 
-## Brace expressions
+## Batch node creation
 
-Brace expressions allow to create a set of node with regex-like expressions
+It is posible to create several nodes in a raw using regex-like expressions
 similar to the ones used when doing pattern matching.
 
-Only [] and { } are possible. e.g.
+Only [] and {} are possible. e.g.
 
 /foo/{bar,baz}.[0-9][0-9]/bob.{3..12..2}
 
