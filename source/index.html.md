@@ -1448,7 +1448,7 @@ Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 ```javascript
 ```
 
-# Node attributes
+# Node and parameter attributes
 This part presents the attributes that can be set on nodes and parameters.
 
 When using OSCQuery, all attribute changes will propagate across the network, except 
