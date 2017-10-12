@@ -810,6 +810,9 @@ N/A
 This show how, for environments that support it, ossia objects can integrate
 with existing property environments.
 
+```python
+N/A
+```
 
 ```qml
 Rectangle {
