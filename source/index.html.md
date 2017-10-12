@@ -1112,6 +1112,13 @@ Map remote device namespace using Midi protocol.
 ```
 
 ```python
+# scan to get midi devices list
+midi_devices = ossia.list_midi_devices()
+for data in midi_devices:
+    print(str(data.type) + ": device = " + data.device + ", port = " + str(data.port))
+
+# connect to the first device using MIDI protocol
+remote_midi_device = ossia.MidiDevice("remoteMidiDevice", midi_devices[0])
 ```
 
 ```qml
