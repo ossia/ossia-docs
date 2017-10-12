@@ -1866,11 +1866,22 @@ set the state of the device tree.</p>
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code><span class="n">N</span><span class="o">/</span><span class="n">A</span>
 </code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h1 id='utilities'>Utilities</h1><h2 id='logging'>Logging</h2>
 <p>Being able to use the libossia logging facilities</p>
-<pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code><span class="c"># for instance logging facilities are available for network messages</span>
-<span class="c"># by setting up a flag to True when exposing local device to a protocol</span>
+<pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code><span class="c"># observe all parameters value of a device</span>
+<span class="n">device_messageq</span> <span class="o">=</span> <span class="n">ossia</span><span class="o">.</span><span class="n">GlobalMessageQueue</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 
+<span class="c"># wait and change the value</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">message</span> <span class="o">=</span> <span class="n">device_messageq</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">message</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"device_messageq : "</span> <span class="o">+</span>  <span class="nb">str</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">node</span><span class="p">)</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c"># There is also some logging facilities available for network input/output</span>
+<span class="c"># by setting up a flag to True when exposing local device to a protocol</span>
 <span class="n">local_device</span><span class="o">.</span><span class="n">create_oscquery_server</span><span class="p">(</span><span class="mi">3456</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 <span class="n">local_device</span><span class="o">.</span><span class="n">create_osc_server</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">9997</span><span class="p">,</span> <span class="mi">9996</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
 </code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code>TBI
 </code></pre>
 <pre class="highlight plaintext tab-plaintext--max"><img src="images/max/logger.png" /></pre>
