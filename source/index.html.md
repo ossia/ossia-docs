@@ -1335,7 +1335,8 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 ```
 
 ```python
-# Do a loop
+for node in node_vector :
+  node.parameter.value = ...
 ```
 
 ```qml
@@ -1371,7 +1372,27 @@ N/A
 ```
 
 ```python
-N/A
+# FIRST WAY : attach a callback function to each matching node's parameter
+def value_callback(v):
+  print(v)
+
+for node in node_vector:
+  node.parameter.add_callback(value_callback)
+
+# SECOND WAY : attach a message queue to a device
+# then register each matching node's parameter to the queue
+messageq = ossia.MessageQueue(device)
+
+for node in node_vector:
+  messageq.register(node.parameter)
+
+# wait and change the value
+while True:
+  message = device_messageq.pop()
+  if message != None :
+    parameter, value = message
+    print("device_messageq : " +  str(parameter.node) + " " + str(value))
+  time.sleep(0.01)
 ```
 
 ```qml
@@ -2818,7 +2839,7 @@ device_messageq = ossia.GlobalMessageQueue(device)
 # wait and change the value
 while True:
   message = device_messageq.pop()
-  if(message != None):
+  if message != None :
     parameter, value = message
     print("device_messageq : " +  str(parameter.node) + " " + str(value))
   time.sleep(0.01)
