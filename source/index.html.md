@@ -1024,36 +1024,46 @@ p.value; // posts 25
 # Advanced networking
 ## Local Midi device
 
-Map local device namespace using Midi protocol.
+Open a Midi Input/Output port to allow local device to receive/send Midi protocol messages.
 
 ```c
+N/A
 ```
 
 ```cpp--98
+N/A
 ```
 
 ```cpp--14
+N/A
 ```
 
 ```python
+N/A
 ```
 
 ```qml
+N/A
 ```
 
 ```cpp--ofx
+N/A
 ```
 
 ```csharp
+N/A
 ```
 
 ```plaintext--pd
+N/A
 ```
 
 ```plaintext--max
+N/A
 ```
 
 ```javascript
+N/A
 ```
 
 ## Local OSC device
@@ -1100,7 +1110,7 @@ local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 
 ## Remote Midi device
 
-Map remote device namespace using Midi protocol.
+Connect to a Midi Input/Output port to receive/send Midi protocol messages from a remote device.
 
 ```c
 ```
