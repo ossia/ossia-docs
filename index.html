@@ -1096,7 +1096,7 @@ Sometimes a remote OSC device also sends OSC messages back which needs to setup 
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='raw-messages'>Raw messages</h2>
 <p>Being able to send messages without the node actually existing in the tree, e.g. like a &quot;basic&quot; OSC library</p>
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h2 id='pattern-matching'>Pattern matching</h2>
-<p>Being able to send and receive messages according to OSC 1.1 pattern matching parameters.</p>
+<p>Address a set of nodes using OSC 1.1 pattern matching.</p>
 
 <p>Valid patterns are for instance:</p>
 
@@ -1116,6 +1116,8 @@ Sometimes a remote OSC device also sends OSC messages back which needs to setup 
 <li>/foo.{5..23} will match /foo.5 to /foo.23</li>
 <li>/foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)</li>
 </ul>
+
+<p>Then it is possible to send and receive values to/from the set of pattern matching nodes.</p>
 
 <blockquote>
 <p>Getting all nodes that match a pattern</p>
