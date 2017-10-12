@@ -2812,11 +2812,22 @@ Being able to use the libossia logging facilities
 ```
 
 ```python
-# for instance logging facilities are available for network messages
-# by setting up a flag to True when exposing local device to a protocol
+# observe all parameters value of a device
+device_messageq = ossia.GlobalMessageQueue(device)
 
+# wait and change the value
+while True:
+  message = device_messageq.pop()
+  if(message != None):
+    parameter, value = message
+    print("device_messageq : " +  str(parameter.node) + " " + str(value))
+  time.sleep(0.01)
+
+# There is also some logging facilities available for network input/output
+# by setting up a flag to True when exposing local device to a protocol
 local_device.create_oscquery_server(3456, 5678, True)
 local_device.create_osc_server("127.0.0.1", 9997, 9996, True)
+
 ```
 
 ```qml
