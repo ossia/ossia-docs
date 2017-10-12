@@ -666,10 +666,10 @@ auto fut = param->pull_value_async();
 
 ```python
 # Get the value (request to the server if any)
-val_sync = float_parameter.value
+val_sync = parameter.value
 
 # Copy the value (without any request to the server if any)
-val_copy = float_parameter.clone_value()
+val_copy = parameter.clone_value()
 
 ```
 
