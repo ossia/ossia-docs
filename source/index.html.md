@@ -1250,7 +1250,7 @@ Being able to send messages without the node actually existing in the tree, e.g.
 
 ## Pattern matching
 
-Being able to send and receive messages according to OSC 1.1 pattern matching parameters.
+Address a set of nodes using OSC 1.1 pattern matching.
 
 Valid patterns are for instance:
 
@@ -1266,6 +1266,8 @@ Brace expansion is also implemented, which allows for more matching, such as:
 
 * /foo.{5..23} will match /foo.5 to /foo.23
 * /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
+
+Then it is possible to send and receive values to/from the set of pattern matching nodes.
 
 > Getting all nodes that match a pattern
 
