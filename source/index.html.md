@@ -1024,7 +1024,7 @@ p.value; // posts 25
 # Advanced networking
 ## Local Midi device
 
-Open a Midi Input/Output port to allow local device to receive/send Midi protocol messages.
+Open a Midi Input/Output port to allow local device to receive/emit Midi protocol messages.
 
 ```c
 N/A
@@ -1110,7 +1110,7 @@ local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 
 ## Remote Midi device
 
-Connect to a Midi Input/Output port to receive/send Midi protocol messages from a remote device.
+Connect to a Midi Input/Output port to observe/send Midi protocol messages from/to a remote device.
 
 ```c
 ```
