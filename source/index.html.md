@@ -1294,16 +1294,23 @@ ossia_node_array_free(data);
 ```
 
 ```cpp--14
-// The path object can be cached if it is going to be reused.
-ossia::net::node_base& node = ...;
-auto path = make_path("/foo/bar.*");
+// The pattern matching process can starts from several nodes
+ossia::net::node_base& node1 = ...;
+ossia::net::node_base& node2 = ...;
+std::vector<ossia::net::node_base*> vec{&node1, &node2};
 
-std::vector<ossia::net::node_base*> vec{&node};
-ossia::traversal::apply(path, vec);
+// The path object can be cached if it is going to be reused.
+if (auto path = ossia::traversal::make_path("/foo/bar.*"))
+    ossia::traversal::apply(*path, vec);
+
 // vec now contains the matching nodes.
 ```
 
 ```python
+// The pattern matching process can starts from several nodes
+node_vector = [node1, node2]
+node_vector = list_node_pattern(node_vector, "/foo/bar.*")
+// node_vector now contains the matching nodes.
 ```
 
 ```qml
@@ -2336,7 +2343,7 @@ ossia::net::set_default_value(node, ossia::none);
 ```
 
 ```python
-node.default_value = 10
+parameter.default_value = 10
 ```
 
 ```qml
