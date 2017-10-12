@@ -745,10 +745,7 @@ param->add_callback([] (const ossia::value& v) {
 ```
 
 ```python
-# work in progress
-# it might change in the next beta releases
-# two ways to do it for nom
-
+# two ways to do it
 
 # FIRST WAY : attach a callback function to the float parameter
 def float_value_callback(v):
@@ -902,6 +899,7 @@ struct MyObject
 ```
 
 ```python
+N/A
 ```
 
 ```qml
@@ -2778,6 +2776,7 @@ Being able to create new objects in reaction to the loading of a preset
 ```
 
 ```python
+N/A
 ```
 
 ```qml
