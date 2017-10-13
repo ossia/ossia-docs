@@ -890,7 +890,17 @@ struct MyObject
 ```
 
 ```python
-N/A
+remote_device = ...
+
+# attach callbacks to remote_oscquery_device
+def on_creation_callback(n):
+  print("remote_device : " + str(n) + " created")
+def on_renamed_callback(n):
+  print("remote_device : " + str(n) + " renamed")
+def on_removing_callback(n):
+  print("remote_device : " + str(n) + " removed")
+
+device_callback = ossia.DeviceCallback(remote_device, on_creation_callback, on_renamed_callback, on_removing_callback)
 ```
 
 ```qml
