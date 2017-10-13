@@ -1454,7 +1454,8 @@ ossia::net::node_base& node = ...;
 auto nodes = ossia::net::create_nodes(node, "/foo/{bar,baz}.[0-9][0-9]");
 ```
 
-```
+```python
+N/A
 ```
 
 ```qml
