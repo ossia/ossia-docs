@@ -2382,7 +2382,7 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/default.png" /></pre>
 
-<pre class="highlight plaintext tab-plaintext--max"><br>Due to a bug, the attribute is currently called '@defval'<img src="/images/max/default.png" /><br></pre>
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/default.png" /><br></pre>
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
