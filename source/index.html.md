@@ -735,7 +735,7 @@ n.set_value_callback(my_callback, 0);
 ```cpp--14
 ossia::net::node_base& n = ...;
 auto param = n.create_parameter(val_type::FLOAT);
-param->add_callback([] (const ossia::value& v) {
+param->add_callback([] (const ossia::value& v)) {
   // if you are sure of the type, this is fast:
   float f = v.get<float>();
 
