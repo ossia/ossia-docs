@@ -1267,7 +1267,7 @@ Being able to send messages without the node actually existing in the tree, e.g.
 
 ## Pattern matching
 
-Address a set of nodes using OSC 1.1 pattern matching.
+Address a set of nodes using pattern matching as defined in the [OSC 1.1 specifications](https://hangar.org/webnou/wp-content/uploads/2012/01/Nime09OSCfinal.pdf).
 
 Valid patterns are for instance:
 
@@ -1275,7 +1275,6 @@ Valid patterns are for instance:
 * /{foo,boo}/bar -> matches /foo/bar, /boo/bar
 * /foo[1-5] -> matches /foo1, /foo2, ... /foor5
 * //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
-(as defined in [OSC 1.1 specifications](https://hangar.org/webnou/wp-content/uploads/2012/01/Nime09OSCfinal.pdf), see 3.4)
 * //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo 
 
 Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
