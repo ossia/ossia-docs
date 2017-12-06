@@ -283,7 +283,7 @@ Nodes are identified with the OSC parameter syntax: `/foo/bar`.
 **Nodes** per se don't carry any value; they have to be extended with **parameters**
 to be able to send and receive messages.
 
-When multiple nodes with the same name are created, they will be appende instance numbers, separated with a dot. E.g. when duplicating the node /foo, its duplicates will be named /foo.1, /foo.2, etc…
+When multiple nodes with the same name are created, they will be appended instance numbers, separated with a dot. E.g. when duplicating the node /foo, its duplicates will be named /foo.1, /foo.2, etc…
 This allows to have a cleaner representation of the address/namespace, as is demonstrated on the figures below:
 
 <img src="/images/NamespaceSlash.png" />
@@ -1302,7 +1302,7 @@ ossia_node_array_free(data);
 ```
 
 ```cpp--14
-// The pattern matching process can starts from several nodes
+// The pattern matching process can start from several nodes
 ossia::net::node_base& node1 = ...;
 ossia::net::node_base& node2 = ...;
 std::vector<ossia::net::node_base*> vec{&node1, &node2};
@@ -1315,10 +1315,10 @@ if (auto path = ossia::traversal::make_path("/foo/bar.*"))
 ```
 
 ```python
-// The pattern matching process can starts from several nodes
+# The pattern matching process can start from several nodes
 node_vector = [node1, node2]
 node_vector = list_node_pattern(node_vector, "/foo/bar.*")
-// node_vector now contains the matching nodes.
+# node_vector now contains the matching nodes.
 ```
 
 ```qml
