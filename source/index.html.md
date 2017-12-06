@@ -283,6 +283,13 @@ Nodes are identified with the OSC parameter syntax: `/foo/bar`.
 **Nodes** per se don't carry any value; they have to be extended with **parameters**
 to be able to send and receive messages.
 
+When multiple nodes with the same name are created, they will be appende instance numbers, separated with a dot. E.g. when duplicating the node /foo, its duplicates will be named /foo.1, /foo.2, etc…
+This allows to have a cleaner representation of the address/namespace, as is demonstrated on the figures below:
+
+<img src="/images/NamespaceSlash.png" />
+<img src="/images/NamespaceDot.png" />
+
+
 ```c
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
 ossia_device_t dev = ossia_device_create(proto, "supersoftware");
@@ -1264,11 +1271,12 @@ Address a set of nodes using OSC 1.1 pattern matching.
 
 Valid patterns are for instance:
 
-* /foo/bar.* -> matches /foo/bar.0, /foo/bar.100, /foo/bar.bob
+* /foo/bar* -> matches /foo/bar, /foo/bar.100, /foo/baron
 * /{foo,boo}/bar -> matches /foo/bar, /boo/bar
 * /foo[1-5] -> matches /foo1, /foo2, ... /foor5
 * //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
-* //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo
+(as defined in [OSC 1.1 specifications](https://hangar.org/webnou/wp-content/uploads/2012/01/Nime09OSCfinal.pdf), see 3.4)
+* //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo 
 
 Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
 
