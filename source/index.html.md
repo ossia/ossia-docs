@@ -849,7 +849,7 @@ for automatically declaring atributes of complex objects (such as jit.gl.*)
 ```
 
 ```javascript
-// In SuperCollider, parameters can easily be integrated with a SynthDef using the .aar, .ar and .kr methods.
+// In SuperCollider, parameters can easily be integrated with a SynthDef using the .snapshot, .ar and .kr methods.
 
 ~freq = OSSIA_Parameter(~some_device, 'freq', Float, [440, 880], 440);
 
@@ -859,8 +859,8 @@ d = SynthDef('sinosc', {
     Out.ar(0, SinOsc.ar(~freq.kr, 0, 0.25));
 }).add;
 
-// the aar convenience method returns an array with parameter's name and current value
-x = Synth('sinosc', ~freq.aar);
+// the .snapshot convenience method returns an array with children parameters names and current values
+x = Synth('sinosc', ~some_device.snapshot);
 
 // changing the value of the parameter will automatically update the synth argument's value
 ~freq.value = 660;
