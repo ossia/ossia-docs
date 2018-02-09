@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 4,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 167.0, 346.0, 586.0, 495.0 ],
+		"rect" : [ 426.0, 335.0, 586.0, 495.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"editing_bgcolor" : [ 0.239216, 0.254902, 0.278431, 1.0 ],
 		"bglocked" : 0,
@@ -48,7 +48,7 @@
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 75.0, 364.0, 226.0, 22.0 ],
 					"style" : "",
-					"text" : "ossia.remote my_param @mute 0"
+					"text" : "ossia.remote my_param @recall_safe 0"
 				}
 
 			}
@@ -134,7 +134,7 @@
 			}
 , 			{
 				"box" : 				{
-					"attr" : "mute",
+					"attr" : "recall_safe",
 					"id" : "obj-9",
 					"maxclass" : "attrui",
 					"numinlets" : 1,

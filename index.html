@@ -330,6 +330,9 @@
                     <a href="#priority" class="toc-h2 toc-link" data-title="Node and parameter attributes">Priority</a>
                   </li>
                   <li>
+                    <a href="#recall_safe" class="toc-h2 toc-link" data-title="Node and parameter attributes">Recall_safe</a>
+                  </li>
+                  <li>
                     <a href="#refresh-rate" class="toc-h2 toc-link" data-title="Node and parameter attributes">Refresh rate</a>
                   </li>
                   <li>
@@ -1673,6 +1676,26 @@ to be relied upon as a metadata.</p>
 <pre class="highlight plaintext tab-plaintext--max"><img src="images/max/priority.png" /></pre>
 <pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'super_important_node'</span><span class="p">);</span>
 <span class="nx">n</span><span class="p">.</span><span class="nx">priority</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre><h2 id='recall_safe'>Recall_safe</h2>
+<p>Nodes with the recallSafe attribute set to 1 won’t be recalled by presets (or other state recall).</p>
+<pre class="highlight c tab-c"><code><span class="n">ossia_node_t</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia_node_set_recall_safe</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="n">ossia_node_unset_recall_safe</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">opp</span><span class="o">::</span><span class="n">node</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">node</span><span class="p">.</span><span class="n">set_recall_safe</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">node</span><span class="p">.</span><span class="n">unset_recall_safe</span><span class="p">();</span>
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">node_base</span><span class="o">&amp;</span> <span class="n">node</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_recall_safe</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">set_recall_safe</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ossia</span><span class="o">::</span><span class="n">none</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="o">//</span> <span class="ow">not</span> <span class="n">yet</span> <span class="n">implemented</span>
+</code></pre><pre class="highlight qml tab-qml"><code><span class="c1">// not yet implemented</span>
+</code></pre><pre class="highlight cpp tab-cpp--ofx"><code><span class="c1">// not yet implemented
+</span></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre>
+<pre class="highlight plaintext tab-plaintext--pd"><img src="images/pd/recall_safe.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--max"><img src="images/max/recall_safe.png" /></pre>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">n</span> <span class="o">=</span> <span class="nx">OSSIA_Node</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'super_important_node'</span><span class="p">);</span>
+<span class="nx">n</span><span class="p">.</span><span class="nx">priority</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 </code></pre><h2 id='refresh-rate'>Refresh rate</h2>
 <p>An optional value that says how often a value should be updated. 
 Currently does not work in all implementations.</p>
@@ -1901,7 +1924,11 @@ set the state of the device tree.</p>
 
 <span class="c1">// reload the original state preset</span>
 <span class="nx">d</span><span class="p">.</span><span class="nx">load_preset</span><span class="p">();</span>
-</code></pre><h2 id='preset-instances'>Preset instances</h2>
+</code></pre>
+<blockquote>
+<p>(Note that the values for parameters with <code>recall_safe</code> attribute set to <code>1</code> will not be recalled) </p>
+</blockquote>
+<h2 id='preset-instances'>Preset instances</h2>
 <p>Being able to create new objects in reaction to the loading of a preset</p>
 <pre class="highlight c tab-c"><code></code></pre><pre class="highlight cpp tab-cpp--98"><code></code></pre><pre class="highlight cpp tab-cpp--14"><code></code></pre><pre class="highlight python tab-python"><code><span class="n">N</span><span class="o">/</span><span class="n">A</span>
 </code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code></code></pre><pre class="highlight plaintext tab-plaintext--max"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre><h1 id='utilities'>Utilities</h1><h2 id='logging'>Logging</h2>
