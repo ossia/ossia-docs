@@ -2244,6 +2244,51 @@ n = OSSIA_Node(~some_device, 'super_important_node');
 n.priority = 10;
 ```
 
+## Recall_safe
+
+Nodes with the recallSafe attribute set to 1 won’t be recalled by presets (or other state recall).
+
+```c
+ossia_node_t node = ...;
+ossia_node_set_recall_safe(node, 10);
+ossia_node_unset_recall_safe(node);
+```
+
+```cpp--98
+opp::node& node = ...;
+node.set_recall_safe(10);
+node.unset_recall_safe();
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_recall_safe(node, 10);
+ossia::net::set_recall_safe(node, ossia::none);
+```
+
+```python
+// not yet implemented
+```
+
+```qml
+// not yet implemented
+```
+
+```cpp--ofx
+// not yet implemented
+```
+
+```csharp
+```
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/recall_safe.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/recall_safe.png" /></pre>
+
+```javascript
+n = OSSIA_Node(~some_device, 'super_important_node');
+n.priority = 10;
+```
+
 ## Refresh rate
 
 An optional value that says how often a value should be updated. 
@@ -2801,6 +2846,9 @@ g.value = "something else";
 // reload the original state preset
 d.load_preset();
 ```
+
+> (Note that the values for parameters with ```recall_safe``` attribute set to ```1``` will not be recalled) 
+
 ## Preset instances
 
 Being able to create new objects in reaction to the loading of a preset
