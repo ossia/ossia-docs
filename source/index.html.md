@@ -88,6 +88,10 @@ clang++ -std=c++98 device.c -Iossia/include -Lossia/lib -lossia
 
 // Windows with MSVC: run in a Visual Studio shell:
 cl.exe device.c -Iossia/include ossia/lib/ossia.lib
+
+// You can have a look at the tutorial at 
+// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
+// for inspiration and examples on the usage of the safeC++ implementation
 ```
 
 ```cpp--14
@@ -210,7 +214,10 @@ ossia_protocol_free(proto);
 ```cpp--98
 #include <ossia-cpp/ossia-cpp98.hpp>
 ...
+// This will create a "supersoftware" device with default ports (OSC: 1234, WS: 5678)
 opp::oscquery_server dev("supersoftware");
+// Different ports can be specified as arguments:
+opp::oscquery_server dev("supersoftware", 4321, 8765);
 ```
 
 ```cpp--14
