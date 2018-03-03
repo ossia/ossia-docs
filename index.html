@@ -441,7 +441,11 @@ For now, protocols available in the implemenations are: plain OSC, OSCquery, Mid
 
 <span class="c1">// Windows with MSVC: run in a Visual Studio shell:
 </span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
-</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// device.cpp:
+
+<span class="c1">// You can have a look at the tutorial at 
+// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
+// for inspiration and examples on the usage of the safeC++ implementation
+</span></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// device.cpp:
 </span><span class="cp">#include &lt;ossia/ossia.hpp&gt;
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 
@@ -530,7 +534,10 @@ to <a href="http://localhost:5678">http://localhost:5678</a>.</p>
 <span class="n">ossia_protocol_free</span><span class="p">(</span><span class="n">proto</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
 </span><span class="p">...</span>
-<span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
+<span class="c1">// This will create a "supersoftware" device with default ports (OSC: 1234, WS: 5678)
+</span><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
+<span class="c1">// Different ports can be specified as arguments:
+</span><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">,</span> <span class="mi">4321</span><span class="p">,</span> <span class="mi">8765</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="cp">#include &lt;ossia/ossia.hpp&gt;
 </span><span class="p">...</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
