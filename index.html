@@ -427,12 +427,19 @@ For now, protocols available in the implemenations are: plain OSC, OSCquery, Mid
 
 <span class="c1">// Windows with MSVC: run in a Visual Studio shell:
 </span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c89</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
-</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="c1">// device.cpp:
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="c1">// You can have a look at the tutorial at 
+// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
+// for inspiration and examples on the usage of the safeC++ implementation
+</span>
+<span class="c1">// device.cpp:
 </span><span class="cp">#include &lt;ossia-cpp/ossia-cpp98.hpp&gt;
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 
 <span class="c1">// Assuming the release package is extracted here:
-</span>
+</span> <span class="p">.</span><span class="o">/</span><span class="n">ossia</span>
+
+<span class="n">The</span> <span class="n">compilation</span> <span class="n">commands</span> <span class="n">are</span><span class="o">:</span>
+
 <span class="c1">// Linux:
 </span><span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">98</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="o">-</span><span class="n">Lossia</span><span class="o">/</span><span class="n">lib</span> <span class="o">-</span><span class="n">lossia</span>
 
@@ -442,10 +449,7 @@ For now, protocols available in the implemenations are: plain OSC, OSCquery, Mid
 <span class="c1">// Windows with MSVC: run in a Visual Studio shell:
 </span><span class="n">cl</span><span class="p">.</span><span class="n">exe</span> <span class="n">device</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">Iossia</span><span class="o">/</span><span class="n">include</span> <span class="n">ossia</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ossia</span><span class="p">.</span><span class="n">lib</span>
 
-<span class="c1">// You can have a look at the tutorial at 
-// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
-// for inspiration and examples on the usage of the safeC++ implementation
-</span></code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// device.cpp:
+</code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="c1">// device.cpp:
 </span><span class="cp">#include &lt;ossia/ossia.hpp&gt;
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 
@@ -538,6 +542,11 @@ to <a href="http://localhost:5678">http://localhost:5678</a>.</p>
 </span><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
 <span class="c1">// Different ports can be specified as arguments:
 </span><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">,</span> <span class="mi">4321</span><span class="p">,</span> <span class="mi">8765</span><span class="p">);</span>
+
+<span class="c1">// A device can also be created without arguments:
+</span><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span>
+<span class="c1">// And configured later on:
+</span><span class="n">dev</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">,</span> <span class="mi">4321</span><span class="p">,</span> <span class="mi">8765</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="cp">#include &lt;ossia/ossia.hpp&gt;
 </span><span class="p">...</span>
 <span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
@@ -594,7 +603,7 @@ This allows to have a cleaner representation of the address/namespace, as is dem
 
 <span class="n">ossia_node_t</span> <span class="n">a_node</span> <span class="o">=</span> <span class="n">ossia_node_create</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">"/foo/blu"</span><span class="p">);</span>
 </code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span><span class="p">(</span><span class="s">"supersoftware"</span><span class="p">);</span>
-<span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_node</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
+<span class="n">opp</span><span class="o">::</span><span class="n">node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_child</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span><span class="p">{</span>
     <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ossia</span><span class="o">::</span><span class="n">oscquery</span><span class="o">::</span><span class="n">oscquery_server_protocol</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">),</span>
     <span class="s">"supersoftware"</span><span class="p">};</span>
@@ -652,11 +661,11 @@ This allows to have a cleaner representation of the address/namespace, as is dem
 </span></code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="n">opp</span><span class="o">::</span><span class="n">oscquery_server</span> <span class="n">dev</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="c1">// /foo/blu
-</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_node</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
+</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_child</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
 <span class="c1">// /foo/blu.1
-</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_node</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
+</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_child</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
 <span class="c1">// /foo/blu.2
-</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_node</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
+</span><span class="n">dev</span><span class="p">.</span><span class="n">get_root_node</span><span class="p">().</span><span class="n">create_child</span><span class="p">(</span><span class="s">"/foo/blu"</span><span class="p">));</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code><span class="n">ossia</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">generic_device</span> <span class="n">dev</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="c1">// /foo/bar
@@ -689,7 +698,10 @@ This allows to have a cleaner representation of the address/namespace, as is dem
 <p>The node structure is a tree that can be explored from the device root node as deep as needed going thru each child recursively.
 It is also possible to search for a particular node or a set of nodes using #pattern-matching features.</p>
 <pre class="highlight c tab-c"><code>
-</code></pre><pre class="highlight cpp tab-cpp--98"><code>
+</code></pre><pre class="highlight cpp tab-cpp--98"><code><span class="c1">// the get_namespace() method will return all children recursively by priority order from any node
+</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">opp</span><span class="o">::</span><span class="n">node</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">get_namespace</span><span class="p">();</span>
+<span class="c1">// this can be restricted to one level of hierarchy only (just direct children) with get_children()
+</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">opp</span><span class="o">::</span><span class="n">node</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">get_children</span><span class="p">();</span>
 </code></pre><pre class="highlight cpp tab-cpp--14"><code>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># a function to iterate on node's tree recursively</span>
 <span class="k">def</span> <span class="nf">iterate_on_children</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
@@ -703,6 +715,10 @@ It is also possible to search for a particular node or a set of nodes using #pat
 </code></pre><pre class="highlight qml tab-qml"><code>
 </code></pre><pre class="highlight cpp tab-cpp--ofx"><code>
 </code></pre><pre class="highlight csharp tab-csharp"><code>
+</code></pre><pre class="highlight plaintext tab-plaintext--pd"><code>Send the [namespace( message to any [ossia.model], [ossia.device] or [ossia] objects
+This will also return all parameters' current values. 
+</code></pre><pre class="highlight plaintext tab-plaintext--max"><code>Send the (namespace) message to any [ossia.model], [ossia.device] or [ossia] objects
+This will also return all parameters' current values. 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
 </code></pre><h2 id='creating-parameters'>Creating parameters</h2>
 <p>Each node can only have a single parameter.
@@ -1954,7 +1970,7 @@ set the state of the device tree.</p>
 <span class="c"># There is also some logging facilities available for network input/output</span>
 <span class="c"># by setting up a flag to True when exposing local device to a protocol</span>
 <span class="n">local_device</span><span class="o">.</span><span class="n">create_oscquery_server</span><span class="p">(</span><span class="mi">3456</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-<span class="n">local_device</span><span class="o">.</span><span class="n">create_osc_server</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">9997</span><span class="p">,</span> <span class="mi">9996</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">local_device</span><span class="o">.</span><span class="n">create_osc_server</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">9997</span><span class="p">,</span><span class="o">~~~~~~~~</span> <span class="mi">9996</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 
 </code></pre><pre class="highlight qml tab-qml"><code></code></pre><pre class="highlight cpp tab-cpp--ofx"><code></code></pre><pre class="highlight csharp tab-csharp"><code></code></pre><pre class="highlight plaintext tab-plaintext--pd"><code>TBI
 </code></pre>
