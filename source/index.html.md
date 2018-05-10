@@ -74,11 +74,18 @@ cl.exe -std=c89 device.c -Iossia/include ossia/lib/ossia.lib
 ```
 
 ```cpp--98
+// You can have a look at the tutorial at 
+// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
+// for inspiration and examples on the usage of the safeC++ implementation
+
 // device.cpp:
 #include <ossia-cpp/ossia-cpp98.hpp>
 int main(int argc, char** argv) { }
 
 // Assuming the release package is extracted here:
+ ./ossia
+
+The compilation commands are:
 
 // Linux:
 g++ -std=c++98 device.c -Iossia/include -Lossia/lib -lossia
@@ -89,9 +96,6 @@ clang++ -std=c++98 device.c -Iossia/include -Lossia/lib -lossia
 // Windows with MSVC: run in a Visual Studio shell:
 cl.exe device.c -Iossia/include ossia/lib/ossia.lib
 
-// You can have a look at the tutorial at 
-// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
-// for inspiration and examples on the usage of the safeC++ implementation
 ```
 
 ```cpp--14
@@ -218,6 +222,11 @@ ossia_protocol_free(proto);
 opp::oscquery_server dev("supersoftware");
 // Different ports can be specified as arguments:
 opp::oscquery_server dev("supersoftware", 4321, 8765);
+
+// A device can also be created without arguments:
+opp::oscquery_server dev
+// And configured later on:
+dev.setup("supersoftware", 4321, 8765);
 ```
 
 ```cpp--14
@@ -307,7 +316,7 @@ ossia_node_t a_node = ossia_node_create(root, "/foo/blu");
 
 ```cpp--98
 opp::oscquery_server dev("supersoftware");
-opp::node n = dev.get_root_node().create_node("/foo/blu"));
+opp::node n = dev.get_root_node().create_child("/foo/blu"));
 ```
 
 ```cpp--14
@@ -387,11 +396,11 @@ ossia_node_create(root, "/foo/blu"); // /foo/blu.2
 opp::oscquery_server dev = ...;
 
 // /foo/blu
-dev.get_root_node().create_node("/foo/blu"));
+dev.get_root_node().create_child("/foo/blu"));
 // /foo/blu.1
-dev.get_root_node().create_node("/foo/blu"));
+dev.get_root_node().create_child("/foo/blu"));
 // /foo/blu.2
-dev.get_root_node().create_node("/foo/blu"));
+dev.get_root_node().create_child("/foo/blu"));
 ```
 
 ```cpp--14
@@ -451,7 +460,10 @@ It is also possible to search for a particular node or a set of nodes using #pat
 ```
 
 ```cpp--98
-
+// the get_namespace() method will return all children recursively by priority order from any node
+std::vector<opp::node> tree = n.get_namespace();
+// this can be restricted to one level of hierarchy only (just direct children) with get_children()
+std::vector<opp::node> tree = n.get_children();
 ```
 
 ```cpp--14
@@ -480,6 +492,16 @@ iterate_on_children(local_device.root_node)
 
 ```csharp
 
+```
+
+```plaintext--pd
+Send the [namespace( message to any [ossia.model], [ossia.device] or [ossia] objects
+This will also return all parameters' current values. 
+```
+
+```plaintext--max
+Send the (namespace) message to any [ossia.model], [ossia.device] or [ossia] objects
+This will also return all parameters' current values. 
 ```
 
 ```javascript
@@ -2922,7 +2944,7 @@ while True:
 # There is also some logging facilities available for network input/output
 # by setting up a flag to True when exposing local device to a protocol
 local_device.create_oscquery_server(3456, 5678, True)
-local_device.create_osc_server("127.0.0.1", 9997, 9996, True)
+local_device.create_osc_server("127.0.0.1", 9997,~~~~~~~~ 9996, True)
 
 ```
 
