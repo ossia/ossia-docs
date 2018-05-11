@@ -520,7 +520,7 @@ Parameters can have the following types:
 * Impulse: no value; just a message.
 * ASCII Character: 'a', '0', '$'...
 * String
-* Tuple: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
+* List: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
 
 As an optimisation, specific types for 2, 3, and 4 floats are provided;
 they are referred to as Vec2f, Vec3f, Vec4f through the code.
@@ -1940,38 +1940,72 @@ p.unit = OSSIA_color.rgba;
 
 ### List of units
 
+Units are sorted by categories: every unit in a category is convertible to the other units in the same category. Every category (coined "dataspace" in the code) has a neutral to/from which conversions are made. This neutral unit is placed first in the list of units below.
+
+An unit can be expressed by:
+- category.unit (such as "position.cart2D"), 
+- only with the unit name (such as "cart2D", those being all unique), 
+- or with "nicknames", that are indicated in parentheses, after the unit name
+When setting them as an attribute.
+
+
 #### Position
 
-* cart2D
-* cart3D
-* spherical
-* polar
-* opengl
-* cylindrical
+* cart3D (xyz, pos, point, point3d, 3d, cartesian3d, coord, coordinate, coordinates, pvector, vertex):
+Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
+* cart2D (xy, complex, point2d, 2d, cartesian2d): 
+Cartesian 2-dimensional position (i.e. X, Y)
+* opengl (gl, position.gl):
+Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
+* spherical (aed):
+Polar 3-dimensional position (ie. aed: amplitude, elevation, distance)
+* polar (ad):
+Polar 2-dimensional position (ie. ad: amplitude, distance)
+* cylindrical (daz):
+Mixed 3-dimensional position (ie. daz: distance, amplitude, Z)
 
 
 
 #### Orientation
 
 * quaternion:
+An extension of the complex numbers for 3D orientation, in the form a+bi+cj+dk
 * euler:
+A triplet of angles (in degrees) describing the orientation of a rigid body with respect to a fixed coordinate system
 * axis:
+An angle (a, in degrees) relative to a 3-dimensional vector, expressed in the order X, Y, Z, a
+
+
 
 #### Color
 
-* argb: all between 0 - 1
+* argb (col): 
+4 float numbers between 0. and 1. describing respectively Alpha, Red, Green and Blue color values
 * rgba:
+4 float numbers between 0. and 1. describing respectively Red, Green, Blue and Alpha color values
 * rgb:
+3 float numbers between 0. and 1. describing respectively Red, Green and Blue color values
 * bgr:
-* argb8: all between 0 - 255
+3 float numbers between 0. and 1. describing respectively Blue, Green and Red color values
+* argb8: 
+4 int numbers between 0 and 255 describing respectively Alpha, Red, Green and Blue color values
 * hsv:
+3 float numbers between 0. and 1. describing respectively Hue, Saturation and Value (Luminosity) color values in the HSV colorspace
 * cmy8:
+3 int numbers between 0 and 255 describing respectively Cyan, Magenta, and Yellow color values
+* cmyk8:
+4 int numbers between 0 and 255 describing respectively Cyan, Magenta, Yellow and Black color values
+* Yxy
+* hunter_lab
+* cie_lab
+* cie_luv
 * todo: css? (rgb in 0, 1 and alpha in 0, 255)
 
 #### Angle
 
-* degree
 * radian
+* degree
+
 
 #### Distance
 
@@ -1993,18 +2027,23 @@ p.unit = OSSIA_color.rgba;
 * bark
 * bpm
 * cent
-* frequency
+* frequency (freq, frequence, Hz, hz, Hertz):
 * mel
-* midi_pitch
-* millisecond
+* midi_pitch (midinote): 
+* millisecond (ms)
 * playback_speed
+* sample (the lenght of a sample, for a sample_rate of 44100Hz)
 
 #### Gain
 
-* linear
+* linear:
+A linear gain in the [0. 1.] range, with 1. being the nominal level
 * midigain
+A value in the [0 127] range mimicing a MIDI gain controller. 100 for the nominal level, 127 for +12dB
 * decibel
+A single float value expressed in a logarithmic scale, typically to describe an audio gain (0dB being the nominal gain, < 0dB describing a signal attenuation, clipped at -96dB)
 * decibel_raw
+Same as deciBel, but unclipped.
 
 #### Speed
 
@@ -2025,9 +2064,9 @@ libossia proposes the following types:
 * File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
 * Generic buffer : when a string should be interpreted as a a raw binary blob.
 * Float array : when a parameter has a fixed number of floating point values, like vec2f.
-* Float list : when a tuple consists exclusively of values of type float.
+* Float list : when a list consists exclusively of values of type float.
 * Same for int list and string list.
-* Dynamic array : when a tuple's size may change during execution.
+* Dynamic array : when a list's size may change during execution.
 
 ```c
 ossia_parameter_t param = ...;
