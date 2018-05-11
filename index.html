@@ -732,7 +732,7 @@ Parameters can have the following types:</p>
 <li>Impulse: no value; just a message.</li>
 <li>ASCII Character: &#39;a&#39;, &#39;0&#39;, &#39;$&#39;...</li>
 <li>String</li>
-<li>Tuple: a generic list of values: <code>[3, &#39;a&#39;, 2.68, [&quot;foo&quot;, &quot;bar&quot;]]</code></li>
+<li>List: a generic list of values: <code>[3, &#39;a&#39;, 2.68, [&quot;foo&quot;, &quot;bar&quot;]]</code></li>
 </ul>
 
 <p>As an optimisation, specific types for 2, 3, and 4 floats are provided;
@@ -1510,36 +1510,66 @@ and they will automatically convert parameter values to/from this unit<br><br><i
 directly under the @type attribute:<br><br><img src="images/max/unit-shorter.png" /></pre>
 <pre class="highlight javascript tab-javascript"><code><span class="o">~</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">OSSIA_Parameter</span><span class="p">(</span><span class="o">~</span><span class="nx">some_device</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="nx">Vec4f</span><span class="p">);</span>
 <span class="nx">p</span><span class="p">.</span><span class="nx">unit</span> <span class="o">=</span> <span class="nx">OSSIA_color</span><span class="p">.</span><span class="nx">rgba</span><span class="p">;</span>
-</code></pre><h3 id='list-of-units'>List of units</h3><h4 id='position'>Position</h4>
+</code></pre><h3 id='list-of-units'>List of units</h3>
+<p>Units are sorted by categories: every unit in a category is convertible to the other units in the same category. Every category (coined &quot;dataspace&quot; in the code) has a neutral to/from which conversions are made. This neutral unit is placed first in the list of units below.</p>
+
+<p>An unit can be expressed by:
+- category.unit (such as &quot;position.cart2D&quot;), 
+- only with the unit name (such as &quot;cart2D&quot;, those being all unique), 
+- or with &quot;nicknames&quot;, that are indicated in parentheses, after the unit name
+When setting them as an attribute.</p>
+<h4 id='position'>Position</h4>
 <ul>
-<li>cart2D</li>
-<li>cart3D</li>
-<li>spherical</li>
-<li>polar</li>
-<li>opengl</li>
-<li>cylindrical</li>
+<li>cart3D (xyz, pos, point, point3d, 3d, cartesian3d, coord, coordinate, coordinates, pvector, vertex):
+Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system</li>
+<li>cart2D (xy, complex, point2d, 2d, cartesian2d): 
+Cartesian 2-dimensional position (i.e. X, Y)</li>
+<li>opengl (gl, position.gl):
+Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system</li>
+<li>spherical (aed):
+Polar 3-dimensional position (ie. aed: amplitude, elevation, distance)</li>
+<li>polar (ad):
+Polar 2-dimensional position (ie. ad: amplitude, distance)</li>
+<li>cylindrical (daz):
+Mixed 3-dimensional position (ie. daz: distance, amplitude, Z)</li>
 </ul>
 <h4 id='orientation'>Orientation</h4>
 <ul>
-<li>quaternion:</li>
-<li>euler:</li>
-<li>axis:</li>
+<li>quaternion:
+An extension of the complex numbers for 3D orientation, in the form a+bi+cj+dk</li>
+<li>euler:
+A triplet of angles (in degrees) describing the orientation of a rigid body with respect to a fixed coordinate system</li>
+<li>axis:
+An angle (a, in degrees) relative to a 3-dimensional vector, expressed in the order X, Y, Z, a</li>
 </ul>
 <h4 id='color'>Color</h4>
 <ul>
-<li>argb: all between 0 - 1</li>
-<li>rgba:</li>
-<li>rgb:</li>
-<li>bgr:</li>
-<li>argb8: all between 0 - 255</li>
-<li>hsv:</li>
-<li>cmy8:</li>
+<li>argb (col): 
+4 float numbers between 0. and 1. describing respectively Alpha, Red, Green and Blue color values</li>
+<li>rgba:
+4 float numbers between 0. and 1. describing respectively Red, Green, Blue and Alpha color values</li>
+<li>rgb:
+3 float numbers between 0. and 1. describing respectively Red, Green and Blue color values</li>
+<li>bgr:
+3 float numbers between 0. and 1. describing respectively Blue, Green and Red color values</li>
+<li>argb8: 
+4 int numbers between 0 and 255 describing respectively Alpha, Red, Green and Blue color values</li>
+<li>hsv:
+3 float numbers between 0. and 1. describing respectively Hue, Saturation and Value (Luminosity) color values in the HSV colorspace</li>
+<li>cmy8:
+3 int numbers between 0 and 255 describing respectively Cyan, Magenta, and Yellow color values</li>
+<li>cmyk8:
+4 int numbers between 0 and 255 describing respectively Cyan, Magenta, Yellow and Black color values</li>
+<li>Yxy</li>
+<li>hunter_lab</li>
+<li>cie_lab</li>
+<li>cie_luv</li>
 <li>todo: css? (rgb in 0, 1 and alpha in 0, 255)</li>
 </ul>
 <h4 id='angle'>Angle</h4>
 <ul>
-<li>degree</li>
 <li>radian</li>
+<li>degree</li>
 </ul>
 <h4 id='distance'>Distance</h4>
 <ul>
@@ -1561,18 +1591,23 @@ directly under the @type attribute:<br><br><img src="images/max/unit-shorter.png
 <li>bark</li>
 <li>bpm</li>
 <li>cent</li>
-<li>frequency</li>
+<li>frequency (freq, frequence, Hz, hz, Hertz):</li>
 <li>mel</li>
-<li>midi_pitch</li>
-<li>millisecond</li>
+<li>midi_pitch (midinote): </li>
+<li>millisecond (ms)</li>
 <li>playback_speed</li>
+<li>sample (the lenght of a sample, for a sample_rate of 44100Hz)</li>
 </ul>
 <h4 id='gain'>Gain</h4>
 <ul>
-<li>linear</li>
-<li>midigain</li>
-<li>decibel</li>
-<li>decibel_raw</li>
+<li>linear:
+A linear gain in the [0. 1.] range, with 1. being the nominal level</li>
+<li>midigain
+A value in the [0 127] range mimicing a MIDI gain controller. 100 for the nominal level, 127 for +12dB</li>
+<li>decibel
+A single float value expressed in a logarithmic scale, typically to describe an audio gain (0dB being the nominal gain, &lt; 0dB describing a signal attenuation, clipped at -96dB)</li>
+<li>decibel_raw
+Same as deciBel, but unclipped.</li>
 </ul>
 <h4 id='speed'>Speed</h4>
 <ul>
@@ -1593,9 +1628,9 @@ They can also be used to enable some optimizations.</p>
 <li>File path : used for when a string is a filesystem path, like <code>/home/self/sound.wav</code> or <code>c:\document.txt</code></li>
 <li>Generic buffer : when a string should be interpreted as a a raw binary blob.</li>
 <li>Float array : when a parameter has a fixed number of floating point values, like vec2f.</li>
-<li>Float list : when a tuple consists exclusively of values of type float.</li>
+<li>Float list : when a list consists exclusively of values of type float.</li>
 <li>Same for int list and string list.</li>
-<li>Dynamic array : when a tuple&#39;s size may change during execution.</li>
+<li>Dynamic array : when a list&#39;s size may change during execution.</li>
 </ul>
 <pre class="highlight c tab-c"><code><span class="n">ossia_parameter_t</span> <span class="n">param</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="n">ossia_parameter_set_extended_type</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s">"filepath"</span><span class="p">);</span>
