@@ -759,14 +759,14 @@ ossia_parameter_push_callback(a_parameter, my_callback, NULL);
 ```
 
 ```cpp--98
-void my_callback(void* ctx, const opp::value& v)
-{
-  float f = v.to_float();
-}
-...
+// Create a value callback, and tore it into a callback_index
+opp::callback_index callbackIt = aNode.set_value_callback([](void* context, const opp::value& val)
+      {
+        /* ... some lambda function here ... */  
+      },  this); // or another context
 
-opp::node n = ...;
-n.set_value_callback(my_callback, 0);
+// Later on, you can remve this callback by using the callback_index, with:
+aNode.remove_value_callback(callbackIt);
 ```
 
 ```cpp--14
@@ -1583,10 +1583,11 @@ Ossia.Parameter {
 ```
 
 
-## Domain (min/max)
+## Domain (min/max, set of values)
 
-Domains allow to set a range of accepted values for a given parameter.
-Only meaningful for nodes with parameters.
+Domains allow to set a range of accepted values for a given parameter. <br>
+This range can be continuous (between a min and max), or discrete: a set of accepted values.<br>
+A continuous range is only meaningful for nodes with parameters of numerical types (ie ints, floats, vecnfs and some lists) and a discrete range for nodes with parameters of about any types except Impulse
 
 > This sets a node's range between -5 and 5.
 
@@ -1799,7 +1800,7 @@ Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
 ## Repetition filter
 
 When the repetition filter is enabled, if the same value is sent twice,
-the second time will be filtered.
+the second time will be filtered out.
 
 ```c
 ossia_parameter_t param = ...;
@@ -1937,122 +1938,116 @@ directly under the @type attribute:<br><br><img src="/images/max/unit-shorter.pn
 p.unit = OSSIA_color.rgba;
 ```
 
+ Units are sorted by categories (coined "dataspace" ): every unit in a category is convertible to the other units in the same category. <br>
+ Every category has a neutral unit to/from which conversions are made. <br>
 
-### List of units
+ An unit, when setting it as a parameter's attribute, can be expressed as a string in the form:<br>
+ - "category.unit" (such as "position.cart2D"),<br>
+ - only with the unit name (such as "cart2D", those being all unique), <br>
+ - or with "nicknames", that are indicated in parentheses, after the unit name <br>
+  A list of all supported units is given below.
 
-Units are sorted by categories: every unit in a category is convertible to the other units in the same category. Every category (coined "dataspace" in the code) has a neutral to/from which conversions are made. This neutral unit is placed first in the list of units below.
-
-An unit can be expressed by:
-- category.unit (such as "position.cart2D"), 
-- only with the unit name (such as "cart2D", those being all unique), 
-- or with "nicknames", that are indicated in parentheses, after the unit name
-When setting them as an attribute.
-
+### List of Units
 
 #### Position
 
-* cart3D (xyz, pos, point, point3d, 3d, cartesian3d, coord, coordinate, coordinates, pvector, vertex):
+* **cart3D** (*xyz*, *pos*, *point*, *point3d*, *3d*, *cartesian3d*, *coord*, *coordinate*, *coordinates*, *pvector*, *vertex*):
 Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
-* cart2D (xy, complex, point2d, 2d, cartesian2d): 
+* **cart2D** (*xy*, *complex*, *point2d*, *2d*, *cartesian2d*): 
 Cartesian 2-dimensional position (i.e. X, Y)
-* opengl (gl, position.gl):
+* **opengl** (*gl*, *position.gl*):
 Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
-* spherical (aed):
+* **spherical** (*aed*):
 Polar 3-dimensional position (ie. aed: amplitude, elevation, distance)
-* polar (ad):
+* **polar** (*ad*):
 Polar 2-dimensional position (ie. ad: amplitude, distance)
-* cylindrical (daz):
+* **cylindrical** (*daz*):
 Mixed 3-dimensional position (ie. daz: distance, amplitude, Z)
 
 
 
 #### Orientation
 
-* quaternion:
+* **quaternion**:
 An extension of the complex numbers for 3D orientation, in the form a+bi+cj+dk
-* euler:
+* **euler**:
 A triplet of angles (in degrees) describing the orientation of a rigid body with respect to a fixed coordinate system
-* axis:
+* **axis**:
 An angle (a, in degrees) relative to a 3-dimensional vector, expressed in the order X, Y, Z, a
 
 
 
 #### Color
 
-* argb (col): 
+* **argb** (*col*): 
 4 float numbers between 0. and 1. describing respectively Alpha, Red, Green and Blue color values
-* rgba:
+* **rgba**:
 4 float numbers between 0. and 1. describing respectively Red, Green, Blue and Alpha color values
-* rgb:
+* **rgb**:
 3 float numbers between 0. and 1. describing respectively Red, Green and Blue color values
-* bgr:
+* **bgr**:
 3 float numbers between 0. and 1. describing respectively Blue, Green and Red color values
-* argb8: 
+* **argb8**: 
 4 int numbers between 0 and 255 describing respectively Alpha, Red, Green and Blue color values
-* hsv:
+* **hsv**:
 3 float numbers between 0. and 1. describing respectively Hue, Saturation and Value (Luminosity) color values in the HSV colorspace
-* cmy8:
+* **cmy8**:
 3 int numbers between 0 and 255 describing respectively Cyan, Magenta, and Yellow color values
-* cmyk8:
+* **cmyk8**:
 4 int numbers between 0 and 255 describing respectively Cyan, Magenta, Yellow and Black color values
-* Yxy
-* hunter_lab
-* cie_lab
-* cie_luv
-* todo: css? (rgb in 0, 1 and alpha in 0, 255)
 
 #### Angle
 
-* radian
-* degree
+* **radian**
+* **degree**
 
 
 #### Distance
 
-* meter
-* kilometer
-* decimeter
-* centimeter
-* millimeter
-* micrometer
-* nanometer
-* picometer
-* inch
-* foot
-* mile
+* **meter**
+* **kilometer**
+* **decimeter**
+* **centimeter**
+* **millimeter**
+* **micrometer**
+* **nanometer**
+* **picometer**
+* **inch**
+* **foot**
+* **mile**
 
 #### Time
 
-* second
-* bark
-* bpm
-* cent
-* frequency (freq, frequence, Hz, hz, Hertz):
-* mel
-* midi_pitch (midinote): 
-* millisecond (ms)
-* playback_speed
-* sample (the lenght of a sample, for a sample_rate of 44100Hz)
+* **second**
+* **bark**
+* **bpm**
+* **cent**
+* **frequency** (*freq*, *frequence*, *Hz*, *hz*, *Hertz*):
+* **mel**
+* **midi_pitch** (*midinote*): 
+* **millisecond** (*ms*)
+* **playback_speed**
+* **sample** (the length of a sample, for a sample_rate of 44100Hz)
 
 #### Gain
 
-* linear:
+* **linear**:
 A linear gain in the [0. 1.] range, with 1. being the nominal level
-* midigain
+* **midigain**:
 A value in the [0 127] range mimicing a MIDI gain controller. 100 for the nominal level, 127 for +12dB
-* decibel
+* **decibel** (*db*, *dB*):
 A single float value expressed in a logarithmic scale, typically to describe an audio gain (0dB being the nominal gain, < 0dB describing a signal attenuation, clipped at -96dB)
-* decibel_raw
+* **decibel_raw**
 Same as deciBel, but unclipped.
 
 #### Speed
 
-* meter_per_second
-* miles_per_hour
-* kilometer_per_hour
-* knot
-* foot_per_second
-* foot_per_hour
+* **meter_per_second**
+* **miles_per_hour**
+* **kilometer_per_hour**
+* **knot**
+* **foot_per_second**
+* **foot_per_hour**
 
 ## Extended type
 
@@ -2223,7 +2218,7 @@ n.description = "a pretty node";
 
 ## Tags
 
-An optional array of tags for nodes.
+An optional array of tags for nodes, expressed as one string per tag.
 
 ```c
 ossia_node_t node = ...;
@@ -2509,50 +2504,6 @@ Ossia.Node {
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
 ```
 
-## Zombie
-
-This is a read-only attribute: it informs of whether a node is in a zombie state.
-A zombie node is an node in a remote device, whose source has been removed.
-It is kept in the mirrors but marked as such.
-
-```c
-ossia_node_t node = ...;
-int z = ossia_node_get_zombie(node);
-```
-
-```cpp--98
-opp::node& node = ...;
-bool z = node.get_zombie();
-```
-
-```cpp--14
-ossia::net::node_base& node = ...;
-bool z = ossia::net::get_zombie(node);
-```
-
-```python
-node.zombie = True
-```
-
-```qml
-N/A
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-```plaintext--pd
-```
-
-```plaintext--max
-```
-
-```javascript
-~some_param.zombie;
-```
 
 ## Critical
 
@@ -2603,9 +2554,9 @@ p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
 p.critical = false;
 ```
 
-## Enabled/Disabled
+## Disabled
 
-This attribute will disable a node: it will stop sending messages to the network.
+This attribute will disable a node: it will stop receiving/sending messages from/to the network.
 
 ```c
 ossia_node_t node = ...;
@@ -2649,53 +2600,11 @@ n.enable;
 n.is_disabled;
 ```
 
-## Hidden
-
-This attribute is to use for nodes that are not to be exposed to the network.
-
-```c
-ossia_node_t node = ...;
-ossia_node_set_hidden(node, 1);
-```
-
-```cpp--98
-opp::node& node = ...;
-node.set_hidden(true);
-```
-
-```cpp--14
-ossia::net::node_base& node = ...;
-ossia::net::set_hidden(node, true);
-```
-
-```python
-node.hidden = True
-```
-
-```qml
-Ossia.Node { 
-  hidden: true
-}
-```
-
-```cpp--ofx
-```
-
-```csharp
-```
-
-<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
-
-<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
-
-```javascript
-n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
-```
 
 ## Muted
 
 This attribute will disable a node: it will stop sending messages to the network.
-Unlike the "enabled/disabled" attribute, it won't propagate to other computers.
+Unlike the "disabled" attribute, it won't propagate to other mirrored devices.
 
 ```c
 ossia_node_t node = ...;
@@ -2742,6 +2651,96 @@ n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
 n.muted = false;
 ```
 
+## Hidden
+
+This attribute is to use for nodes that are not to be exposed to the network.
+
+```c
+ossia_node_t node = ...;
+ossia_node_set_hidden(node, 1);
+```
+
+```cpp--98
+opp::node& node = ...;
+node.set_hidden(true);
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+ossia::net::set_hidden(node, true);
+```
+
+```python
+node.hidden = True
+```
+
+```qml
+Ossia.Node { 
+  hidden: true
+}
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+<pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
+
+<pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
+
+```javascript
+n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
+```
+
+
+## Zombie
+
+This is a read-only attribute: it informs of whether a node is in a zombie state.
+A zombie node is an node in a remote device, whose source has been removed.
+It is kept in the mirrors but marked as such.
+
+```c
+ossia_node_t node = ...;
+int z = ossia_node_get_zombie(node);
+```
+
+```cpp--98
+opp::node& node = ...;
+bool z = node.get_zombie();
+```
+
+```cpp--14
+ossia::net::node_base& node = ...;
+bool z = ossia::net::get_zombie(node);
+```
+
+```python
+node.zombie = True
+```
+
+```qml
+N/A
+```
+
+```cpp--ofx
+```
+
+```csharp
+```
+
+```plaintext--pd
+```
+
+```plaintext--max
+```
+
+```javascript
+~some_param.zombie;
+```
+
+
 # Preset support
 ## Loading and saving presets
 
@@ -2756,6 +2755,7 @@ ossia_devices_make_preset(device, &preset);
 ```
 
 ```cpp--98
+// No support for presets yet
 ```
 
 ```cpp--14
