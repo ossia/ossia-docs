@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Manually declare a namespace - Score documentation</title>
+        <title>Interpolation Process - Score documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -70,7 +70,7 @@
 </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">In depth <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -79,29 +79,29 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../../in_depth/automation_process/index.html">Automation Process</a>
+    <a href="../automation_process/index.html">Automation Process</a>
+</li>
+            
+<li class="active">
+    <a href="index.html">Interpolation Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/interpolation_process/index.html">Interpolation Process</a>
+    <a href="../mapping_process/index.html">Mapping Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/mapping_process/index.html">Mapping Process</a>
+    <a href="../loop_process/index.html">Loop Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/loop_process/index.html">Loop Process</a>
-</li>
-            
-<li >
-    <a href="../../in_depth/scenario_process/index.html">Scenario Process</a>
+    <a href="../scenario_process/index.html">Scenario Process</a>
 </li>
     </ul>
   </li>
                         </ul>
                     </li>
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">How to ? <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -110,15 +110,15 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../declare_an_osc_device/index.html">Setup an OSC device</a>
-</li>
-            
-<li class="active">
-    <a href="index.html">Manually declare a namespace</a>
+    <a href="../../howtos/declare_an_osc_device/index.html">Setup an OSC device</a>
 </li>
             
 <li >
-    <a href="../namespace_learning/index.html">Use the learn function</a>
+    <a href="../../howtos/manual_namespace_setup/index.html">Manually declare a namespace</a>
+</li>
+            
+<li >
+    <a href="../../howtos/namespace_learning/index.html">Use the learn function</a>
 </li>
     </ul>
   </li>
@@ -128,7 +128,7 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../update_state/index.html">Update stored state</a>
+    <a href="../../howtos/update_state/index.html">Update stored state</a>
 </li>
     </ul>
   </li>
@@ -143,12 +143,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../declare_an_osc_device/index.html">
+                        <a rel="next" href="../automation_process/index.html">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../namespace_learning/index.html">
+                        <a rel="prev" href="../mapping_process/index.html">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -160,39 +160,46 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#how-to-manually-declare-a-namespace">How to manually declare a namespace ?</a></li>
-            <li><a href="#saving-namespace-as-a-file">Saving namespace as a file</a></li>
+        <li class="main active"><a href="#process-overview-interpolation">Process overview: Interpolation</a></li>
+            <li><a href="#presentation">Presentation</a></li>
+            <li><a href="#edition">Edition</a></li>
+            <li><a href="#execution">Execution</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="how-to-manually-declare-a-namespace">How to manually declare a namespace ?</h1>
-<p>When not using Score with an application providing querying mechanism (such as OSCQuery) or echoing its parameters state, you need to manually add the parameter addresses to your device setup. Once having <a href="../declare_an_osc_device/index.html">setup an OSC device</a>, click on the device name and from the contextual menu, choose <code>Add child</code> to add an address at a level below. (you may as well choose <code>Add sibling</code> when right-clicking on a parameter name to add a parameter at the same hierarchical level)</p>
-<p><img alt="Adding child in namespace" src="../../images/adding_child.png" /></p>
-<p>This brings a configuration window for the parameter to declare in the namespace.</p>
-<p>Score (along with some compatible protocols such as OSCQuery or Minuit) offers a number of attributes describing a parameter behaviour. Setting up these attributes allows to benefit from a number of Score handy features such as automatic value range setup when writing automations, repetitions filtering or unit conversion, to name a few.</p>
-<p><img alt="Edit node" src="../../images/edit_nodes_attributes.png" /></p>
-<p>These attributes are the following:</p>
+<h1 id="process-overview-interpolation">Process overview: Interpolation</h1>
+<h2 id="presentation">Presentation</h2>
+<p>The interpolation is very similar to the automation.
+It sends a set of values over time, given by a curve, and it is green instead of red.
+However, instead of sending values that graphically looks like the curve, it sends values
+that are interpolated between the first and last state of the parent interval for its address.</p>
+<p><img class="wp-image-1334 size-full" src="http://ossia.io/wp-content/uploads/2016/11/interpol.png" alt="interpol" width="237" height="154" /></p>
+<h2 id="edition">Edition</h2>
+<p>From an edition point of view, an interpolation is identical to an automation : it is just a curve.</p>
+<h2 id="execution">Execution</h2>
+<p>In order to work, an interpolation requires :</p>
 <ul>
-<li>Parameter name</li>
-<li>Type of value</li>
-<li>Default value</li>
-<li>Domain (range)</li>
-<li>Clip mode</li>
-<li>I/O type</li>
-<li>Repetitions filter</li>
-<li>Optional tags</li>
-<li>Unit</li>
-<li>Description</li>
+<li>An address</li>
+<li>A start state with a value for this address</li>
+<li>An end state with a value for this address</li>
 </ul>
-<p>Please see <a href="https://ossia.github.io/#node-and-parameter-attributes">libossia documentation page</a> for detailed explanation on these attributes.</p>
-<p>Just fill these various optional attributes for the parameter to declare then click the <code>Ok</code> button. Freshly created parameter now appears in the Device explorer.</p>
-<blockquote>
-<p>Note that at the time of this writing, it is not possible to add in one go a parameter under several nodes (ie. <code>/foo/bar/my_parameter</code>). For the time being, you need to add the various nodes one at each time and set <code>container</code> as type. Then right-click on the created node and select <code>Add child</code> as many times as needed.</p>
-</blockquote>
-<h2 id="saving-namespace-as-a-file">Saving namespace as a file</h2>
-<p>When done adding the various parameters of your device, you can save the resulting namespace as a file for later use. Hence when working with this device in another project, you will be able to import the namespace when setting up the device and avoid the tedious manual namespace declaration above.</p>
-<p>To do so, right-click on your device name, then from the contextual menu, choose <code>Export device</code>.</p></div>
+<p>For instance, with comment blocks to show what's in the states :</p>
+<p><img class="alignnone size-medium wp-image-1335" src="http://ossia.io/wp-content/uploads/2016/11/interpol-2-300x174.png" alt="interpol-2" width="300" height="174" /></p>
+<p>For now, this curve behaves exactly like an automation : at t=0, the value 0 will be sent, at mid-course, the value 25, and at the end, the value 50.</p>
+<p>A first difference arises if the states are in the other order :</p>
+<p><img class="alignnone size-medium wp-image-1336" src="http://ossia.io/wp-content/uploads/2016/11/interpol-3-300x181.png" alt="interpol-3" width="300" height="181" /></p>
+<p>Here, even though the curve seems to increase, the value will actually do 50, 49, ..., 25, ..., 0.
+Basically:</p>
+<ul>
+<li>A point at the <strong>bottom</strong> of the curve has the value of the <strong>start</strong> start</li>
+<li>A point at the <strong>top</strong> of the curve has the value of the <strong>end</strong> state</li>
+</ul>
+<p>The interpolation is also useful with arrays : each array value will be interpolated one-by-one.
+For instance, in this case :</p>
+<p><img class="alignnone size-medium wp-image-1337" src="http://ossia.io/wp-content/uploads/2016/11/interpol-array-300x189.png" alt="interpol-array" width="300" height="189" /></p>
+<p>The sent values will look like [ 10, 0, 5 ],  [ 9, 1, 5 ], ..., [ 5, 5, 5 ], ..., [ 0, 10, 5 ].</p>
+<p>Values of non-interpolable types (strings) will just be copied for each sent message.</p></div>
         </div>
 
         <footer class="col-md-12">

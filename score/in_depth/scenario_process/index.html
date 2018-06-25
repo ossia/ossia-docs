@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Manually declare a namespace - Score documentation</title>
+        <title>Scenario Process - Score documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -70,7 +70,7 @@
 </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">In depth <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -79,29 +79,29 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../../in_depth/automation_process/index.html">Automation Process</a>
+    <a href="../automation_process/index.html">Automation Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/interpolation_process/index.html">Interpolation Process</a>
+    <a href="../interpolation_process/index.html">Interpolation Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/mapping_process/index.html">Mapping Process</a>
+    <a href="../mapping_process/index.html">Mapping Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/loop_process/index.html">Loop Process</a>
+    <a href="../loop_process/index.html">Loop Process</a>
 </li>
             
-<li >
-    <a href="../../in_depth/scenario_process/index.html">Scenario Process</a>
+<li class="active">
+    <a href="index.html">Scenario Process</a>
 </li>
     </ul>
   </li>
                         </ul>
                     </li>
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">How to ? <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -110,15 +110,15 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../declare_an_osc_device/index.html">Setup an OSC device</a>
-</li>
-            
-<li class="active">
-    <a href="index.html">Manually declare a namespace</a>
+    <a href="../../howtos/declare_an_osc_device/index.html">Setup an OSC device</a>
 </li>
             
 <li >
-    <a href="../namespace_learning/index.html">Use the learn function</a>
+    <a href="../../howtos/manual_namespace_setup/index.html">Manually declare a namespace</a>
+</li>
+            
+<li >
+    <a href="../../howtos/namespace_learning/index.html">Use the learn function</a>
 </li>
     </ul>
   </li>
@@ -128,7 +128,7 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../update_state/index.html">Update stored state</a>
+    <a href="../../howtos/update_state/index.html">Update stored state</a>
 </li>
     </ul>
   </li>
@@ -143,12 +143,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../declare_an_osc_device/index.html">
+                        <a rel="next" href="../loop_process/index.html">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../namespace_learning/index.html">
+                        <a rel="prev" href="../../howtos/declare_an_osc_device/index.html">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -160,39 +160,32 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#how-to-manually-declare-a-namespace">How to manually declare a namespace ?</a></li>
-            <li><a href="#saving-namespace-as-a-file">Saving namespace as a file</a></li>
+        <li class="main active"><a href="#process-overview-scenario">Process overview: Scenario</a></li>
+            <li><a href="#presentation">Presentation</a></li>
+            <li><a href="#edition">Edition</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="how-to-manually-declare-a-namespace">How to manually declare a namespace ?</h1>
-<p>When not using Score with an application providing querying mechanism (such as OSCQuery) or echoing its parameters state, you need to manually add the parameter addresses to your device setup. Once having <a href="../declare_an_osc_device/index.html">setup an OSC device</a>, click on the device name and from the contextual menu, choose <code>Add child</code> to add an address at a level below. (you may as well choose <code>Add sibling</code> when right-clicking on a parameter name to add a parameter at the same hierarchical level)</p>
-<p><img alt="Adding child in namespace" src="../../images/adding_child.png" /></p>
-<p>This brings a configuration window for the parameter to declare in the namespace.</p>
-<p>Score (along with some compatible protocols such as OSCQuery or Minuit) offers a number of attributes describing a parameter behaviour. Setting up these attributes allows to benefit from a number of Score handy features such as automatic value range setup when writing automations, repetitions filtering or unit conversion, to name a few.</p>
-<p><img alt="Edit node" src="../../images/edit_nodes_attributes.png" /></p>
-<p>These attributes are the following:</p>
-<ul>
-<li>Parameter name</li>
-<li>Type of value</li>
-<li>Default value</li>
-<li>Domain (range)</li>
-<li>Clip mode</li>
-<li>I/O type</li>
-<li>Repetitions filter</li>
-<li>Optional tags</li>
-<li>Unit</li>
-<li>Description</li>
-</ul>
-<p>Please see <a href="https://ossia.github.io/#node-and-parameter-attributes">libossia documentation page</a> for detailed explanation on these attributes.</p>
-<p>Just fill these various optional attributes for the parameter to declare then click the <code>Ok</code> button. Freshly created parameter now appears in the Device explorer.</p>
-<blockquote>
-<p>Note that at the time of this writing, it is not possible to add in one go a parameter under several nodes (ie. <code>/foo/bar/my_parameter</code>). For the time being, you need to add the various nodes one at each time and set <code>container</code> as type. Then right-click on the created node and select <code>Add child</code> as many times as needed.</p>
-</blockquote>
-<h2 id="saving-namespace-as-a-file">Saving namespace as a file</h2>
-<p>When done adding the various parameters of your device, you can save the resulting namespace as a file for later use. Hence when working with this device in another project, you will be able to import the namespace when setting up the device and avoid the tedious manual namespace declaration above.</p>
-<p>To do so, right-click on your device name, then from the contextual menu, choose <code>Export device</code>.</p></div>
+<h1 id="process-overview-scenario">Process overview: Scenario</h1>
+<h2 id="presentation">Presentation</h2>
+<p>The scenario process is the heart of <em>score</em>, its <em>raison d'être</em>.
+It allows to sequence the various objects presented before in a non-linear timeline.</p>
+<p>When opening <em>score</em> for the first time, the blank document is a root Time interval, the blue line at the top, which
+contains a single scenario.</p>
+<p><img class="alignnone wp-image-1350 " src="http://ossia.io/wp-content/uploads/2016/11/scenario.png" alt="scenario" width="342" height="381"></p>
+<h2 id="edition">Edition</h2>
+<p>The various edition features of a scenario are detailed in the tutorials.</p>
+<p>Sub-scenarios can of course be added :</p>
+<video src="http://ossia.io/wp-content/uploads/2016/11/scenario-1.webm" autoplay>
+
+## Full-view and hierarchy
+
+One can go inside sub-scenarios by using the Full-view feature of the interval.
+
+By double-clicking on a interval name, it switches to the main view.
+
+<video src="http://ossia.io/wp-content/uploads/2016/11/full-view.webm" autoplay></div>
         </div>
 
         <footer class="col-md-12">

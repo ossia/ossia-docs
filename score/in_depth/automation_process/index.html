@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Manually declare a namespace - Score documentation</title>
+        <title>Automation Process - Score documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -70,7 +70,7 @@
 </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">In depth <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -78,30 +78,30 @@
     <a href="#">Processes</a>
     <ul class="dropdown-menu">
             
-<li >
-    <a href="../../in_depth/automation_process/index.html">Automation Process</a>
+<li class="active">
+    <a href="index.html">Automation Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/interpolation_process/index.html">Interpolation Process</a>
+    <a href="../interpolation_process/index.html">Interpolation Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/mapping_process/index.html">Mapping Process</a>
+    <a href="../mapping_process/index.html">Mapping Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/loop_process/index.html">Loop Process</a>
+    <a href="../loop_process/index.html">Loop Process</a>
 </li>
             
 <li >
-    <a href="../../in_depth/scenario_process/index.html">Scenario Process</a>
+    <a href="../scenario_process/index.html">Scenario Process</a>
 </li>
     </ul>
   </li>
                         </ul>
                     </li>
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">How to ? <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
@@ -110,15 +110,15 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../declare_an_osc_device/index.html">Setup an OSC device</a>
-</li>
-            
-<li class="active">
-    <a href="index.html">Manually declare a namespace</a>
+    <a href="../../howtos/declare_an_osc_device/index.html">Setup an OSC device</a>
 </li>
             
 <li >
-    <a href="../namespace_learning/index.html">Use the learn function</a>
+    <a href="../../howtos/manual_namespace_setup/index.html">Manually declare a namespace</a>
+</li>
+            
+<li >
+    <a href="../../howtos/namespace_learning/index.html">Use the learn function</a>
 </li>
     </ul>
   </li>
@@ -128,7 +128,7 @@
     <ul class="dropdown-menu">
             
 <li >
-    <a href="../update_state/index.html">Update stored state</a>
+    <a href="../../howtos/update_state/index.html">Update stored state</a>
 </li>
     </ul>
   </li>
@@ -143,12 +143,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../declare_an_osc_device/index.html">
+                        <a rel="next" href="../../first_steps/first_scenario/index.html">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../namespace_learning/index.html">
+                        <a rel="prev" href="../interpolation_process/index.html">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -160,39 +160,75 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#how-to-manually-declare-a-namespace">How to manually declare a namespace ?</a></li>
-            <li><a href="#saving-namespace-as-a-file">Saving namespace as a file</a></li>
+        <li class="main active"><a href="#process-overview-automation">Process overview : Automation</a></li>
+            <li><a href="#presentation">Presentation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="how-to-manually-declare-a-namespace">How to manually declare a namespace ?</h1>
-<p>When not using Score with an application providing querying mechanism (such as OSCQuery) or echoing its parameters state, you need to manually add the parameter addresses to your device setup. Once having <a href="../declare_an_osc_device/index.html">setup an OSC device</a>, click on the device name and from the contextual menu, choose <code>Add child</code> to add an address at a level below. (you may as well choose <code>Add sibling</code> when right-clicking on a parameter name to add a parameter at the same hierarchical level)</p>
-<p><img alt="Adding child in namespace" src="../../images/adding_child.png" /></p>
-<p>This brings a configuration window for the parameter to declare in the namespace.</p>
-<p>Score (along with some compatible protocols such as OSCQuery or Minuit) offers a number of attributes describing a parameter behaviour. Setting up these attributes allows to benefit from a number of Score handy features such as automatic value range setup when writing automations, repetitions filtering or unit conversion, to name a few.</p>
-<p><img alt="Edit node" src="../../images/edit_nodes_attributes.png" /></p>
-<p>These attributes are the following:</p>
-<ul>
-<li>Parameter name</li>
-<li>Type of value</li>
-<li>Default value</li>
-<li>Domain (range)</li>
-<li>Clip mode</li>
-<li>I/O type</li>
-<li>Repetitions filter</li>
-<li>Optional tags</li>
-<li>Unit</li>
-<li>Description</li>
-</ul>
-<p>Please see <a href="https://ossia.github.io/#node-and-parameter-attributes">libossia documentation page</a> for detailed explanation on these attributes.</p>
-<p>Just fill these various optional attributes for the parameter to declare then click the <code>Ok</code> button. Freshly created parameter now appears in the Device explorer.</p>
-<blockquote>
-<p>Note that at the time of this writing, it is not possible to add in one go a parameter under several nodes (ie. <code>/foo/bar/my_parameter</code>). For the time being, you need to add the various nodes one at each time and set <code>container</code> as type. Then right-click on the created node and select <code>Add child</code> as many times as needed.</p>
-</blockquote>
-<h2 id="saving-namespace-as-a-file">Saving namespace as a file</h2>
-<p>When done adding the various parameters of your device, you can save the resulting namespace as a file for later use. Hence when working with this device in another project, you will be able to import the namespace when setting up the device and avoid the tedious manual namespace declaration above.</p>
-<p>To do so, right-click on your device name, then from the contextual menu, choose <code>Export device</code>.</p></div>
+<h1 id="process-overview-automation">Process overview : Automation</h1>
+<h2 id="presentation">Presentation</h2>
+<p>The automation is a central process in score.
+It is a curve that represents the variation of the value of an address in time, bounded between a minimum and a maximum, with an optional unit.
+It also allows tweening : instead of starting from a fixed point, it will query the current value of its address when executing, and adapt its first segment to start smoothly from this point.
+This is useful for transitions and will be explained in further details afterwards.</p>
+<p>[caption id="attachment_1071" align="alignnone" width="218"] A interval with a single automation[/caption]
+Curve edition
+Automations can have multiple break-points.
+Between each break-point, in green, there are curve segments, in red.</p>
+<p>New break-points can be added by pressing ⌘ (Mac) / Ctrl (Lin/Win) and clicking or simply double-clicking on the curve :</p>
+<p>[video width="254" height="156" webm="http://ossia.io/wp-content/uploads/2016/11/autom-click.webm"][/video]</p>
+<p>By default, the curvature of a segment can be modified by clicking on it, pressing Shift and moving the mouse vertically :</p>
+<p>[video width="254" height="156" webm="http://ossia.io/wp-content/uploads/2016/11/autom-curve.webm"][/video]</p>
+<p>For now, this is only possible for the "Power" curve segment type ; this is the default type of a segment.</p>
+<p>Other curve segments are available, including the common easing functions :</p>
+<p>[video width="484" height="300" webm="http://ossia.io/wp-content/uploads/2016/11/autom-ease.webm"][/video]</p>
+<p>One can remove points of the automation by selecting them and pressing delete or backspace :</p>
+<p>Finally, there are multiple edition modes :</p>
+<pre><code>The default mode locks the moved point between its two closest points.
+Another mode ("unlocked") allows overwriting them :[video width="244" height="160" webm="http://ossia.io/wp-content/uploads/2016/11/autom-nolock.webm"][/video]
+It is also possible to just move the point without overwriting the adjacent points :
+</code></pre>
+<p>[video width="272" height="256" webm="http://ossia.io/wp-content/uploads/2016/11/autom-nosuppress-1.webm"][/video]</p>
+<p>Automation inspector
+When clicking on the parent interval of an automation (in the previous examples drop0lead33),
+its inspector should become visible :</p>
+<p>The fields are as follows :</p>
+<pre><code>Address : the address on which the automation will send messages.
+</code></pre>
+<p>Nodes of the device explorer can be dragged here.
+It can be of the form :</p>
+<pre><code>aDevice:/anAddress : simple address
+aDevice:/anAddress[1] : if the address is an array, will access the *second* value of the array (e.g. for [27, 12, 5], it will be 12)
+aDevice:/anAddress[angle.radian] : if the address has an unit, will send the value in this unit. The value will be converted back to the address's original unit upon sending.
+
+aDevice:/anAddress[color.rgb.r] : same as before, but for a specific component of an unit.
+
+
+
+
+Tween : when checked, the automation will tween from the current value of the address.
+</code></pre>
+<p>The first curve segment will become dashed :</p>
+<p>When playing, if the value of the address when the automation is reached is 50, then the first segment will interpolate from 50 to the value of the second point.
+    Min / max : the values between which the automation evolves.
+The min is the value that will be sent if a point is at the bottom in the curve.
+The max is the value that will be sent if a point is at the top in the curve.</p>
+<p>Execution semantics
+The automation tries to send values that are graphically as close as possible as the shown curve.
+For the case where the address has no unit :</p>
+<pre><code>If the address is integer or floating point, the behavior is as expected.
+If the address is a fixed-width array, then :
+
+If there is no array accessor (such as an:/address[1]), all the values of the array are set to the value of the automation ([1, 1], [2, 2], [3, 3], etc.).
+If there is an array accessor, only the accessed value will be set : [1, 1], [1, 2], [1, 3], etc...
+</code></pre>
+<p>For the case where the address has an unit, the value will be converted to the correct unit afterwards.</p>
+<p>An interesting case is the cascading of units.
+For instance, given this case :</p>
+<p>First, the current value of aDevice:/light will be fetched, converted to the hue-saturation-value color space and its value will be set according to the first curve.
+Then, in the red-green-blue color-space, the red component will be increased.
+The result will be applied.</p></div>
         </div>
 
         <footer class="col-md-12">
