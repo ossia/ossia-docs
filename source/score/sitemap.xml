@@ -26,6 +26,31 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>/in_depth/automation_process/index.html</loc>
+     <lastmod>2018-06-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>/in_depth/interpolation_process/index.html</loc>
+     <lastmod>2018-06-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>/in_depth/mapping_process/index.html</loc>
+     <lastmod>2018-06-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>/in_depth/loop_process/index.html</loc>
+     <lastmod>2018-06-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>/in_depth/scenario_process/index.html</loc>
+     <lastmod>2018-06-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>/howtos/declare_an_osc_device/index.html</loc>
      <lastmod>2018-06-25</lastmod>
      <changefreq>daily</changefreq>
