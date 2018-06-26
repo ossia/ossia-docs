@@ -99,6 +99,10 @@
 </li>
     </ul>
   </li>
+                            
+<li >
+    <a href="../../in_depth/value_addressing/index.html">Avanced value addressing</a>
+</li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -189,10 +193,12 @@
 <p><img alt="Conditional execution" src="../../images/conditionnal_triggering.gif" /></p>
 <p>Of course as detailed later in this documentation, both interactive triggering and conditional execution can be used along with other features so you can get a precise control of time flow in your scenario.</p>
 <h2 id="hierarchicalcascading-time-flow">Hierarchical/cascading time flow</h2>
-<p>Using intervals between events in your scenario ensures that time will flow along the paths and will trigger events or automations as they are reached. Yet another feature allows you to add even more temporal flexibility, in a continuous way, by precisely controlling how time flows: hierarchical time flow. </p>
+<p>Using intervals between events in your scenario ensures that time will flow along the paths and will trigger events or automations as they are reached. Yet another feature allows you to add even more temporal flexibility, by precisely and continuously controlling the speed of the time-flow, in a hierarchical and cascading way. </p>
+<p><img alt="Controlling the global speed" src="../../images/speed-global.gif" /></p>
 <p>Each interval in a <em>Score</em> scenario provides a speed control allowing to adjust how time will travel along the paths during the execution of your scenario. This makes a very useful feature, in particular for live performance when you may want to slow down a particular process (ie. light automation) a bit as the performer on stage takes more time to reach his new position, while not affecting automations controlling another process (e.g. sound spatialization). </p>
+<p><img alt="Controlling speed locally" src="../../images/speed-sub-intervals.gif" /></p>
 <p>But the important point to note here is that changing the speed of a given interval will also affect the sub-paths it is feeding time to, in a <em>cascading way</em>. You may think of this speed variable as an <em>adjustable tap at each feeder pipe input</em>. For example, when using sub-scenarios, changing the speed of the parent interval will propagate to the whole scenario it holds. On the other hand, changing the speed of an interval inside the sub-scenario will only affect this interval and its attached processes while the parent interval time will progress as written in the scenario.</p>
-<p><img alt="Cascading time" src="../../images/cascading_time.gif" /></p>
+<p><img alt="Cascading speed control" src="../../images/speed-cascading.gif" /></p>
 <h2 id="out-of-time-events">Out of time events</h2>
 <p>As explained above, events must be connected to a time source to be executed as time progresses. When placed in <em>Score</em>’s timeline without being connected to a preceding interval, events are what we call <em>detached from the timeline</em> and their execution does not follow its progression. </p>
 <p>This can be extremely useful when you want to freely send parameters value or automation at any time in the execution of you scenario. </p>
