@@ -190,6 +190,8 @@
 <p>Note that adjusting the curvature of a segment is only available when using the default "Power" curve segment type</p>
 </blockquote>
 <p>Points of the automation can be deleted by selecting them and pressing the <code>delete</code> or <code>backspace</code> key.</p>
+<p>Automation's function can also be hand-drawn by holding the <code>alt</code> key and drawing in Automation editor. Drawn function will get optimized and transformed onto a beak-point function on mouse release so you can edit various points individually.</p>
+<p><img alt="Hand-drawing function" src="../../images/function_handraw.gif" /></p>
 <h3 id="advance-editing">Advance editing</h3>
 <p>The automation editor provides different options for point displacement. By default, moving a point horizontally is locked to the x position of the preceding and following point.</p>
 <p>Point displacement can be unlocked from the function contextual menu. To do so, right click in the automation editor and uncheck the option: <code>Automation (float) &gt; Lock between points</code>. When unlocked, moving a point beyond its preceding or following point will delete them.</p>
@@ -206,11 +208,11 @@
 <blockquote>
 <p>Notice that in tween mode, first curve segment will become dashed</p>
 </blockquote>
-<p>When playing, if the value of the address when the automation is reached is 50, then the first segment will interpolate from 50 to the value of the second point.</p>
+<p>In tween mode, when playing, if the automated parameter in the device is 50, the first segment will interpolate from 50 to the value of the second point set in the automation editor.</p>
 <h2 id="related-topic">Related topic</h2>
 <ul>
 <li><a href="../../first_steps/first_scenario/index.html#writing-processes">Adding processes</a></li>
-<li><a href="in_depth/value_addressing.md">Addressing value</a></li>
+<li><a href="../value_addressing/index.html">Addressing value</a></li>
 </ul></div>
         </div>
 
