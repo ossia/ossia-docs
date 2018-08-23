@@ -50,7 +50,7 @@ Here's a quick explanation of the bindings:
 
 
 The interactive sequencer [*score*](https://github.com/OSSIA/score) is an example of software based on *libossia*.
-An exhaustive (Doxygen) documentation can be found at http://ossia.github.io/libossia/html/index.html
+An exhaustive (Doxygen) documentation can be found at [http://ossia.github.io/libossia/html/index.html](http://ossia.github.io/libossia/html/index.html)
 
 
 # Setup
