@@ -2,7 +2,7 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - c: C
+  - c: C89
   - cpp--98: Safe C++
   - cpp--14: Fast C++
   - python: Python
@@ -11,10 +11,11 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - csharp: Unity3D
   - plaintext--pd: Pd
   - plaintext--max: Max
+  - java: Processing
   - javascript: SuperCollider
 
 toc_footers:
-  - <a href='https://github.com/OSSIA/libossia'>Get libossia on Github</a>
+  - <a href='https://github.com/ossia/libossia'>Get libossia on Github</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 
@@ -45,6 +46,7 @@ Here's a quick explanation of the bindings:
 * **Unity3D**: Bindings for the Unity3D game engine. Required C# files are [here](https://github.com/jcelerier/ossia-unity3d/tree/master/ossia).
 * **Pd**: PureData bindings. Requires at least Pd vanilla 0.48/
 * **Max**: Max/MSP bindings. Requires at least Max 7.
+* **Java**: Java bindings. Tested with Processing and OpenRNDR.
 * **SuperCollider**: Requires a custom build of SuperCollider.
 * **Faust**: A Faust architecture file is provided. It should be modified however to tailor your own system.
 
@@ -173,6 +175,17 @@ Extract the ossia package to Documents/Max 7/Packages.
 (Installing from Max's Package Manager will be possible upon public release)
 ```
 
+```java
+To use with Processing: 
+* Download http://repo1.maven.org/maven2/net/java/dev/jna/jna/4.5.1/jna-4.5.1.jar
+* Rename it to jna.jar
+* Put it in a "code" folder in the sketchbook
+  e.g. ~/sketchbook/sketch_123456/code/jna.jar
+* Then do the same with the ossia-java release
+  e.g. ~/sketchbook/sketch_123456/code/ossia-java.jar
+* You should now be able to import io.ossia;
+```
+
 ```javascript
 Notice that ossia-supercollider has only been tested on Mac, so far.
 to install, run the following commands
@@ -279,7 +292,12 @@ var dev = new Ossia.Device(proto, "supersoftware");
 <pre class="highlight plaintext tab-plaintext--max">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/max/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
 
 
+```java
+import io.ossia.*;
 
+Protocol protocol = new OscQueryServer(1234, 5678);
+Device device = new Device(p, "processing");
+```
 
 ```javascript
 ~some_device = OSSIA_Device('supersoftware');
@@ -377,6 +395,17 @@ dev.GetRootNode().AddChild ("scene");
 <pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/model.png" /></pre>
 
 
+```java
+import io.ossia.*;
+
+Protocol protocol = new OscQueryServer(1234, 5678);
+Device device = new Device(p, "processing");
+
+Node root = device.getRootNode();
+Node bar = root.createNode("/foo/bar");
+bar.setDescription("Rectangle fill color");
+```
+
 ```javascript
 ~some_device = OSSIA_Device('supersoftware');
 ~some_device.exposeOSCQueryServer(1234, 5678);
@@ -443,12 +472,19 @@ _myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/model2.png" /></pre>
 
+```java
+// Creates /foo/bar, /foo/bar.1, /foo/bar.2
+Node root = device.getRootNode();
+Node bar = root.createNode("/foo/bar");
+Node bar1 = root.createNode("/foo/bar");
+Node bar2 = root.createNode("/foo/bar");
+```
+
 ```javascript
 // this is not the case with ossia-supercollider, because of workflow issues
 // this will simply overwrite the /foo/bar parameter
 ~node = OSSIA_Node(parent: ~some_device, name: "/foo/bar");
 ~node_1 = OSSIA_Node(parent: ~some_device, name: "/foo/bar");
-
 ```
 
 ## Exploring nodes
@@ -503,6 +539,9 @@ This will also return all parameters' current values.
 ```plaintext--max
 Send the (namespace) message to any [ossia.model], [ossia.device] or [ossia] objects
 This will also return all parameters' current values. 
+```
+
+```java
 ```
 
 ```javascript
@@ -614,6 +653,21 @@ Ossia.Signal {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/parameter.png" /></pre>
 
 
+```java
+import io.ossia.*;
+
+Protocol protocol = new OscQueryServer(1234, 5678);
+Device device = new Device(p, "processing");
+
+Node root = device.getRootNode();
+Node bar = root.createNode("/foo/bar");
+bar.setDescription("Rectangle fill color");
+
+Parameter my_color = bar.createParameter(Type.VEC4F_T);
+my_color.setUnit("color.rgba8");
+```
+```
+
 ```javascript
 
 ~param = OSSIA_Parameter(~some_device, 'int_test', Integer);
@@ -661,6 +715,10 @@ onSomething: {
 
 <pre class="highlight plaintext tab-plaintext--max">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/max/parameter-numbers.png" /></pre>
 
+
+```java
+my_color.push(120f, 20f, 50f, 255f);
+```
 
 ```javascript
 ~param.value = 347;
@@ -725,6 +783,10 @@ console.log(param.value)
 <pre class="highlight plaintext tab-plaintext--pd">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/pd/remote.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/max/remote.png" /></pre>
+
+```java
+my_color.getVec4()[0]; // 120.0 according to the previous push() call
+```
 
 ```javascript
 ~param.value.postln;
@@ -825,6 +887,9 @@ N/A
 N/A
 ```
 
+```java
+```
+
 ```javascript
 ~param.callback = { |value|
 	format("value received: %", value).postln;
@@ -876,6 +941,9 @@ public class Banana : MonoBehaviour {
 ```plaintext--max
 N/A yet - the [ossia.declare] object is planned to be implemented in the future 
 for automatically declaring atributes of complex objects (such as jit.gl.*) 
+```
+
+```java
 ```
 
 ```javascript
@@ -958,6 +1026,9 @@ N/A
 N/A
 ```
 
+```java
+```
+
 ```javascript
 // This shows how to automatically wait for the device to be instantiated
 // before creating your own tree of nodes & parameters
@@ -1031,6 +1102,9 @@ Ossia.OSCQueryMirror {
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/client.png" /></pre>
 
+```java
+```
+
 ```javascript
 // create a local device in any application, for this example, we'll do this directly in SuperCollider
 
@@ -1098,6 +1172,9 @@ N/A
 N/A
 ```
 
+```java
+```
+
 ```javascript
 N/A
 ```
@@ -1141,6 +1218,9 @@ local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ```
 
@@ -1180,6 +1260,9 @@ remote_midi_device = ossia.MidiDevice("remoteMidiDevice", midi_devices[0])
 ```
 
 ```plaintext--max
+```
+
+```java
 ```
 
 ```javascript
@@ -1224,6 +1307,9 @@ remote_osc_device = ossia.OSCDevice("remoteOSCDevice", "127.0.0.1", 10000, 10001
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ```
 
@@ -1258,6 +1344,9 @@ Being able to create and remove objects in reaction to OSCQuery messages
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ```
 
@@ -1290,6 +1379,9 @@ Being able to send messages without the node actually existing in the tree, e.g.
 ```
 
 ```plaintext--max
+```
+
+```java
 ```
 
 ```javascript
@@ -1366,6 +1458,9 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern.png" /></pre>
 
+```java
+```
+
 ```javascript
 ```
 
@@ -1402,6 +1497,9 @@ N/A
 <pre class="highlight plaintext tab-plaintext--pd">Notice that, due to the tcl/tk graphical framework on which pd is based <br>curly braces: {} are not allowed, so they have to be preplaced with '<>'<br>Also, commas aren't allowed, so you have to replace them with pipes: '|'<br><br><img src="/images/pd/pattern-complex.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">Notice that, due to the use of commas as message separators in Max, <br>you'll have to  use pipes instead: "|"<br><br><img src="/images/max/pattern-complex.png" /></pre>
+
+```java
+```
 
 ```javascript
 ```
@@ -1461,6 +1559,9 @@ N/A
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ```
 
@@ -1510,6 +1611,9 @@ Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/brace.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png"/></pre>
+
+```java
+```
 
 ```javascript
 ```
@@ -1575,6 +1679,9 @@ Ossia.Parameter {
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/mode.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mode.png" /></pre>
+
+```java
+```
 
 ```javascript
 ~some_parameter.access_mode = OSSIA_access_mode.bi; 
@@ -1642,6 +1749,9 @@ param.SetMax(new Value(5));
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range.png" /></pre>
 
+```java
+```
+
 ```javascript
 // Set domain either at parameter creation, or later on...
 ~param_1 = OSSIA_Parameter(~some_device, 'float_param', Float, [-5, 5]);
@@ -1680,6 +1790,9 @@ vec3f_parameter.apply_domain()
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range2.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range2.png" /></pre>
+
+```java
+```
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
@@ -1720,6 +1833,9 @@ char_parameter.apply_domain()
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
+
+```java
+```
 
 ```javascript
 ~param = OSSIA_Parameter(~some_device, 'my_param', Integer,
@@ -1789,6 +1905,8 @@ In Max, this is done with the '@clip' attribute.<cr>
 Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
 <img src="/images/max/clip.png" /></pre>
 
+```java
+```
 
 ```javascript
 // same as domain:
@@ -1849,6 +1967,9 @@ When on (by default), repetitions are allowed to happen. When off, they are filt
 In Max, this is done reversely, with the '@repetitions' attribute.<cr>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
 <img src="/images/max/repetitions.png" /></pre>
+
+```java
+```
 
 ```javascript
 p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
@@ -1932,6 +2053,9 @@ and they will automatically convert parameter values to/from this unit<br><br><i
 
 <pre class="highlight plaintext tab-plaintext--max">As the type is deduced from the unit, we can omit it, or even provide the unit<cr>
 directly under the @type attribute:<br><br><img src="/images/max/unit-shorter.png" /></pre>
+
+```java
+```
 
 ```javascript
 ~color = OSSIA_Parameter(~some_device, 'color', Vec4f);
@@ -2100,6 +2224,8 @@ Ossia.Node {
 ```plaintext--Max
 ```
 
+```java
+```
 
 ```javascript
 //TBI
@@ -2162,6 +2288,9 @@ print('instance_bounds : {' + str(node.instance_bounds.min) + ', ' + str(node.in
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 // TBI
 ```
@@ -2211,6 +2340,9 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/description.png" /></pre>
 
+```java
+```
+
 ```javascript
 n = OSSIA_Node(~some_device, 'pretty_node');
 n.description = "a pretty node";
@@ -2255,6 +2387,9 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/tags.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/tags.png" /></pre>
+
+```java
+```
 
 ```javascript
 n = OSSIA_Node(~some_device, 'synth_1');
@@ -2303,6 +2438,9 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/priority.png" /></pre>
 
+```java
+```
+
 ```javascript
 n = OSSIA_Node(~some_device, 'super_important_node');
 n.priority = 10;
@@ -2347,6 +2485,9 @@ ossia::net::set_recall_safe(node, ossia::none);
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/recall_safe.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/recall_safe.png" /></pre>
+
+```java
+```
 
 ```javascript
 n = OSSIA_Node(~some_device, 'super_important_node');
@@ -2396,6 +2537,9 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/rate.png" /></pre>
 
+```java
+```
+
 ```javascript
 n = OSSIA_Node(~some_device, 'laggy_node');
 n.refresh_rate = 500;
@@ -2444,6 +2588,9 @@ Ossia.Node {
 ```
 
 ```plaintext--max
+```
+
+```java
 ```
 
 ```javascript
@@ -2500,6 +2647,9 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/default.png" /><br></pre>
 
+```java
+```
+
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
 ```
@@ -2549,6 +2699,9 @@ Ossia.Node {
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
 p.critical = false;
@@ -2592,6 +2745,9 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
+
+```java
+```
 
 ```javascript
 n = OSSIA_Node(~some_device, 'some_node');
@@ -2646,6 +2802,9 @@ Ossia.Node {
 
 <pre class="highlight plaintext tab-plaintext--max">This also works (locally) with remotes: they will stop sending and receiving to the bound parameter.<br><br><img src="/images/max/remote-mute.png" /></pre>
 
+```java
+```
+
 ```javascript
 n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
 n.muted = false;
@@ -2689,6 +2848,9 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
+
+```java
+```
 
 ```javascript
 n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
@@ -2736,6 +2898,9 @@ N/A
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ~some_param.zombie;
 ```
@@ -2778,7 +2943,8 @@ ossia_devices_make_preset(device, &preset);
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
-
+```java
+```
 
 ```javascript
 d = OSSIA_Device('my_device');
@@ -2821,6 +2987,9 @@ ossia_presets_write_json(preset, "root_name", "foo/preset.json");
 ```plaintext--max
 ```
 
+```java
+```
+
 ```javascript
 ```
 
@@ -2860,6 +3029,8 @@ if(res != OSSIA_PRESETS_OK) {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-load.png" />
 <br><br>This will also work on ossia.device and ossia.client</pre>
 
+```java
+```
 
 ```javascript
 ```
@@ -2907,6 +3078,9 @@ On the PresetController, press "Load preset":
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
+```java
+```
+
 ```javascript
 p.value = 0.75;
 q.value = 127;
@@ -2948,6 +3122,9 @@ N/A
 ```
 
 ```plaintext--max
+```
+
+```java
 ```
 
 ```javascript
@@ -3002,6 +3179,9 @@ TBI
 ```
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/logger.png" /></pre>
+
+```java
+```
 
 ```javascript
 ```
