@@ -18,7 +18,6 @@ toc_footers:
   - <a href='https://github.com/ossia/libossia'>Get libossia on Github</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
-
 search: true
 ---
 
@@ -28,32 +27,28 @@ search: true
 
 It allows to declare the architecture of your creative coding application's functions as a **tree of OSC nodes and parameters**. These nodes/parameters can have attributes, which allow to declare many of their properties, such as their values, types, units, ranges, etc....
 
-This OSC tree-based architecture (coined "device" in the OSSIA terminology) can then be exposed over the network under several protocols, some of which allow this architecture, and the properties and values of its nodes, to be fully explored and queried. 
+This OSC tree-based architecture (coined "device" in the _ossia_ terminology) can then be exposed over the network under several protocols, some of which allow this architecture, and the properties and values of its nodes, to be fully explored and queried.
 For now, protocols available in the implemenations are: plain OSC, OSCquery, Midi - more are part of libossia and will be made available in the future.
 
 libossia offers bindings and implementations for several environments: PureData, Max/MSP, Python, Unity3D, QML, Faust, SuperCollider.
 
-
-
 Here's a quick explanation of the bindings:
 
-* **C** : a C89 binding that should work everywhere and has a stable and strong API & ABI guarantee.
-* **Safe C++**: a simplified C++ binding, kept compatible with C++98, which makes it hard to have problems at the cost of performance.
-* **Fast C++**: the native libossia API, written in modern C++14. Subject to frequent updates and changes; use to get maximal performance.
-* **Python**: Python 2 / 3 bindings made with [pybind11](https://github.com/pybind/pybind11).
-* **QML**: Bindings for the Qt declarative UI language, [QML](http://doc.qt.io/qt-5/qmlapplications.html). Very nice for user interfaces.
-* **OFX**: OpenFrameworks bindings. Requires the [ofxOssia](https://github.com/OSSIA/ofxOSSIA) addon.
-* **Unity3D**: Bindings for the Unity3D game engine. Required C# files are [here](https://github.com/jcelerier/ossia-unity3d/tree/master/ossia).
-* **Pd**: PureData bindings. Requires at least Pd vanilla 0.48/
-* **Max**: Max/MSP bindings. Requires at least Max 7.
-* **Java**: Java bindings. Tested with Processing and OpenRNDR.
-* **SuperCollider**: Requires a custom build of SuperCollider.
-* **Faust**: A Faust architecture file is provided. It should be modified however to tailor your own system.
+- **C** : a C89 binding that should work everywhere and has a stable and strong API & ABI guarantee.
+- **Safe C++**: a simplified C++ binding, kept compatible with C++98, which makes it hard to have problems at the cost of performance.
+- **Fast C++**: the native libossia API, written in modern C++ (requires C++17). Subject to frequent updates and changes; use to get maximal performance.
+- **Python**: Python 2 / 3 bindings made with [pybind11](https://github.com/pybind/pybind11).
+- **QML**: Bindings for the Qt declarative UI language, [QML](http://doc.qt.io/qt-5/qmlapplications.html). Very nice for user interfaces.
+- **OFX**: OpenFrameworks bindings. Requires the [ofxOssia](https://github.com/ossia/ofxOSSIA) addon.
+- **Unity3D**: Bindings for the Unity3D game engine. Required C# files are [here](https://github.com/jcelerier/ossia-unity3d/tree/master/ossia).
+- **Pd**: PureData bindings. Requires at least Pd vanilla 0.48/
+- **Max**: Max/MSP bindings. Requires at least Max 7.
+- **Java**: Java bindings. Tested with Processing and OpenRNDR.
+- **SuperCollider**: Requires a custom build of SuperCollider.
+- **Faust**: A Faust architecture file is provided. It should be modified however to tailor your own system.
 
-
-The interactive sequencer [*score*](https://github.com/OSSIA/score) is an example of software based on *libossia*.
+The interactive sequencer [_score_](https://github.com/ossia/score) is an example of software based on _libossia_.
 An exhaustive (Doxygen) documentation can be found at [http://ossia.github.io/libossia/html/index.html](http://ossia.github.io/libossia/html/index.html)
-
 
 # Setup
 
@@ -77,8 +72,8 @@ cl.exe -std=c89 device.c -Iossia/include ossia/lib/ossia.lib
 ```
 
 ```cpp--98
-// You can have a look at the tutorial at 
-// https://github.com/OSSIA/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp 
+// You can have a look at the tutorial at
+// https://github.com/ossia/libossia/blob/master/Documentation/Tutorial/CPP98/device.cpp
 // for inspiration and examples on the usage of the safeC++ implementation
 
 // device.cpp:
@@ -145,7 +140,7 @@ qmlscene Device.qml
 
 //Due to a bug in the boost library , you’ll have to use  openframework in versions >= 1.0 (i.e. from the nightly builds) and ofxOSSIA's ofx0.10 git branch
 
-//Then, like every other ofx addon: clone the repository https://github.com/OSSIA/ofxOssia in the ofx addons folder
+//Then, like every other ofx addon: clone the repository https://github.com/ossia/ofxOssia in the ofx addons folder
 
 //At the installation, or for libossia updates, you'll have to clone and compile libossia and dependenices for this, run the build script in the lib folder as is described in the README.md file
 
@@ -154,15 +149,16 @@ qmlscene Device.qml
 #include "ofxOssia.h"
 
 private:
-    
+
     ofxOssia ossia;
 
 ```
 
 ```csharp
 // Create a new empty GameObject named OssiaController
-// Add the Controller script to it : 
+// Add the Controller script to it :
 ```
+
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/Controller.png" /></pre>
 
 ```plaintext--pd
@@ -171,12 +167,12 @@ Extract in ~/pd-externals on Linux, ~/Documents/Pd/externals on Mac
 ```
 
 ```plaintext--max
-Extract the ossia package to Documents/Max 7/Packages. 
+Extract the ossia package to Documents/Max 7/Packages.
 (Installing from Max's Package Manager will be possible upon public release)
 ```
 
 ```java
-To use with Processing: 
+To use with Processing:
 * Download http://repo1.maven.org/maven2/net/java/dev/jna/jna/4.5.1/jna-4.5.1.jar
 * Rename it to jna.jar
 * Put it in a "code" folder in the sketchbook
@@ -198,6 +194,7 @@ cd ossia-sc
 # Basic networking
 
 ## Local OSCQuery device
+
 A device represents a tree of parameters.
 
 Local devices map to real parameters on the executable libossia is used with.
@@ -217,7 +214,6 @@ Once a device has been created, it is possible to check what's in it by going
 to [http://localhost:5678](http://localhost:5678).
 
 For more information on the OSCQuery protocol, please refer to [the proposal](https://github.com/mrRay/OSCQueryProposal).
-
 
 ```c
 #include <ossia-c/ossia-c.h>
@@ -268,7 +264,7 @@ Ossia.OSCQueryServer {
 ```cpp--ofx
    // setup ofxOssia, by default it uses oscquery protocol on ports 3456 and 5678
     ossia.setup();
-    
+
    // you can specify your parameters by adding customs value in setup fonction :
    // void setup("OSCQuery","customName",localportOSC, localPortWS);
 
@@ -285,12 +281,9 @@ var dev = new Ossia.Device(proto, "supersoftware");
 
 <pre class="highlight plaintext tab-plaintext--pd">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/pd/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
 
-
-
 <pre class="highlight plaintext tab-plaintext--max">By default, Max creates a global device under which <br>all parameters and models will be registered <br>This global device can be configured with the [ossia] object.<br><br><img src="/images/max/global_device.png" /><br><br>Sending the (expose oscquery) message to the ossia object <br>will expose this global device <br>with the default OSCquery ports, i.e. 9999 for OSC and 5678 for WS<br></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">It is also possible (and more powerful and flexible) to declare <br>a patcher as a separate device with the [ossia.device] object<br>(and all its subpatchers until a new device is declared).<br><br><img src="/images/max/ossia.device.png" /><br><br>Here we declare this device with specific OSC and WS ports<br></pre>
-
 
 ```java
 import io.ossia.*;
@@ -300,15 +293,13 @@ Device device = new Device(p, "processing");
 ```
 
 ```javascript
-~some_device = OSSIA_Device('supersoftware');
+~some_device = OSSIA_Device("supersoftware");
 ~some_device.exposeOSCQueryServer(1234, 5678);
 
 // or
 
-~some_device = OSSIA_Device.newOSCQueryServer('supersoftware', 1234, 5678);
-
+~some_device = OSSIA_Device.newOSCQueryServer("supersoftware", 1234, 5678);
 ```
-
 
 ## Creating nodes
 
@@ -323,7 +314,6 @@ This allows to have a cleaner representation of the address/namespace, as is dem
 
 <img src="/images/NamespaceSlash.png" />
 <img src="/images/NamespaceDot.png" />
-
 
 ```c
 ossia_protocol_t proto = ossia_protocol_oscquery_server_create(1234, 5678);
@@ -390,10 +380,10 @@ _val.setup(_myGroup, "valOSCName", value, min, max);
 ```csharp
 dev.GetRootNode().AddChild ("scene");
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd">In ossia-pd, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/pd/model.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">In ossia-max, partly due to the filiation with Jamoma, these nodes are called 'models'<br><br><img src="/images/max/model.png" /></pre>
-
 
 ```java
 import io.ossia.*;
@@ -465,10 +455,10 @@ _myGroup.setup(_parent_node, "myGroupAddr"); // -> /myGroupAddr.2
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/model2.png" /></pre>
-
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/model2.png" /></pre>
 
@@ -533,15 +523,16 @@ iterate_on_children(local_device.root_node)
 
 ```plaintext--pd
 Send the [namespace( message to any [ossia.model], [ossia.device] or [ossia] objects
-This will also return all parameters' current values. 
+This will also return all parameters' current values.
 ```
 
 ```plaintext--max
 Send the (namespace) message to any [ossia.model], [ossia.device] or [ossia] objects
-This will also return all parameters' current values. 
+This will also return all parameters' current values.
 ```
 
 ```java
+
 ```
 
 ```javascript
@@ -553,13 +544,13 @@ This will also return all parameters' current values.
 Each node can only have a single parameter.
 Parameters can have the following types:
 
-* Integer: 32-bit int.
-* Floating-point: 32-bit float.
-* Boolean: true/false.
-* Impulse: no value; just a message.
-* ASCII Character: 'a', '0', '$'...
-* String
-* List: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
+- Integer: 32-bit int.
+- Floating-point: 32-bit float.
+- Boolean: true/false.
+- Impulse: no value; just a message.
+- ASCII Character: 'a', '0', '$'...
+- String
+- List: a generic list of values: `[3, 'a', 2.68, ["foo", "bar"]]`
 
 As an optimisation, specific types for 2, 3, and 4 floats are provided;
 they are referred to as Vec2f, Vec3f, Vec4f through the code.
@@ -631,7 +622,7 @@ Ossia.Signal {
                     ofVec2f(ofRandomWidth(), ofRandomHeight()),
                     ofVec2f(0., 0.), // Min
                     ofVec2f(ofGetWidth(), ofGetHeight())); // Max
-                    
+
     //Here we create a subNode for colors
     //This was declared first in the .h file as:
     //     ossia::ParameterGroup _colorParams;
@@ -646,12 +637,12 @@ Ossia.Signal {
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/parameter.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/parameter.png" /></pre>
-
 
 ```java
 import io.ossia.*;
@@ -666,13 +657,14 @@ bar.setDescription("Rectangle fill color");
 Parameter my_color = bar.createParameter(Type.VEC4F_T);
 my_color.setUnit("color.rgba8");
 ```
-```
+
+````
 
 ```javascript
 
 ~param = OSSIA_Parameter(~some_device, 'int_test', Integer);
 ~sigparam = OSSIA_Parameter(~some_device, 'signal_test', Signal);
-```
+````
 
 > Then we can send values to this parameter
 
@@ -710,11 +702,12 @@ onSomething: {
 ```
 
 ```csharp
+
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/pd/parameter-numbers.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max">Values can be sent (to the inlet) and read (from the outlet) locally to the object.<br><br><img src="/images/max/parameter-numbers.png" /></pre>
-
 
 ```java
 my_color.push(120f, 20f, 50f, 255f);
@@ -723,8 +716,8 @@ my_color.push(120f, 20f, 50f, 255f);
 ```javascript
 ~param.value = 347;
 // equivalent to: (faster for livecoding)
-~param.v = (347) // 1st shortcut
-~param.sv(347) // 2nd shortcut
+~param.v = 347; // 1st shortcut
+~param.sv(347); // 2nd shortcut
 ```
 
 > And read them
@@ -778,6 +771,7 @@ console.log(param.value)
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd">Values can also be sent and read remotely with the [ossia.remote] object.<br><br><img src="/images/pd/remote.png" /></pre>
@@ -792,8 +786,6 @@ my_color.getVec4()[0]; // 120.0 according to the previous push() call
 ~param.value.postln;
 ~param.v.postln;
 ```
-
-
 
 ## Parameter callbacks
 
@@ -824,7 +816,7 @@ ossia_parameter_push_callback(a_parameter, my_callback, NULL);
 // Create a value callback, and tore it into a callback_index
 opp::callback_index callbackIt = aNode.set_value_callback([](void* context, const opp::value& val)
       {
-        /* ... some lambda function here ... */  
+        /* ... some lambda function here ... */
       },  this); // or another context
 
 // Later on, you can remve this callback by using the callback_index, with:
@@ -874,9 +866,11 @@ Ossia.Signal {
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
@@ -888,6 +882,7 @@ N/A
 ```
 
 ```java
+
 ```
 
 ```javascript
@@ -897,6 +892,7 @@ N/A
 ```
 
 ## Property binding
+
 This show how, for environments that support it, ossia objects can integrate
 with existing property environments.
 
@@ -939,11 +935,12 @@ public class Banana : MonoBehaviour {
 ```
 
 ```plaintext--max
-N/A yet - the [ossia.declare] object is planned to be implemented in the future 
-for automatically declaring atributes of complex objects (such as jit.gl.*) 
+N/A yet - the [ossia.declare] object is planned to be implemented in the future
+for automatically declaring atributes of complex objects (such as jit.gl.*)
 ```
 
 ```java
+
 ```
 
 ```javascript
@@ -970,9 +967,11 @@ Device callbacks can be used to react to creation or removal of nodes in a
 given device.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
@@ -1013,9 +1012,11 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
@@ -1027,6 +1028,7 @@ N/A
 ```
 
 ```java
+
 ```
 
 ```javascript
@@ -1093,9 +1095,11 @@ Ossia.OSCQueryMirror {
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/client.png" /></pre>
@@ -1103,6 +1107,7 @@ Ossia.OSCQueryMirror {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/client.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
@@ -1130,8 +1135,8 @@ q.value = 25.0;
 p.value; // posts 25
 ```
 
-
 # Advanced networking
+
 ## Local Midi device
 
 Open a Midi Input/Output port to allow local device to receive/emit Midi protocol messages.
@@ -1173,10 +1178,11 @@ N/A
 ```
 
 ```java
+
 ```
 
 ```javascript
-N/A
+N / A;
 ```
 
 ## Local OSC device
@@ -1187,12 +1193,15 @@ To be controled by a remote OSC client we need to setup a local port where clien
 Sometimes the local device sends OSC messages back to be observed by a client which needs to setup the client ip and port.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
@@ -1204,24 +1213,31 @@ local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Remote Midi device
@@ -1229,12 +1245,15 @@ local_device.create_osc_server("127.0.0.1", 9997, 9996, False)
 Connect to a Midi Input/Output port to observe/send Midi protocol messages from/to a remote device.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
@@ -1248,24 +1267,31 @@ remote_midi_device = ossia.MidiDevice("remoteMidiDevice", midi_devices[0])
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Remote OSC device
@@ -1278,12 +1304,15 @@ Sometimes a remote OSC device also sends OSC messages back which needs to setup 
 To send and receive values to each parameter, we also have to declare the namespace as any ossia device.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
@@ -1293,24 +1322,31 @@ remote_osc_device = ossia.OSCDevice("remoteOSCDevice", "127.0.0.1", 10000, 10001
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## OSCQuery instances
@@ -1318,36 +1354,47 @@ remote_osc_device = ossia.OSCDevice("remoteOSCDevice", "127.0.0.1", 10000, 10001
 Being able to create and remove objects in reaction to OSCQuery messages
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Raw messages
@@ -1355,36 +1402,47 @@ Being able to create and remove objects in reaction to OSCQuery messages
 Being able to send messages without the node actually existing in the tree, e.g. like a "basic" OSC library
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Pattern matching
@@ -1393,18 +1451,18 @@ Address a set of nodes using pattern matching as defined in the [OSC 1.1 specifi
 
 Valid patterns are for instance:
 
-* /foo/bar* -> matches /foo/bar, /foo/bar.100, /foo/baron
-* /{foo,boo}/bar -> matches /foo/bar, /boo/bar
-* /foo[1-5] -> matches /foo1, /foo2, ... /foor5
-* //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
-* //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo 
+- /foo/bar\* -> matches /foo/bar, /foo/bar.100, /foo/baron
+- /{foo,boo}/bar -> matches /foo/bar, /boo/bar
+- /foo[1-5] -> matches /foo1, /foo2, ... /foor5
+- //bar -> matches /foo/bar, /foo/bar.123/bar, etc.
+- //bob/../foo -> given /foo/bob and /foo/bar.123/bob, matches /foo
 
-Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob 
+Because of the way instances of nodes are created when duplicating them (see [#creating-nodes](#creating-nodes)), we have added a special wildcard, '!', that matches all instances including the original one, e.g. /foo! matches /foo, /foo.1 and /foo.bob
 
 Brace expansion is also implemented, which allows for more matching, such as:
 
-* /foo.{5..23} will match /foo.5 to /foo.23
-* /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
+- /foo.{5..23} will match /foo.5 to /foo.23
+- /foo.{5..23..7} will match /foo.5, /foo.12, foo.17 (by steps of 7 for instance)
 
 Then it is possible to send and receive values to/from the set of pattern matching nodes.
 
@@ -1420,6 +1478,7 @@ ossia_node_array_free(data);
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
@@ -1447,6 +1506,7 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -1459,9 +1519,11 @@ Node[] res = Node.FindPattern(root, "/foo/bar.*");
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/pattern.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 > Sending messages to multiple nodes
@@ -1488,6 +1550,7 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -1499,9 +1562,11 @@ N/A
 <pre class="highlight plaintext tab-plaintext--max">Notice that, due to the use of commas as message separators in Max, <br>you'll have to  use pipes instead: "|"<br><br><img src="/images/max/pattern-complex.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 > Receiving messages from multiple nodes
@@ -1547,6 +1612,7 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -1554,15 +1620,19 @@ N/A
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Batch node creation
@@ -1584,6 +1654,7 @@ ossia_node_array_free(data);
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
@@ -1601,6 +1672,7 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -1613,31 +1685,33 @@ Node[] res = Node.CreatePattern(root, "/foo/{bar,baz}.[0-9][0-9]");
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/brace.png"/></pre>
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 # Node and parameter attributes
+
 This part presents the attributes that can be set on nodes and parameters.
 
-When using OSCQuery, all attribute changes will propagate across the network, except 
+When using OSCQuery, all attribute changes will propagate across the network, except
 mute which is local. The "enabled/disabled" attribute has the same effect but does propagate.
-
 
 ## Access mode
 
 Access mode is a metadata that categorizes parameters between:
 
-* **GET**: read-only
-* **SET**: write-only
-* **BI**: read-write
+- **GET**: read-only
+- **SET**: write-only
+- **BI**: read-write
 
-For instance: 
+For instance:
 
-* The value of a vu-meter should be GET
-* A "play" button should be SET.
-* The cutoff of a filter or a controllable color should be BI.
+- The value of a vu-meter should be GET
+- A "play" button should be SET.
+- The cutoff of a filter or a controllable color should be BI.
 
 ```c
 ossia_parameter_t param = ...;
@@ -1665,15 +1739,17 @@ float_parameter.access_mode = ossia.AccessMode.Get
 ```
 
 ```qml
-Ossia.Parameter { 
+Ossia.Parameter {
   access: Ossia.Bi
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/mode.png" /></pre>
@@ -1681,14 +1757,14 @@ Ossia.Parameter {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mode.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-~some_parameter.access_mode = OSSIA_access_mode.bi; 
-~some_parameter.access_mode = 'bi'; // equivalent #1
-~some_parameter.access_mode = 'rw'; // equivalent #2
+~some_parameter.access_mode = OSSIA_access_mode.bi;
+~some_parameter.access_mode = "bi"; // equivalent #1
+~some_parameter.access_mode = "rw"; // equivalent #2
 ```
-
 
 ## Domain (min/max, set of values)
 
@@ -1737,6 +1813,7 @@ Ossia.Parameter {
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
@@ -1750,21 +1827,24 @@ param.SetMax(new Value(5));
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
 // Set domain either at parameter creation, or later on...
-~param_1 = OSSIA_Parameter(~some_device, 'float_param', Float, [-5, 5]);
-~param_2 = OSSIA_Parameter(~some_device, 'int_param', Integer, nil);
+~param_1 = OSSIA_Parameter(~some_device, "float_param", Float, [-5, 5]);
+~param_2 = OSSIA_Parameter(~some_device, "int_param", Integer, nil);
 ~param_2.domain = [-5, 5];
 ```
 
 > If the domain is an array, it is possible to filter per value, or with a single, shared, min / max.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
@@ -1779,12 +1859,15 @@ vec3f_parameter.apply_domain()
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range2.png" /></pre>
@@ -1792,20 +1875,26 @@ vec3f_parameter.apply_domain()
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range2.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-~param = OSSIA_Parameter(~some_device, 'vector', OSSIA_Vec3f);
-~param.domain = [[0.0, 1.0, 2.0], [1.0, 5.0, 10.0]]; // unique min/max ranges for each value, first array represents the min values, second array the max values
+~param = OSSIA_Parameter(~some_device, "vector", OSSIA_Vec3f);
+~param.domain = [
+  [0.0, 1.0, 2.0],
+  [1.0, 5.0, 10.0],
+]; // unique min/max ranges for each value, first array represents the min values, second array the max values
 ```
 
 > Instead of a min / max, it is also possible to give a set of accepted values.
 > Values that don't fit will be rounded to the closest accepted value.
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
@@ -1822,12 +1911,15 @@ char_parameter.apply_domain()
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
@@ -1835,23 +1927,29 @@ char_parameter.apply_domain()
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/range-strings.png" /><br><br>This works with the 'string' @type<br>If @clip is at any other value than 'off' values outside of the range won't be output</pre>
 
 ```java
+
 ```
 
 ```javascript
-~param = OSSIA_Parameter(~some_device, 'my_param', Integer,
-    OSSIA.domain(values: [1, 3, 5]), 3);
+~param = OSSIA_Parameter(
+  ~some_device,
+  "my_param",
+  Integer,
+  OSSIA.domain((values: [1, 3, 5])),
+  3
+);
 ```
 
 ## Bounding mode
 
 The bounding mode tells what happens when a value is outside of the min / max:
 
-* **FREE** : no clipping; domain is only indicative.
-* **CLIP** : clipped to the closest value in the range.
-* **LOW** : only clips values lower than the min.
-* **HIGH** : only clips values higher than the max.
-* **WRAP** : wraps values around the range
-* **FOLD** : folds back values into the range
+- **FREE** : no clipping; domain is only indicative.
+- **CLIP** : clipped to the closest value in the range.
+- **LOW** : only clips values lower than the min.
+- **HIGH** : only clips values higher than the max.
+- **WRAP** : wraps values around the range
+- **FOLD** : folds back values into the range
 
 The default is **FREE**.
 
@@ -1884,15 +1982,17 @@ float_parameter.bounding_mode = ossia.BoundingMode.Clip
 ```
 
 ```qml
-Ossia.Parameter { 
+Ossia.Parameter {
   bounding: Ossia.Clip
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd">
@@ -1906,13 +2006,20 @@ Also, clipping on both ends is done with 'both' (instead of 'CLIP')<br>
 <img src="/images/max/clip.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
 // same as domain:
-~param = OSSIA_Parameter(~some_device, 'param', Float, [0, 2017], bounding_mode: 'clip');
+~param = OSSIA_Parameter(
+  ~some_device,
+  "param",
+  Float,
+  [0, 2017],
+  (bounding_mode: "clip")
+);
 ~param.bounding_mode = OSSIA_bounding_mode.high;
-~param.bounding_mode = 'high'; // equivalent;
+~param.bounding_mode = "high"; // equivalent;
 ```
 
 ## Repetition filter
@@ -1945,15 +2052,17 @@ int_parameter.repetition_filter = ossia.RepetitionFilter.On
 ```
 
 ```qml
-Ossia.Parameter { 
+Ossia.Parameter {
   filterRepetitions: Ossia.Filtered
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd">
@@ -1961,18 +2070,23 @@ In pd, this is done reversely, with the '@repetitions' attribute.<cr>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
 <img src="/images/pd/repetitions.png" /></pre>
 
-
-
 <pre class="highlight plaintext tab-plaintext--max">
 In Max, this is done reversely, with the '@repetitions' attribute.<cr>
 When on (by default), repetitions are allowed to happen. When off, they are filtered out.<br>
 <img src="/images/max/repetitions.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-p = OSSIA_Parameter(~some_device, 'p', Float, [0, 1], repetition_filter: true);
+p = OSSIA_Parameter(
+  ~some_device,
+  "p",
+  Float,
+  [0, 1],
+  (repetition_filter: true)
+);
 p.repetition_filter = false;
 ```
 
@@ -2007,24 +2121,27 @@ parameter.unit = "color.hsv"
 ```
 
 ```qml
-Ossia.Parameter { 
+Ossia.Parameter {
   unit: "color.hsv"
 }
 // When bound to a specific value, the unit is matched if possible.
-Ossia.Property on color { 
+Ossia.Property on color {
   // will be argb
 }
-Ossia.Property on position { 
+Ossia.Property on position {
   // will be xy
 }
 // etc for all common Qt types
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd">
 Units can be specified, with the @unit argument, by providing their full names.<cr>
 i.e. using the syntax "category.unit"<br>
@@ -2037,9 +2154,6 @@ and they will automatically convert parameter values to/from this unit<br><br><i
 
 <pre class="highlight plaintext tab-plaintext--pd">As the type is deduced from the unit, we can omit it, or even provide the unit<cr>
 directly under the @type attribute:<br><br><img src="/images/pd/unit-shorter.png" /></pre>
-
-
-
 
 <pre class="highlight plaintext tab-plaintext--max">
 Units can be specified, with the @unit argument, by providing their full names.<cr>
@@ -2055,123 +2169,120 @@ and they will automatically convert parameter values to/from this unit<br><br><i
 directly under the @type attribute:<br><br><img src="/images/max/unit-shorter.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-~color = OSSIA_Parameter(~some_device, 'color', Vec4f);
+~color = OSSIA_Parameter(~some_device, "color", Vec4f);
 p.unit = OSSIA_color.rgba;
 ```
 
- Units are sorted by categories (coined "dataspace" ): every unit in a category is convertible to the other units in the same category. <br>
- Every category has a neutral unit to/from which conversions are made. <br>
+Units are sorted by categories (coined "dataspace" ): every unit in a category is convertible to the other units in the same category. <br>
+Every category has a neutral unit to/from which conversions are made. <br>
 
- An unit, when setting it as a parameter's attribute, can be expressed as a string in the form:<br>
- - "category.unit" (such as "position.cart2D"),<br>
- - only with the unit name (such as "cart2D", those being all unique), <br>
- - or with "nicknames", that are indicated in parentheses, after the unit name <br>
+An unit, when setting it as a parameter's attribute, can be expressed as a string in the form:<br>
+
+- "category.unit" (such as "position.cart2D"),<br>
+- only with the unit name (such as "cart2D", those being all unique), <br>
+- or with "nicknames", that are indicated in parentheses, after the unit name <br>
   A list of all supported units is given below.
 
 ### List of Units
 
 #### Position
 
-* **cart3D** (*xyz*, *pos*, *point*, *point3d*, *3d*, *cartesian3d*, *coord*, *coordinate*, *coordinates*, *pvector*, *vertex*):
-Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
-* **cart2D** (*xy*, *complex*, *point2d*, *2d*, *cartesian2d*): 
-Cartesian 2-dimensional position (i.e. X, Y)
-* **opengl** (*gl*, *position.gl*):
-Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
-* **spherical** (*aed*):
-Polar 3-dimensional position (ie. aed: azimuth, elevation, distance)
-* **polar** (*ad*):
-Polar 2-dimensional position (ie. ad: azimuth, distance)
-* **cylindrical** (*daz*):
-Mixed 3-dimensional position (ie. daz: distance, azimuth, Z)
-
-
+- **cart3D** (_xyz_, _pos_, _point_, _point3d_, _3d_, _cartesian3d_, _coord_, _coordinate_, _coordinates_, _pvector_, _vertex_):
+  Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
+- **cart2D** (_xy_, _complex_, _point2d_, _2d_, _cartesian2d_):
+  Cartesian 2-dimensional position (i.e. X, Y)
+- **opengl** (_gl_, _position.gl_):
+  Cartesian 3-dimensional position (ie. X, Y, Z) in the OpenGL coordinate reference system
+- **spherical** (_aed_):
+  Polar 3-dimensional position (ie. aed: azimuth, elevation, distance)
+- **polar** (_ad_):
+  Polar 2-dimensional position (ie. ad: azimuth, distance)
+- **cylindrical** (_daz_):
+  Mixed 3-dimensional position (ie. daz: distance, azimuth, Z)
 
 #### Orientation
 
-* **quaternion**:
-An extension of the complex numbers for 3D orientation, in the form a+bi+cj+dk
-* **euler**:
-A triplet of angles (in degrees) describing the orientation of a rigid body with respect to a fixed coordinate system
-* **axis**:
-An angle (a, in degrees) relative to a 3-dimensional vector, expressed in the order X, Y, Z, a
-
-
+- **quaternion**:
+  An extension of the complex numbers for 3D orientation, in the form a+bi+cj+dk
+- **euler**:
+  A triplet of angles (in degrees) describing the orientation of a rigid body with respect to a fixed coordinate system
+- **axis**:
+  An angle (a, in degrees) relative to a 3-dimensional vector, expressed in the order X, Y, Z, a
 
 #### Color
 
-* **argb** (*col*): 
-4 float numbers between 0. and 1. describing respectively Alpha, Red, Green and Blue color values
-* **rgba**:
-4 float numbers between 0. and 1. describing respectively Red, Green, Blue and Alpha color values
-* **rgb**:
-3 float numbers between 0. and 1. describing respectively Red, Green and Blue color values
-* **bgr**:
-3 float numbers between 0. and 1. describing respectively Blue, Green and Red color values
-* **argb8**: 
-4 int numbers between 0 and 255 describing respectively Alpha, Red, Green and Blue color values
-* **hsv**:
-3 float numbers between 0. and 1. describing respectively Hue, Saturation and Value (Luminosity) color values in the HSV colorspace
-* **cmy8**:
-3 int numbers between 0 and 255 describing respectively Cyan, Magenta, and Yellow color values
-* **cmyk8**:
-4 int numbers between 0 and 255 describing respectively Cyan, Magenta, Yellow and Black color values
+- **argb** (_col_):
+  4 float numbers between 0. and 1. describing respectively Alpha, Red, Green and Blue color values
+- **rgba**:
+  4 float numbers between 0. and 1. describing respectively Red, Green, Blue and Alpha color values
+- **rgb**:
+  3 float numbers between 0. and 1. describing respectively Red, Green and Blue color values
+- **bgr**:
+  3 float numbers between 0. and 1. describing respectively Blue, Green and Red color values
+- **argb8**:
+  4 int numbers between 0 and 255 describing respectively Alpha, Red, Green and Blue color values
+- **hsv**:
+  3 float numbers between 0. and 1. describing respectively Hue, Saturation and Value (Luminosity) color values in the HSV colorspace
+- **cmy8**:
+  3 int numbers between 0 and 255 describing respectively Cyan, Magenta, and Yellow color values
+- **cmyk8**:
+  4 int numbers between 0 and 255 describing respectively Cyan, Magenta, Yellow and Black color values
 
 #### Angle
 
-* **radian**
-* **degree**
-
+- **radian**
+- **degree**
 
 #### Distance
 
-* **meter**
-* **kilometer**
-* **decimeter**
-* **centimeter**
-* **millimeter**
-* **micrometer**
-* **nanometer**
-* **picometer**
-* **inch**
-* **foot**
-* **mile**
+- **meter**
+- **kilometer**
+- **decimeter**
+- **centimeter**
+- **millimeter**
+- **micrometer**
+- **nanometer**
+- **picometer**
+- **inch**
+- **foot**
+- **mile**
 
 #### Time
 
-* **second**
-* **bark**
-* **bpm**
-* **cent**
-* **frequency** (*freq*, *frequence*, *Hz*, *hz*, *Hertz*):
-* **mel**
-* **midi_pitch** (*midinote*): 
-* **millisecond** (*ms*)
-* **playback_speed**
-* **sample** (the length of a sample, for a sample_rate of 44100Hz)
+- **second**
+- **bark**
+- **bpm**
+- **cent**
+- **frequency** (_freq_, _frequence_, _Hz_, _hz_, _Hertz_):
+- **mel**
+- **midi_pitch** (_midinote_):
+- **millisecond** (_ms_)
+- **playback_speed**
+- **sample** (the length of a sample, for a sample_rate of 44100Hz)
 
 #### Gain
 
-* **linear**:
-A linear gain in the [0. 1.] range, with 1. being the nominal level
-* **midigain**:
-A value in the [0 127] range mimicing a MIDI gain controller. 100 for the nominal level, 127 for +12dB
-* **decibel** (*db*, *dB*):
-A single float value expressed in a logarithmic scale, typically to describe an audio gain (0dB being the nominal gain, < 0dB describing a signal attenuation, clipped at -96dB)
-* **decibel_raw**
-Same as deciBel, but unclipped.
+- **linear**:
+  A linear gain in the [0. 1.] range, with 1. being the nominal level
+- **midigain**:
+  A value in the [0 127] range mimicing a MIDI gain controller. 100 for the nominal level, 127 for +12dB
+- **decibel** (_db_, _dB_):
+  A single float value expressed in a logarithmic scale, typically to describe an audio gain (0dB being the nominal gain, < 0dB describing a signal attenuation, clipped at -96dB)
+- **decibel_raw**
+  Same as deciBel, but unclipped.
 
 #### Speed
 
-* **meter_per_second**
-* **miles_per_hour**
-* **kilometer_per_hour**
-* **knot**
-* **foot_per_second**
-* **foot_per_hour**
+- **meter_per_second**
+- **miles_per_hour**
+- **kilometer_per_hour**
+- **knot**
+- **foot_per_second**
+- **foot_per_hour**
 
 ## Extended type
 
@@ -2180,12 +2291,12 @@ They can also be used to enable some optimizations.
 
 libossia proposes the following types:
 
-* File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
-* Generic buffer : when a string should be interpreted as a a raw binary blob.
-* Float array : when a parameter has a fixed number of floating point values, like vec2f.
-* Float list : when a list consists exclusively of values of type float.
-* Same for int list and string list.
-* Dynamic array : when a list's size may change during execution.
+- File path : used for when a string is a filesystem path, like `/home/self/sound.wav` or `c:\document.txt`
+- Generic buffer : when a string should be interpreted as a a raw binary blob.
+- Float array : when a parameter has a fixed number of floating point values, like vec2f.
+- Float list : when a list consists exclusively of values of type float.
+- Same for int list and string list.
+- Dynamic array : when a list's size may change during execution.
 
 ```c
 ossia_parameter_t param = ...;
@@ -2206,36 +2317,39 @@ node.extended_type = "filepath"
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   extendedType: "filepath"
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
-
 ```plaintext--Max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
 //TBI
 ```
 
-
 ## Instance bounds
 
 For nodes that can have instantiatable children, this sets the minimum and
-maximum number of children that can exist. This is not enforced and is only 
+maximum number of children that can exist. This is not enforced and is only
 to be relied upon as a metadata.
 
 This is an optional attribute.
@@ -2250,7 +2364,7 @@ ossia_node_unset_instance_bounds(node);
 int min, max;
 int ok;
 ossia_node_get_instance_bounds(node, &min, &max, &ok);
-if(ok) { 
+if(ok) {
   // min and max are meaningful
 }
 ```
@@ -2277,25 +2391,28 @@ print('instance_bounds : {' + str(node.instance_bounds.min) + ', ' + str(node.in
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
 // TBI
 ```
-
-
 
 ## Description
 
@@ -2325,15 +2442,17 @@ node.description = "a pretty node"
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   description: "a pretty node"
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/description.png" /></pre>
@@ -2341,10 +2460,11 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/description.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'pretty_node');
+n = OSSIA_Node(~some_device, "pretty_node");
 n.description = "a pretty node";
 ```
 
@@ -2373,15 +2493,17 @@ node.tags = ["video", "funny"]
 ```
 
 ```qml
-Ossia.Node { 
-  tags: ["video", "funny"] 
+Ossia.Node {
+  tags: ["video", "funny"]
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/tags.png" /></pre>
@@ -2389,12 +2511,12 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/tags.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'synth_1');
-n.tags = ['physical_model', "awesome"];
-
+n = OSSIA_Node(~some_device, "synth_1");
+n.tags = ["physical_model", "awesome"];
 ```
 
 ## Priority
@@ -2424,25 +2546,29 @@ node.priority = 10
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   priority: 10
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/priority.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/priority.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'super_important_node');
+n = OSSIA_Node(~some_device, "super_important_node");
 n.priority = 10;
 ```
 
@@ -2481,22 +2607,25 @@ ossia::net::set_recall_safe(node, ossia::none);
 ```
 
 ```csharp
+
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/recall_safe.png" /></pre>
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/recall_safe.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'super_important_node');
+n = OSSIA_Node(~some_device, "super_important_node");
 n.priority = 10;
 ```
 
 ## Refresh rate
 
-An optional value that says how often a value should be updated. 
+An optional value that says how often a value should be updated.
 Currently does not work in all implementations.
 
 ```c
@@ -2522,15 +2651,17 @@ node.refresh_rate = 10
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   refresh_rate: 10
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/rate.png" /></pre>
@@ -2538,16 +2669,17 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/rate.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'laggy_node');
+n = OSSIA_Node(~some_device, "laggy_node");
 n.refresh_rate = 500;
 ```
 
 ## Step size
 
-An optional value that says by which increment a value should change, 
+An optional value that says by which increment a value should change,
 for instance in a value editor.
 
 ```c
@@ -2573,27 +2705,33 @@ node.value_step_size = 10
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   stepSize: 10
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 ## Default value
@@ -2632,15 +2770,17 @@ parameter.default_value = 10
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   defaultValue: 23.4
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/default.png" /></pre>
@@ -2648,16 +2788,16 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/default.png" /><br></pre>
 
 ```java
+
 ```
 
 ```javascript
-p = OSSIA_Parameter(~some_device, 'foo', Float, [0, 1], default_value: 0.5);
+p = OSSIA_Parameter(~some_device, "foo", Float, [0, 1], (default_value: 0.5));
 ```
-
 
 ## Critical
 
-This attribute informs the network protocol that the value has a particular importance 
+This attribute informs the network protocol that the value has a particular importance
 and should if possible use a protocol not subject to message loss, eg TCP instead of UDP.
 This is useful for instance for "play" messages.
 
@@ -2682,28 +2822,33 @@ node.critical = True
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   critical: true
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
-p = OSSIA_Parameter(~some_device, 'foo', Signal, critical: true);
+p = OSSIA_Parameter(~some_device, "foo", Signal, (critical: true));
 p.critical = false;
 ```
 
@@ -2731,15 +2876,17 @@ node.disabled = True
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   disabled: true
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
@@ -2747,15 +2894,15 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'some_node');
+n = OSSIA_Node(~some_device, "some_node");
 n.disable;
 n.enable;
 n.is_disabled;
 ```
-
 
 ## Muted
 
@@ -2782,31 +2929,33 @@ node.muted = True
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   muted: true
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/mute.png" /><br><br>This will prevent ossia.parameter from outputting local (i.e. fed from the input) values <br>Remote values will still come out</pre>
 
 <pre class="highlight plaintext tab-plaintext--pd">This also works (locally) with remotes: they will stop sending and receiving to the bound parameter.<br><br><img src="/images/pd/remote-mute.png" /></pre>
-
-
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/mute.png" /><br><br>This will prevent ossia.parameter from outputting local (i.e. fed from the input) values <br>Remote values will still come out</pre>
 
 <pre class="highlight plaintext tab-plaintext--max">This also works (locally) with remotes: they will stop sending and receiving to the bound parameter.<br><br><img src="/images/max/remote-mute.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'muted_node').muted_(true);
+n = OSSIA_Node(~some_device, "muted_node").muted_(true);
 n.muted = false;
 ```
 
@@ -2834,15 +2983,17 @@ node.hidden = True
 ```
 
 ```qml
-Ossia.Node { 
+Ossia.Node {
   hidden: true
 }
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/enable.png" /></pre>
@@ -2850,12 +3001,12 @@ Ossia.Node {
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/enable.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
-n = OSSIA_Node(~some_device, 'hidden_node').hidden_(true);
+n = OSSIA_Node(~some_device, "hidden_node").hidden_(true);
 ```
-
 
 ## Zombie
 
@@ -2887,32 +3038,37 @@ N/A
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
 ~some_param.zombie;
 ```
 
-
 # Preset support
+
 ## Loading and saving presets
 
 Ossia provides preset handling. Files can be loaded and save to the disk to
 set the state of the device tree.
 
-> Create a preset from a device: 
+> Create a preset from a device:
 
 ```c
 ossia_preset_t preset;
@@ -2924,26 +3080,31 @@ ossia_devices_make_preset(device, &preset);
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
-
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 ```java
+
 ```
 
 ```javascript
@@ -2957,48 +3118,58 @@ d.exposeOSCQueryServer(1234, 5678, {
 d.save_preset(); // if no path is explicitly specified, this will open a dialog
 ```
 
-> Write the preset to a file: 
+> Write the preset to a file:
 
 ```c
 ossia_presets_write_json(preset, "root_name", "foo/preset.json");
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
-> Load the preset: 
+> Load the preset:
 
 ```c
 ossia_preset_t preset;
 ossia_preset_result res = ossia_presets_read_json(
-                                "path/to/mypreset.json", 
+                                "path/to/mypreset.json",
                                 &preset);
 if(res != OSSIA_PRESETS_OK) {
   ...
@@ -3006,23 +3177,29 @@ if(res != OSSIA_PRESETS_OK) {
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
 
 ```
+
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-load.png" />
 <br><br>This will also work on ossia.device and ossia.client</pre>
 
@@ -3030,9 +3207,11 @@ if(res != OSSIA_PRESETS_OK) {
 <br><br>This will also work on ossia.device and ossia.client</pre>
 
 ```java
+
 ```
 
 ```javascript
+
 ```
 
 > Apply the loaded preset to a device:
@@ -3041,44 +3220,50 @@ if(res != OSSIA_PRESETS_OK) {
 ossia_preset_t preset;
 
 res = ossia_devices_apply_preset(device, preset);
-if(res == OSSIA_PRESETS_OK) { 
+if(res == OSSIA_PRESETS_OK) {
   // the preset was successfuly applied
 }
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
+
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
 // Add a PresetController script somewhere
-// Set the following script order : 
+// Set the following script order :
 ```
+
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/ScriptOrder.png" /></pre>
 
 ```csharp
 On the PresetController, press "Load preset":
 ```
+
 <pre class="highlight plaintext tab-csharp"><img src="/images/unity/PresetController.png" /></pre>
 
-
 <pre class="highlight plaintext tab-plaintext--pd"><img src="/images/pd/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
-
 
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/preset-save.png" /><br><br>This will also work on ossia.model and ossia.client</pre>
 
 ```java
+
 ```
 
 ```javascript
@@ -3090,19 +3275,22 @@ g.value = "something else";
 d.load_preset();
 ```
 
-> (Note that the values for parameters with ```recall_safe``` attribute set to ```1``` will not be recalled) 
+> (Note that the values for parameters with `recall_safe` attribute set to `1` will not be recalled)
 
 ## Preset instances
 
 Being able to create new objects in reaction to the loading of a preset
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
@@ -3110,26 +3298,32 @@ N/A
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
+
 ```
 
 ```plaintext--max
+
 ```
 
 ```java
+
 ```
 
 ```javascript
-```
 
+```
 
 # Utilities
 
@@ -3138,12 +3332,15 @@ N/A
 Being able to use the libossia logging facilities
 
 ```c
+
 ```
 
 ```cpp--98
+
 ```
 
 ```cpp--14
+
 ```
 
 ```python
@@ -3166,12 +3363,15 @@ local_device.create_osc_server("127.0.0.1", 9997,~~~~~~~~ 9996, True)
 ```
 
 ```qml
+
 ```
 
 ```cpp--ofx
+
 ```
 
 ```csharp
+
 ```
 
 ```plaintext--pd
@@ -3181,13 +3381,9 @@ TBI
 <pre class="highlight plaintext tab-plaintext--max"><img src="/images/max/logger.png" /></pre>
 
 ```java
+
 ```
 
 ```javascript
+
 ```
-
-
-
-
-
-
